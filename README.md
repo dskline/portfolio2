@@ -5,4 +5,3 @@ The technologies I'm using in this project:
 * Tailwind for styling
 * Biome for linting
 * Playwright for testing
-* 
