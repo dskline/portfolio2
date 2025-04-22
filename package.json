@@ -27,7 +27,8 @@
     "husky": "9.1.7",
     "lint-staged": "15.5.1",
     "tailwindcss": "4.1.4",
-    "typescript": "5.8.3"
+    "typescript": "5.8.3",
+    "zod": "3.24.3"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json,css}": ["biome check --staged"]
