@@ -30,3 +30,6 @@ CMS_TYPE=github
 CMS_TOKEN=your_github_personal_access_token
 CMS_URL=https://api.github.com/repos/yourusername/yourrepo/git/trees/preview
 ```
+
+## Dependencies
+- [gray-matter](https://github.com/jonschlinkert/gray-matter) to parse the Markdown content's frontmatter

@@ -30,6 +30,6 @@
     "typescript": "5.8.3"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,css,md}": ["biome check --staged"]
+    "*.{js,jsx,ts,tsx,json,css}": ["biome check --staged"]
   }
 }
