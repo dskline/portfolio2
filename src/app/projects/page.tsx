@@ -1,4 +1,4 @@
-import { getFiles } from "@/app/features/cms/getFiles";
+import { getFiles } from "@/features/cms/getFiles";
 
 export default async function Page() {
   const projects = await getFiles("Portfolio/CMS/Projects");

@@ -1,4 +1,4 @@
-import { Toolbox } from "@/app/features/toolbox/Toolbox";
+import { Toolbox } from "@/features/toolbox/Toolbox";
 
 export default async function Page() {
   return <Toolbox />;

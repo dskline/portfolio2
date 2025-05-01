@@ -4,7 +4,7 @@ import { Anton, Geist } from "next/font/google";
 import "./globals.css";
 import clsx from "clsx";
 import { ThemeProvider } from "next-themes";
-import { Navbar } from "./features/layout/Navbar";
+import { Navbar } from "../features/layout/Navbar";
 
 const fontHeading = Anton({
   variable: "--font-mono",
