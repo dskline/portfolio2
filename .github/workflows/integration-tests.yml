@@ -19,8 +19,10 @@ jobs:
         run: npm ci
       - name: Read package.json
         id: read_package
-        run: echo "::set-output name=package::$(cat package.json)"
+        run: |
+          HOMEPAGE=$(node -p "require('./package.json').homepage")
+          echo "HOMEPAGE=$HOMEPAGE" >> $GITHUB_ENV
       - name: Run tests
         env:
-          PLAYWRIGHT_BASE_URL: ${{ fromJson(steps.read_package.outputs.package).homepage }}
+          PLAYWRIGHT_BASE_URL: ${{ env.HOMEPAGE }}
         run: npm test
