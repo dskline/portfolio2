@@ -1,7 +1,11 @@
 {
   "name": "portfolio2",
   "version": "0.2.0",
-  "private": true,
+  "homepage": "https://spencerkline.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dskline/portfolio2"
+  },
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
@@ -9,6 +13,7 @@
     "prepare": "husky",
     "lint": "biome check",
     "lint:fix": "biome check --write",
+    "test": "playwright test",
     "typegen": "openapi-typescript && npm run lint:fix"
   },
   "dependencies": {
@@ -22,6 +27,7 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@next-devtools/core": "0.3.0-beta.1",
+    "@playwright/test": "1.52.0",
     "@tailwindcss/postcss": "4.1.4",
     "@types/lodash.set": "^4.3.9",
     "@types/node": "22.14.1",
