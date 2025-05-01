@@ -2,6 +2,9 @@ import { NextDevtoolsProvider } from "@next-devtools/core";
 import type { Metadata } from "next";
 import { Anton, Geist } from "next/font/google";
 import "./globals.css";
+import clsx from "clsx";
+import { ThemeProvider } from "next-themes";
+import { Navbar } from "./features/layout/Navbar";
 
 const fontHeading = Anton({
   variable: "--font-mono",
@@ -26,11 +29,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${fontBody.variable} ${fontHeading.variable} antialiased`}
-      >
-        <NextDevtoolsProvider>{children}</NextDevtoolsProvider>
+    <html lang="en" suppressHydrationWarning>
+      <body className={clsx(fontBody.variable, fontHeading.variable)}>
+        <ThemeProvider attribute="class">
+          <div className="antialiased min-h-screen bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50">
+            <Navbar />
+            <NextDevtoolsProvider>{children}</NextDevtoolsProvider>
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );
