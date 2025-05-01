@@ -1,0 +1,570 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+TITLE: Implementing Server Actions in Server Components using inline directive in JavaScript
+DESCRIPTION: This snippet demonstrates how to implement a Server Action in a Next.js Server Component by adding the 'use server' directive at the beginning of an async function body in JavaScript.
+SOURCE: https://github.com/vercel/next.js/blob/canary/docs/01-app/03-building-your-application/02-data-fetching/03-server-actions-and-mutations.mdx#2025-04-23_snippet_1
+
+LANGUAGE: jsx
+CODE:
+```
+export default function Page() {
+  // Server Action
+  async function create() {
+    'use server'
+    // Mutate data
+  }
+
+  return '...'
+}
+```
+
+----------------------------------------
+
+TITLE: Removing Deprecated Container in Next.js _app.js (After)
+DESCRIPTION: This code snippet shows the corrected implementation of the custom <App> component in Next.js. It removes the import and usage of the deprecated <Container> component from `next/app`, resolving the "App Container Deprecated" error.  The `MyApp` class extends `App` and renders the `Component` directly, without the wrapping `Container`.
+SOURCE: https://github.com/vercel/next.js/blob/canary/errors/app-container-deprecated.mdx#2025-04-21_snippet_1
+
+LANGUAGE: jsx
+CODE:
+```
+import React from 'react'
+import App from 'next/app'
+
+class MyApp extends App {
+  render() {
+    const { Component, pageProps } = this.props
+    return <Component {...pageProps} />
+  }
+}
+
+export default MyApp
+```
+
+----------------------------------------
+
+TITLE: Getting User with Session Verification in DAL (TypeScript)
+DESCRIPTION: This TypeScript code snippet demonstrates how to retrieve user information in a Data Access Layer after session verification. It uses `verifySession` to ensure the user is authenticated and authorized. If the session is valid, user ID from session is used for further data fetching. The code emphasizes performing auth checks within the DAL to ensure consistency and prevent developers from forgetting authorization checks.
+SOURCE: https://github.com/vercel/next.js/blob/canary/docs/01-app/02-guides/authentication.mdx#_snippet_51
+
+LANGUAGE: typescript
+CODE:
+```
+export const getUser = cache(async () => {
+  const session = await verifySession()
+  if (!session) return null
+
+  // Get user ID from session and fetch data
+})
+```
+
+----------------------------------------
+
+TITLE: Signup with Session Creation & Redirect - JavaScript
+DESCRIPTION: This snippet shows how to integrate the `createSession` function in a signup process. After validating the form, preparing the data, and inserting the user into the database, it calls `createSession` with the new user's ID and redirects the user to their profile page using `redirect('/profile')`.
+SOURCE: https://github.com/vercel/next.js/blob/canary/docs/01-app/02-guides/authentication.mdx#_snippet_26
+
+LANGUAGE: javascript
+CODE:
+```
+import { createSession } from '@/app/lib/session'
+
+export async function signup(state, formData) {
+  // Previous steps:
+  // 1. Validate form fields
+  // 2. Prepare data for insertion into database
+  // 3. Insert the user into the database or call an Library API
+
+  // Current steps:
+  // 4. Create user session
+  await createSession(user.id)
+  // 5. Redirect user
+  redirect('/profile')
+}
+```
+
+----------------------------------------
+
+TITLE: Logout with Session Deletion & Redirect - TypeScript
+DESCRIPTION: This snippet demonstrates a logout function that deletes the session using `deleteSession()` and then redirects the user to the login page using `redirect('/login')`.
+SOURCE: https://github.com/vercel/next.js/blob/canary/docs/01-app/02-guides/authentication.mdx#_snippet_31
+
+LANGUAGE: typescript
+CODE:
+```
+import { cookies } from 'next/headers'
+import { deleteSession } from '@/app/lib/session'
+
+export async function logout() {
+  deleteSession()
+  redirect('/login')
+}
+```
+
+----------------------------------------
+TITLE: Role-Based Access Control in Server Component (TypeScript)
+DESCRIPTION: This TypeScript code snippet demonstrates role-based access control within a Next.js Server Component. It uses the `verifySession` function from a DAL to check the user's session and determine their role. Based on the role ('admin', 'user'), it conditionally renders different dashboard components (AdminDashboard, UserDashboard). If no valid session or role is found, it redirects the user to the login page, ensuring only authorized users can access specific areas of the application.
+SOURCE: https://github.com/vercel/next.js/blob/canary/docs/01-app/02-guides/authentication.mdx#_snippet_47
+
+LANGUAGE: typescript
+CODE:
+```
+import { verifySession } from '@/app/lib/dal'
+
+export default function Dashboard() {
+  const session = await verifySession()
+  const userRole = session?.user?.role // Assuming 'role' is part of the session object
+
+  if (userRole === 'admin') {
+    return <AdminDashboard />
+  } else if (userRole === 'user') {
+    return <UserDashboard />
+  } else {
+    redirect('/login')
+  }
+}
+```
+
+----------------------------------------
+
+TITLE: Tagging Cache Entries in Next.js Fetch Requests
+DESCRIPTION: Applies tags to cache entries when fetching data. These tags can later be used with revalidateTag to selectively purge cache entries associated with specific tags.
+SOURCE: https://github.com/vercel/next.js/blob/canary/docs/01-app/03-building-your-application/04-caching/index.mdx#2025-04-21_snippet_8
+
+LANGUAGE: jsx
+CODE:
+```
+// Cache data with a tag
+fetch(`https://...`, { next: { tags: ['a', 'b', 'c'] } })
+```
+
+----------------------------------------
+
+TITLE: Role-Based Access Control in Server Component (JavaScript)
+DESCRIPTION: This JavaScript code demonstrates role-based access control within a Next.js Server Component.  It calls the `verifySession` function to retrieve the user's session and extracts the user role.  Based on the role ('admin' or 'user'), it conditionally renders either the `AdminDashboard` or `UserDashboard` component. If the user is not authenticated or does not have a recognized role, they are redirected to the '/login' page.
+SOURCE: https://github.com/vercel/next.js/blob/canary/docs/01-app/02-guides/authentication.mdx#_snippet_48
+
+LANGUAGE: javascript
+CODE:
+```
+import { verifySession } from '@/app/lib/dal'
+
+export default function Dashboard() {
+  const session = await verifySession()
+  const userRole = session.role // Assuming 'role' is part of the session object
+
+  if (userRole === 'admin') {
+    return <AdminDashboard />
+  } else if (userRole === 'user') {
+    return <UserDashboard />
+  } else {
+    redirect('/login')
+  }
+}
+```
+
+----------------------------------------
+
+TITLE: Importing and Using Inter Font in Next.js (App Router)
+DESCRIPTION: This code snippet demonstrates how to import the Inter font from `next/font/google` and apply it to the root layout component in a Next.js application using the app router. It defines a variable font and assigns it to the `className` of the `html` element, ensuring the font is applied globally.
+SOURCE: https://github.com/vercel/next.js/blob/canary/docs/01-app/03-building-your-application/06-optimizing/03-fonts.mdx#2025-04-21_snippet_0
+
+LANGUAGE: tsx
+CODE:
+```
+import { Inter } from 'next/font/google'
+
+// If loading a variable font, you don't need to specify the font weight
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+})
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en" className={inter.className}>
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+----------------------------------------
+
+TITLE: Handling CORS in Next.js Middleware (JS)
+DESCRIPTION: This snippet illustrates how to implement CORS (Cross-Origin Resource Sharing) handling in Next.js middleware. It checks the origin of the request, determines if it's allowed based on a predefined list, and sets the appropriate CORS headers for both preflight and simple requests.
+SOURCE: https://github.com/vercel/next.js/blob/canary/docs/01-app/03-building-your-application/01-routing/14-middleware.mdx#2025-04-21_snippet_12
+
+LANGUAGE: javascript
+CODE:
+```
+import { NextResponse } from 'next/server'
+
+const allowedOrigins = ['https://acme.com', 'https://my-app.org']
+
+const corsOptions = {
+  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+}
+
+export function middleware(request) {
+  // Check the origin from the request
+  const origin = request.headers.get('origin') ?? ''
+  const isAllowedOrigin = allowedOrigins.includes(origin)
+
+  // Handle preflighted requests
+  const isPreflight = request.method === 'OPTIONS'
+
+  if (isPreflight) {
+    const preflightHeaders = {
+      ...(isAllowedOrigin && { 'Access-Control-Allow-Origin': origin }),
+      ...corsOptions,
+    }
+    return NextResponse.json({}, { headers: preflightHeaders })
+  }
+
+  // Handle simple requests
+  const response = NextResponse.next()
+
+  if (isAllowedOrigin) {
+    response.headers.set('Access-Control-Allow-Origin', origin)
+  }
+
+  Object.entries(corsOptions).forEach(([key, value]) => {
+    response.headers.set(key, value)
+  })
+
+  return response
+}
+
+export const config = {
+  matcher: '/api/:path*',
+}
+```
+
+----------------------------------------
+
+TITLE: Utilizing New Routing Hooks in Next.js App Directory - JSX
+DESCRIPTION: This JavaScript snippet demonstrates the usage of new routing hooks 'useRouter', 'usePathname', and 'useSearchParams' in Next.js client components. These hooks are imported from 'next/navigation' and are meant to replace older routing hooks in the 'app' directory. The hooks are intended for client components only and handle routing by interacting with the navigation system.
+SOURCE: https://github.com/vercel/next.js/blob/canary/docs/01-app/02-guides/migrating/app-router-migration.mdx#2025-04-21_snippet_12
+
+LANGUAGE: jsx
+CODE:
+```
+"use client"\n\nimport { useRouter, usePathname, useSearchParams } from 'next/navigation'\n\nexport default function ExampleClientComponent() {\n  const router = useRouter()\n  const pathname = usePathname()\n  const searchParams = useSearchParams()\n\n  // ...\n}
+```
+
+----------------------------------------
+
+TITLE: Redirect with Server Action in Next.js (TypeScript)
+DESCRIPTION: This example demonstrates how to use the `redirect` function within a Server Action in Next.js using TypeScript. It defines a `navigate` function that takes form data and redirects the user to a specific post based on the provided ID. This demonstrates how to use redirect within server actions.
+SOURCE: https://github.com/vercel/next.js/blob/canary/docs/01-app/05-api-reference/04-functions/redirect.mdx#2025-04-21_snippet_4
+
+LANGUAGE: typescript
+CODE:
+```
+'use server'
+
+import { redirect } from 'next/navigation'
+
+export async function navigate(data: FormData) {
+  redirect(`/posts/${data.get('id')}`)
+}
+```
+
+----------------------------------------
+
+TITLE: Using cacheTag in Next.js with TypeScript
+DESCRIPTION: Demonstrates tagging a cache entry using cacheTag in a TypeScript file. It requires dynamicIO enabled and assigns 'my-data' as a cache tag in the getData function.
+SOURCE: https://github.com/vercel/next.js/blob/canary/docs/01-app/05-api-reference/04-functions/cacheTag.mdx#2025-04-21_snippet_2
+
+LANGUAGE: typescript
+CODE:
+```
+import { unstable_cacheTag as cacheTag } from 'next/cache'
+
+export async function getData() {
+  'use cache'
+  cacheTag('my-data')
+  const data = await fetch('/api/data')
+  return data
+}
+```
+
+----------------------------------------
+
+TITLE: Implementing Local Fonts in Next.js App Router with TypeScript
+DESCRIPTION: Demonstrates how to import and use local font files in a Next.js application using the App Router with TypeScript. The example shows how to load a local font file and apply it to the entire application through the RootLayout component.
+SOURCE: https://github.com/vercel/next.js/blob/canary/docs/01-app/03-building-your-application/06-optimizing/03-fonts.mdx#2025-04-21_snippet_21
+
+LANGUAGE: tsx
+CODE:
+```
+import localFont from 'next/font/local'
+
+// Font files can be colocated inside of `app`
+const myFont = localFont({
+  src: './my-font.woff2',
+  display: 'swap',
+})
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en" className={myFont.className}>
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+----------------------------------------
+
+TITLE: Running ESLint on Staged Files with lint-staged (js)
+DESCRIPTION: This snippet demonstrates how to configure lint-staged to run `next lint` on staged files. It defines a `buildEslintCommand` function that constructs the command to run ESLint with the `--file` flag for each staged file. This is useful for ensuring that only changed files are linted before committing.
+SOURCE: https://github.com/vercel/next.js/blob/canary/docs/01-app/05-api-reference/05-config/03-eslint.mdx#_snippet_9
+
+LANGUAGE: js
+CODE:
+```
+const path = require('path')
+
+const buildEslintCommand = (filenames) =>
+  `next lint --fix --file ${filenames
+    .map((f) => path.relative(process.cwd(), f))
+    .join(' --file ')}`
+
+module.exports = {
+  '*.{js,jsx,ts,tsx}': [buildEslintCommand],
+}
+```
+
+----------------------------------------
+
+TITLE: Using waitUntil in Next.js Middleware (TS)
+DESCRIPTION: This snippet shows how to use the `waitUntil` method in Next.js middleware to perform background tasks that extend the lifetime of the middleware function. It fetches data from an analytics platform to log page views.
+SOURCE: https://github.com/vercel/next.js/blob/canary/docs/01-app/03-building-your-application/01-routing/14-middleware.mdx#2025-04-21_snippet_15
+
+LANGUAGE: typescript
+CODE:
+```
+import { NextResponse } from 'next/server'
+import type { NextFetchEvent, NextRequest } from 'next/server'
+
+export function middleware(req: NextRequest, event: NextFetchEvent) {
+  event.waitUntil(
+    fetch('https://my-analytics-platform.com', {
+      method: 'POST',
+      body: JSON.stringify({ pathname: req.nextUrl.pathname }),
+    })
+  )
+
+  return NextResponse.next()
+}
+```
+
+----------------------------------------
+
+TITLE: Basic Link Component Usage in Next.js App Router (TypeScript)
+DESCRIPTION: Example of importing and using the Next.js Link component in the App Router with TypeScript. The Link component enables client-side navigation between routes with prefetching capabilities.
+SOURCE: https://github.com/vercel/next.js/blob/canary/docs/01-app/05-api-reference/02-components/link.mdx#2025-04-21_snippet_0
+
+LANGUAGE: tsx
+CODE:
+```
+import Link from 'next/link'
+
+export default function Page() {
+  return <Link href="/dashboard">Dashboard</Link>
+}
+```
+
+----------------------------------------
+
+TITLE: Dynamic Metadata Generation (JSX)
+DESCRIPTION: This snippet demonstrates the use of the `generateMetadata` function in a JavaScript Next.js application to generate dynamic metadata based on route parameters and fetched data.  It fetches product data based on the `id` parameter and extends parent metadata.
+SOURCE: https://github.com/vercel/next.js/blob/canary/docs/01-app/05-api-reference/04-functions/generate-metadata.mdx#_snippet_5
+
+LANGUAGE: jsx
+CODE:
+```
+export async function generateMetadata({ params, searchParams }, parent) {
+  // read route params
+  const { id } = await params
+
+  // fetch data
+  const product = await fetch(`https://.../${id}`).then((res) => res.json())
+
+  // optionally access and extend (rather than replace) parent metadata
+  const previousImages = (await parent).openGraph?.images || []
+
+  return {
+    title: product.title,
+    openGraph: {
+      images: ['/some-specific-page-image.jpg', ...previousImages],
+    },
+  }
+}
+
+export default function Page({ params, searchParams }) {}
+```
+
+----------------------------------------
+
+TITLE: Managing Cookies in Server Action using Next.js API
+DESCRIPTION: This example illustrates how to get, set, and delete cookies inside a Server Action using the cookies API from Next.js. It demonstrates basic cookie operations in a server-side context.
+SOURCE: https://github.com/vercel/next.js/blob/canary/docs/01-app/03-building-your-application/02-data-fetching/03-server-actions-and-mutations.mdx#2025-04-23_snippet_24
+
+LANGUAGE: ts
+CODE:
+```
+'use server'
+
+import { cookies } from 'next/headers'
+
+export async function exampleAction() {
+  const cookieStore = await cookies()
+
+  // Get cookie
+  cookieStore.get('name')?.value
+
+  // Set cookie
+  cookieStore.set('name', 'Delba')
+
+  // Delete cookie
+  cookieStore.delete('name')
+}
+```
+
+LANGUAGE: js
+CODE:
+```
+'use server'
+
+import { cookies } from 'next/headers'
+
+export async function exampleAction() {
+  // Get cookie
+  const cookieStore = await cookies()
+
+  // Get cookie
+  cookieStore.get('name')?.value
+
+  // Set cookie
+  cookieStore.set('name', 'Delba')
+
+  // Delete cookie
+  cookieStore.delete('name')
+}
+```
+
+----------------------------------------
+
+TITLE: Redirecting after mutation with `redirect` in Next.js (App Router)
+DESCRIPTION: This code snippet demonstrates how to use the `redirect` function from `next/navigation` within a server action in the App Router to redirect a user after creating a post. It imports `redirect` and `revalidatePath`, calls a database function (placeholder), revalidates the path, and then redirects the user to the new post page.
+SOURCE: https://github.com/vercel/next.js/blob/canary/docs/01-app/03-building-your-application/01-routing/07-redirecting.mdx#2025-04-21_snippet_1
+
+LANGUAGE: javascript
+CODE:
+```
+"use server"
+
+import { redirect } from 'next/navigation'
+import { revalidatePath } from 'next/cache'
+
+export async function createPost(id) {
+  try {
+    // Call database
+  } catch (error) {
+    // Handle errors
+  }
+
+  revalidatePath('/posts') // Update cached posts
+  redirect(`/post/${id}`) // Navigate to the new post page
+}
+```
+
+----------------------------------------
+
+TITLE: Setting Cache Lifetime with Next.js Fetch - JavaScript
+DESCRIPTION: This snippet demonstrates how to set a timed revalidation interval using Next.js fetch options, by specifying the cache lifetime in seconds. The revalidate option is used to ensure that data is refreshed from the data source after a specified period, and stale data is returned during revalidation.
+SOURCE: https://github.com/vercel/next.js/blob/canary/docs/01-app/03-building-your-application/04-caching/index.mdx#2025-04-21_snippet_3
+
+LANGUAGE: JavaScript
+CODE:
+```
+// Revalidate at most every hour
+fetch('https://...', { next: { revalidate: 3600 } })
+```
+
+----------------------------------------
+
+TITLE: Creating a separate file for Server Actions in JavaScript
+DESCRIPTION: This snippet shows how to create a separate file with the 'use server' directive at the top to mark all exported functions as Server Actions in JavaScript, making them reusable in both Client and Server Components.
+SOURCE: https://github.com/vercel/next.js/blob/canary/docs/01-app/03-building-your-application/02-data-fetching/03-server-actions-and-mutations.mdx#2025-04-23_snippet_3
+
+LANGUAGE: js
+CODE:
+```
+'use server'
+
+export async function create() {}
+```
+
+----------------------------------------
+
+TITLE: Dynamically Importing a Component with SSR Disabled (JavaScript)
+DESCRIPTION: This snippet demonstrates how to use `next/dynamic` to import a component dynamically and disable server-side rendering (SSR). This is useful for components that rely on browser-specific APIs and should only be rendered on the client-side. The `ssr: false` option ensures that the component is not rendered during the initial server-side rendering process.
+SOURCE: https://github.com/vercel/next.js/blob/canary/docs/01-app/02-guides/single-page-applications.mdx#_snippet_10
+
+LANGUAGE: javascript
+CODE:
+```
+import dynamic from 'next/dynamic'
+
+const ClientOnlyComponent = dynamic(() => import('./component'), {
+  ssr: false,
+})
+```
+
+----------------------------------------
+
+TITLE: Server-Side Post Creation and Redirection in Next.js TypeScript
+DESCRIPTION: This TypeScript code describes how to handle post creation on the server side using Next.js. The 'createPost' function processes the form data and uses 'redirect' to navigate to the new post immediately after creation.
+SOURCE: https://github.com/vercel/next.js/blob/canary/docs/01-app/05-api-reference/02-components/form.mdx#2025-04-21_snippet_16
+
+LANGUAGE: TypeScript
+CODE:
+```
+'use server'
+import { redirect } from 'next/navigation'
+
+export async function createPost(formData: FormData) {
+  // Create a new post
+  // ...
+
+  // Redirect to the new post
+  redirect(`/posts/${data.id}`)
+}
+```
+
+----------------------------------------
+
+TITLE: Server-side Data Fetching with Custom Function in Next.js App Directory - TSX
+DESCRIPTION: This TypeScript snippet demonstrates colocating server-side data fetching inside a React component using a custom function in a Next.js 'app' directory. The 'fetch' API is used with 'no-store' cache setting to ensure fresh data on every request. This approach aligns with the transition towards server components, reducing JavaScript payloads to the client.
+SOURCE: https://github.com/vercel/next.js/blob/canary/docs/01-app/02-guides/migrating/app-router-migration.mdx#2025-04-21_snippet_16
+
+LANGUAGE: tsx
+CODE:
+```
+// `app` directory\n\n// This function can be named anything\nasync function getProjects() {\n  const res = await fetch(`https://...`, { cache: 'no-store' })\n  const projects = await res.json()\n\n  return projects\n}\n\nexport default async function Dashboard() {\n  const projects = await getProjects()\n\n  return (\n    <ul>\n      {projects.map((project) => (\n        <li key={project.id}>{project.name}</li>\n      ))}\n    </ul>\n  )\n}
+```
