@@ -1,6 +1,6 @@
 {
   "name": "portfolio2",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
@@ -8,10 +8,12 @@
     "start": "next start",
     "prepare": "husky",
     "lint": "biome check",
-    "lint:fix": "biome check --write"
+    "lint:fix": "biome check --write",
+    "typegen": "openapi-typescript && npm run lint:fix"
   },
   "dependencies": {
     "gray-matter": "4.0.3",
+    "lodash.set": "4.3.2",
     "next": "15.3.1",
     "next-themes": "0.4.6",
     "react": "^19.1.0",
@@ -21,12 +23,14 @@
     "@biomejs/biome": "1.9.4",
     "@next-devtools/core": "0.3.0-beta.1",
     "@tailwindcss/postcss": "4.1.4",
+    "@types/lodash.set": "^4.3.9",
     "@types/node": "22.14.1",
     "@types/react": "19.1.2",
     "@types/react-dom": "19.1.2",
     "clsx": "2.1.1",
     "husky": "9.1.7",
     "lint-staged": "15.5.1",
+    "openapi-typescript": "7.6.1",
     "tailwindcss": "4.1.4",
     "typescript": "5.8.3",
     "zod": "3.24.3"
