@@ -17,6 +17,7 @@
     "typegen": "openapi-typescript && npm run lint:fix"
   },
   "dependencies": {
+    "@upstash/redis": "1.34.8",
     "gray-matter": "4.0.3",
     "lodash.set": "4.3.2",
     "next": "15.3.1",

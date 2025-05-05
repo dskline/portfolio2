@@ -54,6 +54,7 @@ The following environment variables are required:
 
 ## Dependencies
 - [Feature: CMS](../cms/README.md) to edit tools on the page
+- [Feature: Cache](../cache/README.md) to cache brandfetch results
 - [Zod](https://zod.dev/) to validate and static type the Markdown file objects
 - [lodash.set](https://lodash.com/docs/4.17.15#set) for safe object property assignment
 - [OpenAPI TypeScript](https://github.com/drwpow/openapi-typescript) for generating TypeScript types from the Brandfetch API specification
