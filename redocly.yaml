@@ -1,5 +1,0 @@
-apis:
-  brandfetch@v2:
-    root: https://chatgpt-plugin.brandfetch.io/openapi.yaml
-    x-openapi-ts:
-      output: ./src/app/features/toolbox/brand/brandfetch.d.ts

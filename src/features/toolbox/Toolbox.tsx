@@ -20,7 +20,7 @@ export async function Toolbox() {
   );
 
   return (
-    <div className="@container/Toolbox grid gap-8 p-4">
+    <div className="@container/Toolbox grid gap-10 py-16 px-4 md:w-3/4 mx-auto">
       {Object.entries(toolsByCategory)
         .sort()
         .map(([category, categoryTools]) => (
