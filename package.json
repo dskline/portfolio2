@@ -16,8 +16,7 @@
     "test": "playwright test",
     "test:smoke": "npm test -- --project=smoke",
     "test:visual": "npm test -- --project=screenplay*",
-    "test:nightly": "npm test -- --project=synthetic-monitoring",
-    "typegen": "openapi-typescript && npm run lint:fix"
+    "test:nightly": "npm test -- --project=synthetic-monitoring"
   },
   "dependencies": {
     "gray-matter": "4.0.3",
