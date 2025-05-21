@@ -1,8 +1,9 @@
 import { expect, test } from "@playwright/test";
 
 test.describe("@synthetic-monitoring", () => {
-  test("all toolbox links work", async ({ page, request }) => {
-    await page.goto("/toolbox");
+  // This test will visit the homepage, collect all <a> links, and verify each one returns a successful response.
+  test("all links work", async ({ page, request }) => {
+    await page.goto("/");
     const links = await page.$$eval("a[href]", (els) =>
       els.map((e) => (e as HTMLAnchorElement).href),
     );
@@ -17,10 +18,8 @@ test.describe("@synthetic-monitoring", () => {
         ? href
         : new URL(href, page.url()).toString();
       const response = await request.get(url);
-      console.debug(`Toolbox Link: ${url} - Status: ${response.status()}`);
-      expect(response.status(), `Toolbox link failed: ${url}`).toBeLessThan(
-        400,
-      );
+      console.debug(`Homepage Link: ${url} - Status: ${response.status()}`);
+      expect(response.status(), `Link failed: ${url}`).toBeLessThan(400);
     }
   });
 });
