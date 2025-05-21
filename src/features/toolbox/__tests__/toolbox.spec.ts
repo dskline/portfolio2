@@ -10,7 +10,7 @@ test.describe("Toolbox", () => {
     // Scroll slowly to the bottom to ensure all elements are loaded smoothly
     await page.evaluate(() => {
       return new Promise((resolve) => {
-        const scrollHeight = document.body.scrollHeight;
+        const { scrollHeight } = document.body;
         let currentPosition = 0;
         const scrollStep = 100; // pixels per step
         const scrollInterval = 100; // milliseconds between steps

@@ -17,7 +17,7 @@ export const getTools = async () => {
     .map((tool) => {
       const parsedTool = toolSchema.safeParse(tool.data);
       if (!parsedTool.success) {
-        console.error("Invalid tool data:", parsedTool.error);
+        console.debug("Invalid tool data:", parsedTool.error);
         return null;
       }
       return parsedTool.data;

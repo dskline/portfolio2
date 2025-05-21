@@ -1,7 +1,10 @@
 import { clsx } from "clsx";
 import type { Tool } from "./getTools";
+import { sanitizeSvg } from "./sanitizeSvg";
 
 export function ToolButton(tool: Tool) {
+  const sanitizedLogo = sanitizeSvg(tool.logo);
+
   return (
     <a
       key={tool.title}
@@ -9,6 +12,7 @@ export function ToolButton(tool: Tool) {
       target="_blank"
       rel="noopener noreferrer"
       data-testid="tool-button"
+      aria-label={tool.title}
       className={clsx(
         "px-4 py-2.5 border-2 border-transparent hover:border-inherit rounded-md",
         "bg-indigo-100 dark:bg-gray-800",
@@ -17,8 +21,8 @@ export function ToolButton(tool: Tool) {
     >
       <div
         className="flex items-center [&>svg]:h-6"
-        /* biome-ignore lint/security/noDangerouslySetInnerHtml: trusted source (me) */
-        dangerouslySetInnerHTML={{ __html: tool.logo }}
+        /* biome-ignore lint/security/noDangerouslySetInnerHtml: sanitized SVG */
+        dangerouslySetInnerHTML={{ __html: sanitizedLogo }}
       />
     </a>
   );
