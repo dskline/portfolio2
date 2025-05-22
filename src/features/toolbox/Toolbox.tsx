@@ -20,7 +20,7 @@ export async function Toolbox() {
   );
 
   return (
-    <div className="@container/Toolbox grid gap-10 py-16 px-4 md:w-3/4 mx-auto">
+    <div className="@container/Toolbox mx-auto grid gap-10 px-4 py-16 md:w-3/4">
       {Object.entries(toolsByCategory)
         .sort()
         .map(([category, categoryTools]) => (
@@ -31,8 +31,8 @@ export async function Toolbox() {
             <div className="@container/ToolboxCategory">
               <h2
                 className={clsx(
-                  "uppercase dark:text-gray-300 transition-all duration-500",
-                  "text-3xl @3xs/ToolboxCategory:text-4xl",
+                  "uppercase transition-all duration-500 dark:text-gray-300",
+                  "@3xs/ToolboxCategory:text-4xl text-3xl",
                 )}
               >
                 {category}

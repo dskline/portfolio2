@@ -14,7 +14,7 @@ export function ToolButton(tool: Tool) {
       data-testid="tool-button"
       aria-label={tool.title}
       className={clsx(
-        "px-4 py-2.5 border-2 border-transparent hover:border-inherit rounded-md",
+        "rounded-md border-2 border-transparent px-4 py-2.5 hover:border-inherit",
         "bg-indigo-100 dark:bg-gray-800",
         "transition-colors duration-200",
       )}
