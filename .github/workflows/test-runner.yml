@@ -1,0 +1,48 @@
+name: Test Runner
+
+on:
+  pull_request_target:
+    types: [opened, synchronize]
+    branches:
+      - feat/*
+      - fix/*
+      - test/*
+      - ci/*
+      - perf/*
+      - refactor/*
+      - security/*
+      - release/*
+
+jobs:
+  run_tests:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js and pnpm
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps
+
+      - name: Build the project
+        run: pnpm run build
+
+      - name: Start the project
+        run: pnpm run start &
+
+      - name: Run feature tests
+        id: feature_tests
+        run: pnpm run test -- --grep=feature-*
+
+      - name: Run regression tests if feature tests passed
+        if: steps.feature_tests.outcome != 'failure'
+        run: pnpm run test:ci
