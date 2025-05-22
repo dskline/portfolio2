@@ -10,8 +10,20 @@ export default defineConfig({
   testMatch: "src/features/**/*.spec.{js,ts,jsx,tsx}",
   projects: [
     {
-      name: "screenplay-desktop",
-      grep: /@screenplay/,
+      name: "smoke",
+      grep: /@smoke/,
+    },
+    {
+      name: "regression",
+      grep: /@regression/,
+    },
+    {
+      name: "synthetic-monitoring",
+      grep: /@synthetic-monitoring/,
+    },
+    {
+      name: "visual-desktop",
+      grep: /@visual/,
       use: {
         screenshot: "on",
         video: "on",
@@ -19,21 +31,13 @@ export default defineConfig({
       },
     },
     {
-      name: "screenplay-mobile",
-      grep: /@screenplay/,
+      name: "visual-mobile",
+      grep: /@visual/,
       use: {
         screenshot: "on",
         video: "on",
         viewport: { width: 400, height: 600 },
       },
-    },
-    {
-      name: "smoke",
-      grep: /@smoke/,
-    },
-    {
-      name: "synthetic-monitoring",
-      grep: /@synthetic-monitoring/,
     },
   ],
 });

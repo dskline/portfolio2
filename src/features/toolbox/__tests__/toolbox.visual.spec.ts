@@ -1,9 +1,11 @@
 import { test } from "@playwright/test";
 
-test.describe("Toolbox", () => {
-  // Go to the toolbox page and slowly scroll down to the bottom
-  // to ensure all elements are loaded.
-  test("@screenplay", async ({ page }) => {
+// Go to the toolbox page and slowly scroll down to the bottom
+// to ensure all elements are loaded.
+test(
+  "Toolbox page visual scroll test",
+  { tag: "@visual" },
+  async ({ page }) => {
     await page.goto("/toolbox");
     await page.waitForLoadState("networkidle");
 
@@ -26,5 +28,5 @@ test.describe("Toolbox", () => {
         }, scrollInterval);
       });
     });
-  });
-});
+  },
+);

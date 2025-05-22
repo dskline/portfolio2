@@ -15,8 +15,9 @@
     "lint:fix": "biome check --write",
     "test": "playwright test",
     "test:smoke": "npm test -- --project=smoke",
-    "test:visual": "npm test -- --project=screenplay*",
-    "test:nightly": "npm test -- --project=synthetic-monitoring"
+    "test:visual": "npm test -- --project=visual*",
+    "test:nightly": "npm test -- --project=synthetic-monitoring",
+    "test:ci": "npm test -- --project=regression"
   },
   "dependencies": {
     "gray-matter": "4.0.3",
@@ -42,6 +43,6 @@
     "zod": "3.24.3"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,css}": ["biome check --staged"]
+    "*.{js,jsx,ts,tsx,json,css}": ["biome check --staged", "npm run test:smoke"]
   }
 }
