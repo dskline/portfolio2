@@ -19,16 +19,12 @@ jobs:
         run: npm ci
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
-      - name: Setup Doppler CLI
-        uses: dopplerhq/cli-action@v3
       - name: Read package.json
         id: read_package
         run: |
           HOMEPAGE=$(node -p "require('./package.json').homepage")
           echo "HOMEPAGE=$HOMEPAGE" >> $GITHUB_ENV
       - name: Run nightly tests
-        run: |
-          doppler run -- npm run test:nightly
+        run: npm run test:nightly
         env:
           PLAYWRIGHT_BASE_URL: ${{ env.HOMEPAGE }}
-          DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
