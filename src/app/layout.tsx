@@ -32,7 +32,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={clsx(fontBody.variable, fontHeading.variable)}>
         <ThemeProvider attribute="class">
-          <div className="antialiased min-h-screen bg-gray-50 text-neutral-800 dark:bg-gray-900 dark:text-gray-50">
+          <div className="min-h-screen bg-gray-50 text-neutral-800 antialiased dark:bg-gray-900 dark:text-gray-50">
             <Navbar />
             <NextDevtoolsProvider>{children}</NextDevtoolsProvider>
           </div>

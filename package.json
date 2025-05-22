@@ -17,7 +17,8 @@
     "test:smoke": "npm test -- --project=smoke",
     "test:visual": "npm test -- --project=visual*",
     "test:nightly": "npm test -- --project=synthetic-monitoring",
-    "test:ci": "npm test -- --project=regression"
+    "test:ci": "npm test -- --project=regression",
+    "precommit": "npm run test:smoke"
   },
   "dependencies": {
     "gray-matter": "4.0.3",
@@ -43,6 +44,6 @@
     "zod": "3.24.3"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,css}": ["biome check --staged", "npm run test:smoke"]
+    "*.{js,jsx,ts,tsx,json,css}": ["biome check --staged"]
   }
 }
