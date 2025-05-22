@@ -1,0 +1,32 @@
+# This workflow checks the title of pull requests to ensure they follow a semantic format.
+name: Pull Request Title Lint
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+jobs:
+  lint-pr-title:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: amannn/action-semantic-pull-request@v5
+      with:
+        types: |
+          feat
+          fix
+          style
+          chore
+          docs
+          test
+          ci
+          perf
+          refactor
+          security
+          release
+        subjectPattern: ^(?![A-Z]).+$ # Ensure the first letter is lowercase
+        subjectPatternError: |
+            The subject "{subject}" found in the pull request title "{title}"
+            didn't match the configured pattern. Please ensure that the subject
+            doesn't start with an uppercase character.
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

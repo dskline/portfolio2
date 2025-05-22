@@ -1,4 +1,10 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+# Validate branch name before running lint-staged
+"$(dirname -- "$0")"/validate-branch-name.sh
+if [ $? -ne 0 ]; then
+  exit 1 # Exit if branch name validation fails
+fi
+
 pnpm lint-staged
