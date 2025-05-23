@@ -1,32 +1,37 @@
-# This workflow checks the title of pull requests to ensure they follow a semantic format.
-name: Pull Request Title Lint
+# .github/workflows/update-pr-title.yml
+name: Update PR Title
 
 on:
   pull_request:
-    types: [opened, edited, synchronize, reopened]
+    types: [opened]
 
 jobs:
-  lint-pr-title:
+  update-title:
     runs-on: ubuntu-latest
     steps:
-    - uses: amannn/action-semantic-pull-request@v5
-      with:
-        types: |
-          feat
-          fix
-          style
-          chore
-          docs
-          test
-          ci
-          perf
-          refactor
-          security
-          release
-        subjectPattern: ^(?![A-Z]).+$ # Ensure the first letter is lowercase
-        subjectPatternError: |
-            The subject "{subject}" found in the pull request title "{title}"
-            didn't match the configured pattern. Please ensure that the subject
-            doesn't start with an uppercase character.
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set PR title using GitHub API
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            // Extract the branch name from the head ref
+            const branch = context.payload.pull_request.head.ref.split('/');
+            
+            // Get commits on the PR to find the first commit
+            const commits = await github.rest.pulls.listCommits({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+              per_page: 1
+            });
+            
+            // Get the first commit message - the first item in the array is the earliest commit
+            const firstCommit = commits.data.length > 0 ? commits.data[0] : null;
+            const commitMessage = firstCommit ? firstCommit.commit.message.split('\n')[0] : context.payload.pull_request.title;
+            
+            github.rest.pulls.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+              title: `${branch[0]}(${branch[1]}): ${commitMessage}`,
+            })
