@@ -1,5 +1,5 @@
 ---
-applyTo: '*.md'
+applyTo: '**/features/**/docs/README.md'
 ---
 
 # Feature Specification Documentation Guide
