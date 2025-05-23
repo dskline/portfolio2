@@ -38,13 +38,13 @@ test.describe(
           await expect(
             htmlElement,
             "HTML class should not contain 'dark' after toggling from dark",
-          ).not.toHaveClass(/dark/, { timeout: 600 });
+          ).not.toHaveClass(/dark/);
         } else {
           // Was light (or system default without dark), should become dark
           await expect(
             htmlElement,
             "HTML class should contain 'dark' after toggling from light",
-          ).toHaveClass(/dark/, { timeout: 600 });
+          ).toHaveClass(/dark/);
         }
         themeAfterFirstToggle = await htmlElement.getAttribute("class");
         console.debug(
