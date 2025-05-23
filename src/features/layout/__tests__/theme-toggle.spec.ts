@@ -19,7 +19,7 @@ test.describe(
         console.debug(`Initial html class: ${initialHtmlClass}`);
       });
 
-      const toggleButton = page.locator('[data-testid="theme-toggle-button"]');
+      const toggleButton = page.locator('[aria-label="Toggle theme"]');
       await test.step("Verify theme toggle button is visible", async () => {
         await expect(
           toggleButton,

@@ -19,7 +19,7 @@ export const Navbar = () => {
           <button
             type="button"
             onClick={() => toggleDarkTheme()}
-            data-testid="theme-toggle-button"
+            aria-label="Toggle theme"
           >
             Toggle
           </button>
