@@ -16,7 +16,11 @@ export const Navbar = () => {
           <a href="/toolbox">Toolbox</a>
         </li>
         <li>
-          <button type="button" onClick={() => toggleDarkTheme()}>
+          <button
+            type="button"
+            onClick={() => toggleDarkTheme()}
+            data-testid="theme-toggle-button"
+          >
             Toggle
           </button>
         </li>
