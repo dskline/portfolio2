@@ -9,10 +9,10 @@ test.describe(
     }) => {
       let initialHtmlClass: string | null;
       let themeAfterFirstToggle: string | null;
+      const htmlElement = page.locator("html");
 
       await test.step("Navigate to homepage and check initial theme", async () => {
         await page.goto("/");
-        const htmlElement = page.locator("html");
         initialHtmlClass = await htmlElement.getAttribute("class");
         // next-themes might add 'light' or 'dark' or nothing if system is preferred and no explicit toggle yet
         // We are primarily interested in the presence/absence of 'dark'
@@ -29,7 +29,6 @@ test.describe(
 
       await test.step("Click toggle button and verify theme changes", async () => {
         await toggleButton.click();
-        const htmlElement = page.locator("html");
 
         // Wait for the class attribute to potentially change
         // Check if the 'dark' class presence has flipped or appeared
@@ -52,45 +51,53 @@ test.describe(
         );
       });
 
-      await test.step("Click toggle button again and verify theme reverts", async () => {
+      await test.step("Click toggle button again", async () => {
         await toggleButton.click();
-        const htmlElement = page.locator("html");
+        console.debug("Toggle button clicked second time");
+      });
 
-        // Now it should revert to the initial state (or its opposite if the initial state was ambiguous)
-        // More robustly, check if it's different from themeAfterFirstToggle and consistent with initialHtmlClass logic
+      let finalHtmlClass: string | null;
+      await test.step("Get final theme state", async () => {
+        finalHtmlClass = await htmlElement.getAttribute("class");
+        console.debug(`HTML class after second toggle: ${finalHtmlClass}`);
+      });
+
+      await test.step("Verify theme class changes after second toggle", async () => {
+        // Check if the 'dark' class presence has flipped again
         if (themeAfterFirstToggle?.includes("dark")) {
-          // Was dark, should become light
+          // Was dark after first toggle, should become light after second toggle
           await expect(
             htmlElement,
             "HTML class should not contain 'dark' after second toggle",
-          ).not.toHaveClass(/dark/, { timeout: 600 });
+          ).not.toHaveClass(/dark/);
         } else {
-          // Was light, should become dark
+          // Was light after first toggle, should become dark after second toggle
           await expect(
             htmlElement,
             "HTML class should contain 'dark' after second toggle",
-          ).toHaveClass(/dark/, { timeout: 600 });
+          ).toHaveClass(/dark/);
         }
+      });
 
-        // A more direct check for reversion if initialHtmlClass is well-defined (e.g., explicitly 'light' or 'dark')
-        // For now, we check that it's different from the intermediate state.
-        const finalHtmlClass = await htmlElement.getAttribute("class");
-        console.debug(`HTML class after second toggle: ${finalHtmlClass}`);
+      await test.step("Verify theme differs from intermediate state", async () => {
+        // A more direct check for reversion if initialHtmlClass is well-defined
         expect(
           finalHtmlClass,
           "Theme should have changed from the intermediate state",
         ).not.toBe(themeAfterFirstToggle);
+      });
 
-        // To be absolutely sure about reverting to initial state, we can re-evaluate based on initialHtmlClass
+      await test.step("Verify theme reverts to match initial state", async () => {
+        // To be absolutely sure about reverting to initial state
         if (initialHtmlClass?.includes("dark")) {
           expect(
             finalHtmlClass,
-            "Theme should revert to initial dark state (or lack of explicit light)",
+            "Theme should revert to initial dark state",
           ).toContain("dark");
         } else {
           expect(
             finalHtmlClass,
-            "Theme should revert to initial light state (or lack of explicit dark)",
+            "Theme should revert to initial light state",
           ).not.toContain("dark");
         }
       });
