@@ -18,7 +18,7 @@ export const Navbar = () => {
         <li>
           <button
             type="button"
-            onClick={() => toggleDarkTheme()}
+            onClick={toggleDarkTheme}
             aria-label="Toggle theme"
           >
             Toggle

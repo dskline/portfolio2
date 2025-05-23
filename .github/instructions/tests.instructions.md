@@ -14,7 +14,7 @@ This document outlines the standards and best practices for developing Playwrigh
 
 ## Test Structure and Assertions
 
--   **Single Assertion per Test (Logical Unit)**: While a test case (`test(...)`) can contain multiple `expect` calls, each `test.step()` should ideally focus on a single logical verification. This improves error isolation and reporting.
+-   **Single Assertion per Test (Logical Unit)**: Each test should ideally focus on a single logical verification. This improves error isolation and reporting.
     -   If multiple distinct conditions need verification within one browser session, break them into logical `test.step()` blocks.
 -   **Web-First Assertions**: Always use Playwright's `expect()` with built-in matchers (e.g., `toBeVisible()`, `toHaveText()`, `toHaveURL()`). These assertions automatically wait for conditions to be met, reducing flakiness.
     ```typescript
@@ -25,7 +25,18 @@ This document outlines the standards and best practices for developing Playwrigh
     // const button = await page.getByText('Submit');
     // expect(await button.isVisible()).toBe(true);
     ```
--   **Avoid Explicit Timeouts**: Do not use `page.waitForTimeout()` or similar explicit waits for managing test flow. Rely on Playwright's auto-waiting capabilities and web-first assertions. If a specific condition needs to be met, use an appropriate `expect` assertion that waits for it.
+-   **Avoid Explicit Timeouts**: Do not use `page.waitForTimeout()` or similar explicit waits for managing test flow. Rely on Playwright's auto-waiting capabilities and web-first assertions. If a specific condition needs to be met, use an appropriate `expect` assertion that waits for it. If a timeout must be specified in an assertion, keep it under 600 milliseconds to ensure tests run efficiently.
+
+    ```typescript
+    // Avoid: Explicit timeout
+    // await page.waitForTimeout(1000); // Bad practice
+    
+    // Prefer: Web-first assertions with minimal timeout if needed
+    await expect(element, "Custom error message").toBeVisible({ timeout: 600 });
+    
+    // Best: Let Playwright's default auto-waiting handle it
+    await expect(element).toBeVisible();
+    ```
 -   **Descriptive Assertion Messages**: Utilize the optional `message` parameter in `expect` calls to provide context-rich failure information. This significantly aids in debugging.
     ```typescript
     await expect(response.status(), `API call to ${url} failed`).toBe(200);
@@ -105,6 +116,28 @@ While both `@smoke` and `@regression` tags aim to ensure the application is work
 | **Frequency**   | High (e.g., pre-commit, on every build)   | Medium (e.g., nightly, pre-release)             |
 | **Speed**       | Very Fast                                 | Can be slower, more comprehensive                 |
 | **Trigger**     | Any significant change, scheduled         | After code changes, before releases               |
+
+## Element Selection and Locators
+
+-   **Use Reliable Selectors**: Prioritize stable selectors that are unlikely to change with UI updates. Order of preference:
+    1. Data attributes (`data-testid="login-button"`)
+    2. Accessibility attributes (role, aria-label)
+    3. CSS selectors with component-based classes
+    4. Text content (for user-facing elements)
+    
+-   **Add Data Attributes When Needed**: When good element locators don't exist in the component, attributes should be added to the component code. In order of preference: good accessibility descriptor attributes should be used first, followed by `data-testid` attributes specifically for testing. This creates a stable contract between the UI and tests.
+    ```typescript
+    // In component code
+    <button data-testid="submit-form">Submit</button>
+
+    // In test code
+    await page.locator('[data-testid="submit-form"]').click();
+    ```
+
+-   **Avoid Brittle Selectors**: Do not use selectors that depend on:
+    - Exact position in the DOM hierarchy
+    - Auto-generated IDs or classes
+    - Visual styling attributes that might change
 
 ## Readability and Debugging
 
