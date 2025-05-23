@@ -15,10 +15,6 @@ test(
       );
     await page.goto("/toolbox");
     await page.waitForLoadState("networkidle");
-    await page.screenshot({
-      path: path.join(screenshotDir, `${isMobile ? "mobile" : "desktop"}.png`),
-      fullPage: true,
-    });
 
     // Scroll slowly to the bottom to ensure all elements are loaded smoothly
     await page.evaluate(() => {
@@ -38,6 +34,10 @@ test(
           window.scrollTo(0, currentPosition);
         }, scrollInterval);
       });
+    });
+    await page.screenshot({
+      path: path.join(screenshotDir, `${isMobile ? "mobile" : "desktop"}.png`),
+      fullPage: true,
     });
   },
 );
