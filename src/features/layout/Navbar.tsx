@@ -16,7 +16,11 @@ export const Navbar = () => {
           <a href="/toolbox">Toolbox</a>
         </li>
         <li>
-          <button type="button" onClick={() => toggleDarkTheme()}>
+          <button
+            type="button"
+            onClick={() => toggleDarkTheme()}
+            aria-label="Toggle theme"
+          >
             Toggle
           </button>
         </li>
