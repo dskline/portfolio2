@@ -22,7 +22,7 @@ valid_branch_pattern="^(${valid_prefixes[0]}"
 for prefix in "${valid_prefixes[@]:1}"; do
     valid_branch_pattern+="|${prefix}"
 done
-valid_branch_pattern+=")\/.*[a-z-]$"
+valid_branch_pattern+=")/.*[a-z0-9-]$"
 
 # Allow common main/development branches to bypass the pattern check
 if [[ "$branch_name" == "main" || "$branch_name" == "preview" ]]; then
