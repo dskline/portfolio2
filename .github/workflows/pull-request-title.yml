@@ -16,6 +16,12 @@ jobs:
           script: |
             // Extract the branch name from the head ref
             const branch = context.payload.pull_request.head.ref.split('/');
+            const expectedBranchPrefix = `${branch[0]}(${branch[1]}): `;
+
+            if (context.payload.pull_request.title.startsWith(expectedBranchPrefix)) {
+              console.log('PR title already starts with the expected prefix. No update needed.');
+              return;
+            }
             
             // Get commits on the PR to find the first commit
             const commits = await github.rest.pulls.listCommits({
@@ -33,5 +39,5 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.payload.pull_request.number,
-              title: `${branch[0]}(${branch[1]}): ${commitMessage}`,
+              title: expectedBranchPrefix + commitMessage,
             })

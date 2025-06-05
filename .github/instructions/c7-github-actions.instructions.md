@@ -1,5 +1,5 @@
 ---
-applyTo: '*.yml'
+applyTo: '.github/workflows/*.yml'
 ---
 TITLE: Demonstrating env Context Usage in GitHub Actions YAML
 DESCRIPTION: This YAML snippet illustrates how the `env` context can be defined at the workflow, job, and step levels in a GitHub Actions workflow. It shows how environment variables are inherited and overridden, and how the `env` context can be referenced in step `run` commands, `if` conditions, and `name` properties.
