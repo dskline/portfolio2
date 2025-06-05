@@ -18,9 +18,8 @@
     "test:visual": "npm test -- --project=visual*",
     "test:nightly": "npm test -- --project=synthetic-monitoring",
     "test:ci": "npm test -- --project=regression",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "test:snapshot": "npx chromatic"
+    "test:snapshot": "npx chromatic",
+    "storybook": "storybook dev -p 6006"
   },
   "dependencies": {
     "gray-matter": "4.0.3",
