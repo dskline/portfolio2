@@ -1,35 +1,58 @@
 ## Feature: CMS
 
-As the portfolio owner, I would like to have the ability to quickly edit often-changing components on my website.
+A headless content management system that enables dynamic content updates without code deployments. The CMS leverages GitHub as a content repository, allowing content editors to manage markdown files directly through GitHub's interface while providing a seamless content delivery system for the portfolio website.
 
-### Nice to haves
-- Use existing tools rather than a separate CMS platform
-- Easily make edits with any device (i.e. phone)
-- Preview changes before publishing
-- Ability to revert changes
+📖 **[View Detailed Specification](./__docs__/SPEC.md)**
 
-## Implementation Details
+## Usage
 
-1. The system authenticates with GitHub using a personal access token
-2. Content is retrieved from specified paths in a given GitHub repository
-3. Markdown files are parsed and converted to JSON with frontmatter
+The CMS feature provides a simple API for retrieving content from GitHub repositories:
+
+```typescript
+import { getFiles } from '@/features/cms';
+
+// Get all markdown files from a specific path
+export async function getProjects() {
+  const files = await getFiles('content/projects');
+  return files.map(file => ({
+    slug: file.data.slug,
+    title: file.data.title,
+    content: file.content,
+    ...file.data
+  }));
+}
+```
+
+For retrieving specific content collections:
+
+```typescript
+import { getFiles } from '@/features/cms';
+
+export async function getBlogPosts() {
+  const posts = await getFiles('content/blog');
+  return posts
+    .filter(post => post.data.published)
+    .sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
+}
+```
 
 ## Environment Variables
 
-The following environment variables are required:
+| Variable | Description | Required | Example |
+|----------|-------------|----------|---------|
+| `CMS_TYPE` | The type of CMS to use | Yes | `github` |
+| `CMS_TOKEN` | GitHub personal access token for API authentication | Yes | `ghp_xxxxxxxxxxxxxxxxxxxx` |
+| `CMS_URL` | GitHub API URL pointing to the content repository tree | Yes | `https://api.github.com/repos/username/content/git/trees/main` |
 
-- `CMS_TYPE`: The type of CMS to use (currently supports "github")
-- `CMS_TOKEN`: GitHub access token for authentication
-- `CMS_URL`: The GitHub repo containing markdown files (format: https://api.github.com/repos/{owner}/{repo}/git/trees/{branch})
+### Setup Instructions
 
-> TIP: For previewing changes, set a staging environment to use a CMS_URL with a branch other than "main"
-
-Example `.env` configuration:
-```
-CMS_TYPE=github
-CMS_TOKEN=your_github_personal_access_token
-CMS_URL=https://api.github.com/repos/yourusername/yourrepo/git/trees/preview
-```
+1. Create a GitHub personal access token with `repo` permissions
+2. Set up a content repository or use an existing one
+3. Configure the environment variables to point to your content repository
+4. For staging environments, use a different branch in the `CMS_URL` (e.g., `git/trees/preview`)
 
 ## Dependencies
-- [gray-matter](https://github.com/jonschlinkert/gray-matter) to parse the Markdown content's frontmatter
+
+| Package | Purpose | Documentation |
+|---------|---------|---------------|
+| `gray-matter` | Parses markdown frontmatter and content | [Documentation](https://github.com/jonschlinkert/gray-matter) |

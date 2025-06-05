@@ -1,3 +1,4 @@
+import path from "node:path";
 import { test } from "@playwright/test";
 
 // Go to the toolbox page and slowly scroll down to the bottom
@@ -5,7 +6,13 @@ import { test } from "@playwright/test";
 test(
   "Toolbox page visual scroll test",
   { tag: "@visual" },
-  async ({ page }) => {
+  async ({ page, isMobile }) => {
+    const screenshotDir = path.join(__dirname, "../__docs__/assets");
+    page
+      .video()
+      ?.saveAs(
+        path.join(screenshotDir, `${isMobile ? "mobile" : "desktop"}.mp4`),
+      );
     await page.goto("/toolbox");
     await page.waitForLoadState("networkidle");
 
@@ -27,6 +34,10 @@ test(
           window.scrollTo(0, currentPosition);
         }, scrollInterval);
       });
+    });
+    await page.screenshot({
+      path: path.join(screenshotDir, `${isMobile ? "mobile" : "desktop"}.png`),
+      fullPage: true,
     });
   },
 );
