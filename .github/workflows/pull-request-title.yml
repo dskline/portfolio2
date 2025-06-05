@@ -16,7 +16,9 @@ jobs:
           script: |
             // Extract the branch name from the head ref
             const branch = context.payload.pull_request.head.ref.split('/');
-            const expectedBranchPrefix = `${branch[0]}(${branch[1]}): `;
+            
+            // If the branch doesn't follow the expected format (type/subtype), assume it's a generated branch
+            const expectedBranchPrefix = branch.length > 1 ? `${branch[0]}(${branch[1]}): ` : 'generated(bot): ';
 
             if (context.payload.pull_request.title.startsWith(expectedBranchPrefix)) {
               console.log('PR title already starts with the expected prefix. No update needed.');
