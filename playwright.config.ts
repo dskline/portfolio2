@@ -25,7 +25,6 @@ export default defineConfig({
       name: "visual-desktop",
       grep: /@visual/,
       use: {
-        screenshot: "on",
         video: "on",
         viewport: { width: 800, height: 600 },
       },
@@ -34,7 +33,7 @@ export default defineConfig({
       name: "visual-mobile",
       grep: /@visual/,
       use: {
-        screenshot: "on",
+        isMobile: true,
         video: "on",
         viewport: { width: 400, height: 600 },
       },

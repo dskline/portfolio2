@@ -1,5 +1,5 @@
-import { Toolbox } from "@/features/toolbox/Toolbox";
+import ToolboxPage from "@/features/toolbox";
 
 export default async function Page() {
-  return <Toolbox />;
+  return <ToolboxPage />;
 }
