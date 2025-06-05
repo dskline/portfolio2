@@ -1,21 +1,22 @@
-# Feature: Developer Toolbox
+# Feature: Toolbox
 
 As a portfolio viewer, I want to see a list of tools used by the candidate so that I can understand their technical expertise and preferences.
 
 As the portfolio owner, I want the ability to edit my toolbox using the CMS feature so that I can keep my displayed tools current without code changes.
 
-## Must-Have Requirements
+## Must-Have Requirements (MVP)
 
 - Display a list of development tools used by the portfolio owner
 - Retrieve tool data from markdown files using the CMS feature
 - Display tool name and logo for each item
 - Link each tool to its respective website
 
-## Nice-to-Have Requirements
+## Future Enhancements
 
-- Categorize the tools for better organization
-- Simple, presentable interface that fits the portfolio aesthetic
-- Responsive design that works well on various screen sizes
+- [x] Categorize the tools for better organization
+- [x] Simple, presentable interface that fits the portfolio aesthetic
+- [x] Synthetic monitoring to ensure links are functionable every morning
+- [ ] Edit toolbox content directly through the CMS interface
 
 ## Implementation Details
 
@@ -53,8 +54,8 @@ Finding the right SVG can be difficult, as we want both the icon and the waterma
 
 The Toolbox implements a clean, grid-based interface that showcases the developer's tools and technologies in an organized, visually appealing manner.
 
-[![Alt](desktop.png)](desktop.webm)
-[![Alt](mobile.png)](mobile.webm)
+<a href="./assets/mobile.mp4"><img src="./assets/mobile.png" width="200" /></a>
+<a href="./assets/desktop.mp4"><img src="./assets/desktop.png" width="400" /></a>
 
 ### Key UI Elements
 
@@ -74,11 +75,3 @@ The Toolbox implements a clean, grid-based interface that showcases the develope
 - SVG icons include appropriate aria-label attributes
 - Interactive elements have sufficient color contrast
 - Focus states are visually apparent
-
-## Dependencies
-
-### Package Dependencies
-- [Zod](https://zod.dev/): Validates and creates static types for the Markdown file objects
-
-### Feature Dependencies
-- `CMS`: Provides the content retrieval mechanism for tool data

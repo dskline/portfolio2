@@ -1,5 +1,5 @@
 ---
-applyTo: '**/features/**/docs/README.md'
+applyTo: '**/__docs__/SPEC.md'
 ---
 
 # Feature Specification Documentation Guide
@@ -33,11 +33,11 @@ Clearly separate mandatory requirements from optional enhancements:
 - Requirement 2: Brief explanation if needed
 - ...
 
-## Enhancements
+## Future Enhancements
 
-- Optional enhancement 1: Brief explanation with priority if applicable
-- Optional enhancement 2: Brief explanation with priority if applicable
-- ...
+- [x] Optional enhancement 1: Brief explanation with priority if applicable
+- [ ] Optional enhancement 2: Brief explanation with priority if applicable
+- [ ] ...
 ```
 
 ### 3. Implementation Details
@@ -83,27 +83,6 @@ List any required visual assets (images, icons, etc.) and their specifications:
 - Asset name: Description and purpose
 - Format requirements (SVG, PNG, etc.)
 - Size/resolution requirements
-```
-
-### 5. Optional Sections
-
-Include these sections when applicable:
-
-```markdown
-## Environment Variables
-
-| Variable Name | Purpose | Required | Default |
-|---------------|---------|----------|---------|
-| `FEATURE_ENABLED` | Toggles the feature on/off | Yes | `false` |
-| `API_ENDPOINT` | External service endpoint | Yes | - |
-
-## Dependencies
-
-### Package Dependencies
-- `package-name`: Brief description [Documentation link](https://example.com)
-
-### Feature Dependencies
-- `OtherFeature`: Brief explanation of dependency relationship
 ```
 
 ## Example
@@ -170,27 +149,6 @@ The authentication UI follows a minimal, user-friendly design that integrates se
 - Social provider logos (SVG format)
 - Loading animation for authentication states
 - Success/error icons for status messages
-
-## Environment Variables
-
-| Variable Name | Purpose | Required | Default |
-|---------------|---------|----------|---------|
-| `NEXTAUTH_SECRET` | Secret for JWT encryption | Yes | - |
-| `GOOGLE_CLIENT_ID` | Google OAuth app ID | Yes | - |
-| `GOOGLE_CLIENT_SECRET` | Google OAuth app secret | Yes | - |
-| `GITHUB_CLIENT_ID` | GitHub OAuth app ID | No | - |
-| `GITHUB_CLIENT_SECRET` | GitHub OAuth app secret | No | - |
-
-## Dependencies
-
-### Package Dependencies
-- `next-auth`: Handles authentication [Documentation](https://next-auth.js.org/)
-- `mongodb`: Database connector [Documentation](https://mongodb.github.io/node-mongodb-native/)
-
-### Feature Dependencies
-- `UserProfile`: Consumes user data from authentication
-- `PermissionsSystem`: Uses authentication status for access control
-```
 
 ## Best Practices
 

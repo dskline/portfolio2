@@ -7,11 +7,11 @@ test(
   "Toolbox page visual scroll test",
   { tag: "@visual" },
   async ({ page, isMobile }) => {
-    const screenshotDir = path.join(__dirname, "../docs");
+    const screenshotDir = path.join(__dirname, "../__docs__/assets");
     page
       .video()
       ?.saveAs(
-        path.join(screenshotDir, `${isMobile ? "mobile" : "desktop"}.webm`),
+        path.join(screenshotDir, `${isMobile ? "mobile" : "desktop"}.mp4`),
       );
     await page.goto("/toolbox");
     await page.waitForLoadState("networkidle");
