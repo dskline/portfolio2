@@ -15,7 +15,7 @@ As the portfolio owner, I want the ability to edit my toolbox using the CMS feat
 
 - [x] Categorize the tools for better organization
 - [x] Simple, presentable interface that fits the portfolio aesthetic
-- [x] Synthetic monitoring to ensure links are functionable every morning
+- [x] Synthetic monitoring to ensure links are functional every morning
 - [ ] Edit toolbox content directly through the CMS interface
 
 ## Implementation Details
