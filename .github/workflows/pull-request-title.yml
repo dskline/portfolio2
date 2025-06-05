@@ -17,6 +17,14 @@ jobs:
             // Extract the branch name from the head ref
             const branch = context.payload.pull_request.head.ref.split('/');
             
+            // If the branch doesn't follow the expected format (type/subtype), assume it's a generated branch
+            const expectedBranchPrefix = branch.length > 1 ? `${branch[0]}(${branch[1]}): ` : 'generated(bot): ';
+
+            if (context.payload.pull_request.title.startsWith(expectedBranchPrefix)) {
+              console.log('PR title already starts with the expected prefix. No update needed.');
+              return;
+            }
+            
             // Get commits on the PR to find the first commit
             const commits = await github.rest.pulls.listCommits({
               owner: context.repo.owner,
@@ -33,5 +41,5 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.payload.pull_request.number,
-              title: `${branch[0]}(${branch[1]}): ${commitMessage}`,
+              title: expectedBranchPrefix + commitMessage,
             })
