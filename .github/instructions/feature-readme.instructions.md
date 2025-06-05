@@ -9,7 +9,7 @@ This file should serve as a contributing guide for developers working on this fe
 ## Structure
 
 ### Header
-Start with a level 2 heading that follows the format: `# Feature: [Feature Name]`
+Start with a level 1 heading that follows the format: `# Feature: [Feature Name]`
 
 Provide a brief user story or description explaining:
 - What the feature does from a user's perspective
