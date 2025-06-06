@@ -1,7 +1,7 @@
 import { NextDevtoolsProvider } from "@next-devtools/core";
 import type { Metadata } from "next";
 import { Anton, Geist } from "next/font/google";
-import "./globals.css";
+import "@/features/theme/globals.css";
 import clsx from "clsx";
 import { ThemeProvider } from "next-themes";
 import { Navbar } from "../features/layout/Navbar";
@@ -32,10 +32,8 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={clsx(fontBody.variable, fontHeading.variable)}>
         <ThemeProvider attribute="class">
-          <div className="min-h-screen bg-gray-50 text-neutral-800 antialiased dark:bg-gray-900 dark:text-gray-50">
-            <Navbar />
-            <NextDevtoolsProvider>{children}</NextDevtoolsProvider>
-          </div>
+          <Navbar />
+          <NextDevtoolsProvider>{children}</NextDevtoolsProvider>
         </ThemeProvider>
       </body>
     </html>
