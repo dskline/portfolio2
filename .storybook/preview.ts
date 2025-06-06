@@ -8,6 +8,9 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    darkMode: {
+      stylePreview: true,
+    },
 
     a11y: {
       // 'todo' - show a11y violations in the test UI only

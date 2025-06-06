@@ -1,5 +1,5 @@
 ---
-applyTo: '**/*.stories.*'
+applyTo: '**/__docs__/*stories*'
 ---
 TITLE: Initializing Storybook with npm
 DESCRIPTION: This command initializes Storybook version 7 or higher in a project using `npx`, the Node Package Execute utility bundled with npm. It sets up the necessary configuration and files for Storybook.
