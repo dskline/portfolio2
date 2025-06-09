@@ -5,7 +5,7 @@
   },
   "files": {
     "include": ["./*", "/*"],
-    "ignore": [".husky", ".next", ".vscode", "node_modules"],
+    "ignore": [".husky", ".next", ".vscode", "node_modules", "coverage"],
     "ignoreUnknown": true
   },
   "linter": {

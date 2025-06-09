@@ -1,6 +1,6 @@
 "use client";
 
-import { toggleDarkTheme } from "../theme/dark";
+import { toggleDarkTheme } from "@/features/theme/dark";
 
 export const Navbar = () => {
   return (

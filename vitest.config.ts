@@ -13,6 +13,9 @@ const dirname =
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
   test: {
+    coverage: {
+      reporter: ["html", "lcov"],
+    },
     workspace: [
       {
         extends: true,
