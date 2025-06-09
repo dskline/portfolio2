@@ -1,5 +1,5 @@
+import { ToolButton } from "@/features/toolbox/ToolButton";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { ToolButton } from "../ToolButton";
 import "@/features/theme/globals.css";
 
 const meta = {

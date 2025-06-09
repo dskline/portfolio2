@@ -1,6 +1,6 @@
+import type { Tool } from "@/features/toolbox/getTools";
+import { sanitizeSvg } from "@/features/toolbox/sanitizeSvg";
 import { clsx } from "clsx";
-import type { Tool } from "./getTools";
-import { sanitizeSvg } from "./sanitizeSvg";
 
 export function ToolButton(tool: Tool) {
   const sanitizedLogo = sanitizeSvg(tool.logo);

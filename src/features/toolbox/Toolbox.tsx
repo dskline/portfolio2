@@ -1,7 +1,6 @@
-import { clsx } from "clsx";
-import { ToolButton } from "./ToolButton";
-import { getTools } from "./getTools";
-import type { Tool } from "./getTools";
+import { ToolButton } from "@/features/toolbox/ToolButton";
+import { type Tool, getTools } from "@/features/toolbox/getTools";
+import clsx from "clsx";
 
 export async function Toolbox() {
   const tools = await getTools();

@@ -1,4 +1,4 @@
-import { getFilesFromGithub } from "./getFilesFromGithub";
+import { getFilesFromGithub } from "@/features/cms/getFilesFromGithub";
 
 const CMS_TYPE = process.env.CMS_TYPE;
 
