@@ -1,19 +1,26 @@
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
+@custom-variant hocus (&:hover, &:focus);
+
+@theme {
+  --color-light: var(--color-gray-50);
+  --color-dark: var(--color-neutral-900);
+}
+
+@layer base {
+  a,
+  button {
+    @apply px-2 py-1.5 outline-0 transition-colors duration-200 border-2 border-transparent rounded-lg hocus:border-dark dark:hocus:border-light;
+  }
+}
 
 body {
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  min-height: 100vh;
-  background-color: var(--color-gray-50);
-  color: var(--color-neutral-800);
+  @apply antialiased min-h-screen text-dark bg-light font-medium;
 }
 html.dark body {
-  background-color: var(--color-gray-900);
-  color: var(--color-gray-50);
+  @apply text-light bg-dark;
 }
 
 h1,
@@ -22,5 +29,5 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-mono);
+  font-family: var(--font-mono), serif;
 }

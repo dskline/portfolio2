@@ -15,9 +15,8 @@ export function ToolButton(tool: Tool) {
       aria-label={tool.title}
       className={clsx(
         "inline-flex px-4 py-2.5",
-        "rounded-md border-2 border-transparent hover:border-inherit",
-        "bg-indigo-100 dark:bg-gray-800",
-        "transition-colors duration-200",
+        "rounded-md border-2 border-transparent hocus:border-inherit",
+        "bg-gray-200 dark:bg-neutral-800",
       )}
     >
       <div

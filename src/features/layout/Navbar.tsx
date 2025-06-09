@@ -5,7 +5,7 @@ import { toggleDarkTheme } from "@/features/theme/dark";
 export const Navbar = () => {
   return (
     <nav className="bg-gray-100 dark:bg-gray-800">
-      <ul className="flex justify-center gap-4 p-4">
+      <ul className="flex items-center justify-center">
         <li>
           <a href="/">Home</a>
         </li>
