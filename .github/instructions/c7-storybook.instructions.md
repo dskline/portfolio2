@@ -1,205 +1,36 @@
 ---
 applyTo: '**/__docs__/*stories*'
 ---
-TITLE: Initializing Storybook with npm
-DESCRIPTION: This command initializes Storybook version 7 or higher in a project using `npx`, the Node Package Execute utility bundled with npm. It sets up the necessary configuration and files for Storybook.
-SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/storybook-init-v7.md#_snippet_0
-
-LANGUAGE: Shell
-CODE:
-```
-npx storybook@^7 init
-```
-
-----------------------------------------
-
-TITLE: Configuring Storybook Main File in JavaScript
-DESCRIPTION: This JavaScript configuration defines the core settings for Storybook, including the chosen framework, the paths to story files (MDX and component stories), and options for the `@storybook/addon-docs` addon. It provides a basic setup for Storybook's main configuration.
-SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/addon-docs-options.md#_snippet_1
+TITLE: Defining Primary Story with Args (Standard CSF)
+DESCRIPTION: Demonstrates how to define a basic story for a `Button` component in its 'primary' state using Storybook's Component Story Format (CSF). It utilizes `args` to configure component properties, making them editable via Storybook Controls.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/writing-stories/index.mdx#_snippet_1
 
 LANGUAGE: JavaScript
 CODE:
 ```
-// Replace your-framework with the framework you are using, e.g. react-vite, nextjs, vue3-vite, etc.
+import { Button } from './Button';
 
 export default {
-  framework: '@storybook/your-framework',
-  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
-  addons: [
-    {
-      name: '@storybook/addon-docs',
-      options: {
-        csfPluginOptions: null,
-        mdxPluginOptions: {
-          mdxCompileOptions: {
-            remarkPlugins: [],
-          },
-        },
-      },
-    },
-  ],
-};
-```
-
-----------------------------------------
-
-TITLE: Mounting Component with Mock Data in React Storybook (TypeScript)
-DESCRIPTION: This snippet demonstrates how to create a Storybook story for a React component using TypeScript. It showcases the `play` function to programmatically interact with the component, including creating mock data via `db.note.create`, mounting the `Page` component with dynamically generated `id` from the mock data, and simulating user interaction with `userEvent.click`. It also configures `argTypes` to disable control for the `params` prop, as its value is set within the `play` function.
-SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/mount-advanced.md#_snippet_0
-
-LANGUAGE: ts
-CODE:
-```
-// Replace your-framework with the framework you are using, e.g., react-vite, nextjs, nextjs-vite, etc.
-import type { Meta, StoryObj } from '@storybook/your-framework';
-
-// 👇 Must include the `.mock` portion of filename to have mocks typed correctly
-import db from '#lib/db.mock';
-import { Page } from './Page';
-
-const meta = { component: Page } satisfies Meta<typeof Page>;
-export default meta;
-
-type Story = StoryObj<typeof meta>;
-
-export const Default: Story = {
-  play: async ({ mount, args, userEvent }) => {
-    const note = await db.note.create({
-      data: { title: 'Mount inside of play' },
-    });
-
-    const canvas = await mount(
-      // 👇 Pass data that is created inside of the play function to the component
-      //   For example, a just-generated UUID
-      <Page {...args} params={{ id: String(note.id) }} />
-    );
-
-    await userEvent.click(await canvas.findByRole('menuitem', { name: /login to add/i }));
-  },
+  title: 'Example/Button',
+  component: Button,
   argTypes: {
-    // 👇 Make the params prop un-controllable, as the value is always overriden in the play function.
-    params: { control: { disable: true } },
-  },
-};
-```
-
-----------------------------------------
-
-TITLE: Initializing Storybook with npm
-DESCRIPTION: This command initializes a Storybook project using npm's package runner, 'npx'. It sets up the necessary files and configurations for Storybook in the current directory, typically used for new projects or adding Storybook to existing ones.
-SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/init-command-custom-version.md#_snippet_0
-
-LANGUAGE: Shell
-CODE:
-```
-npx storybook@8.2 init
-```
-
-----------------------------------------
-
-TITLE: Testing Event Form Submission in Storybook (JavaScript, Svelte)
-DESCRIPTION: This Storybook story, written in JavaScript, tests the `EventForm` component's submission behavior for Svelte applications. It defines `args` to mock `getUsers` and `onSubmit`, sets up `getUsers` to return mock user data in `beforeEach`, and then uses the `play` function to simulate user interaction (typing, clicking) and verify that `onSubmit` is called with the expected form data.
-SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/interaction-test-complex.md#_snippet_6
-
-LANGUAGE: JavaScript
-CODE:
-```
-import { fn, expect } from 'storybook/test';
-
-import { users } from '#mocks';
-import { EventForm } from './EventForm.svelte';
-
-export default {
-  component: EventForm,
+    backgroundColor: { control: 'color' }
+  }
 };
 
-export const Submits = {
-  // Mock functions so we can manipulate and spy on them
+export const Primary = {
   args: {
-    getUsers: fn(),
-    onSubmit: fn(),
-  },
-  beforeEach: async ({ args }) => {
-    // Manipulate `getUsers` mock to return mocked value
-    args.getUsers.mockResolvedValue(users);
-  },
-  play: async ({ args, canvas, userEvent }) => {
-    const usersList = canvas.getAllByRole('listitem');
-    await expect(usersList).toHaveLength(4);
-    await expect(canvas.getAllByText('VIP')).toHaveLength(2);
-
-    const titleInput = await canvas.findByLabelText('Enter a title for your event');
-    await userEvent.type(titleInput, 'Holiday party');
-
-    const submitButton = canvas.getByRole('button', { text: 'Plan event' });
-    await userEvent.click(submitButton);
-
-    // Spy on `onSubmit` to verify that it is called correctly
-    await expect(args.onSubmit).toHaveBeenCalledWith({
-      name: 'Holiday party',
-      userCount: 4,
-      data: expect.anything(),
-    });
-  },
+    primary: true,
+    label: 'Button'
+  }
 };
 ```
 
 ----------------------------------------
 
-TITLE: Defining JavaScript Stories with Play Function
-DESCRIPTION: This JavaScript Component Story Format (CSF) example defines `EmptyForm` and `FilledForm` stories for a `LoginForm` component. The `FilledForm` story uses a `play` function to simulate user input and button clicks, followed by an assertion to verify the DOM structure after interaction.
-SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/login-form-with-play-function.md#_snippet_6
-
-LANGUAGE: js
-CODE:
-```
-import { expect, userEvent, within } from 'storybook/test';
-
-import LoginForm from './LoginForm.svelte';
-
-export default {
-  component: LoginForm,
-};
-
-export const EmptyForm = {};
-
-export const FilledForm = {
-  play: async ({ canvas, userEvent }) => {
-    // 👇 Simulate interactions with the component
-    await userEvent.type(canvas.getByTestId('email'), 'email@provider.com');
-
-    await userEvent.type(canvas.getByTestId('password'), 'a-random-password');
-
-    // See https://storybook.js.org/docs/essentials/actions#automatically-matching-args to learn how to setup logging in the Actions panel
-    await userEvent.click(canvas.getByRole('button'));
-
-    // 👇 Assert DOM structure
-    await expect(
-      canvas.getByText(
-        'Everything is perfect. Your account is ready and we should probably get you started!'
-      )
-    ).toBeInTheDocument();
-  },
-};
-```
-
-----------------------------------------
-
-TITLE: Defining Default Export for Storybook Component in JavaScript
-DESCRIPTION: This snippet exports a default object, specifying the 'Button' component as the primary component for the stories defined in this Storybook file. This is a fundamental configuration in Component Story Format (CSF) v3, enabling Storybook to correctly identify and display the component's stories. It acts as the root configuration for all subsequent stories.
-SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/csf-3-example-auto-title.md#_snippet_0
-
-LANGUAGE: JavaScript
-CODE:
-```
-export default { component: Button };
-```
-
-----------------------------------------
-
-TITLE: Configuring React Button Story in TypeScript
-DESCRIPTION: This snippet illustrates how to define a Storybook story for a React Button component using TypeScript. It imports `Meta` and `StoryObj` from `@storybook/your-framework`, sets the component, and defines a `Primary` story with `label` and `primary` arguments, and a custom display name. It uses `satisfies Meta<typeof Button>` for type safety.
-SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/button-story-rename-story.md#_snippet_4
+TITLE: Defining Button Stories for React in TypeScript
+DESCRIPTION: This TypeScript snippet defines Storybook stories for a React Button component, providing type safety using `Meta<typeof Button>` and `StoryObj<typeof meta>`. It demonstrates setting component metadata and defining multiple stories with inherited arguments.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/button-story-using-args.md#_snippet_4
 
 LANGUAGE: ts
 CODE:
@@ -217,93 +48,113 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
-  // 👇 Rename this story
-  name: 'I am the primary',
   args: {
+    backgroundColor: '#ff0',
     label: 'Button',
-    primary: true,
+  },
+};
+
+export const Secondary: Story = {
+  args: {
+    ...Primary.args,
+    label: '😄👍😍💯',
+  },
+};
+
+export const Tertiary: Story = {
+  args: {
+    ...Primary.args,
+    label: '📚📕📈🤓',
+  },
+};
+
+```
+
+----------------------------------------
+
+TITLE: Testing Form Submission in Common JS/JSX Storybook
+DESCRIPTION: This snippet provides a common JavaScript/JSX Storybook story for a `Form` component. It showcases the `play` function to simulate user input and form submission, followed by an assertion using `expect` and `waitFor` to confirm that the `onSubmit` argument was successfully invoked. The `fn` utility is utilized to create a spy for the `onSubmit` function.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/storybook-interactions-play-function.md#_snippet_3
+
+LANGUAGE: JavaScript
+CODE:
+```
+import { expect, fn, waitFor } from 'storybook/test';
+
+import { Form } from './Form';
+
+export default {
+  component: Form,
+  args: {
+    // 👇 Use `fn` to spy on the onSubmit arg
+    onSubmit: fn(),
+  },
+};
+
+/*
+ * See https://storybook.js.org/docs/writing-stories/play-function#working-with-the-canvas
+ * to learn more about using the canvas to query the DOM
+ */
+export const Submitted = {
+  play: async ({ args, canvas, step, userEvent }) => {
+    // Starts querying the component from its root element
+    await step('Enter credentials', async () => {
+      await userEvent.type(canvas.getByTestId('email'), 'hi@example.com');
+      await userEvent.type(canvas.getByTestId('password'), 'supersecret');
+    });
+
+    await step('Submit form', async () => {
+      await userEvent.click(canvas.getByRole('button'));
+    });
+
+    // 👇 Now we can assert that the onSubmit arg was called
+    await waitFor(() => expect(args.onSubmit).toHaveBeenCalled());
   },
 };
 ```
 
 ----------------------------------------
 
-TITLE: Defining Storybook Preview Configuration with definePreview (TypeScript/JavaScript)
-DESCRIPTION: This snippet illustrates how to define the Storybook preview configuration using `definePreview`. It enables type-safe configuration of addons and parameters, providing autocompletion and type checking for project-wide story settings.
-SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/api/csf/csf-factories.mdx#_snippet_1
+TITLE: Creating Storybook Project with npm
+DESCRIPTION: Initializes a new Storybook project using the npm package manager. The `--package-manager=npm` flag explicitly sets npm as the package manager for the Storybook project itself.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/create-command-custom-package-manager.md#_snippet_0
 
-LANGUAGE: typescript
+LANGUAGE: shell
 CODE:
 ```
-// Replace your-framework with the framework you are using (e.g., react-vite, nextjs, nextjs-vite)
-import { definePreview } from '@storybook/your-framework';
-import addonA11y from '@storybook/addon-a11y';
-
-export default definePreview({
-  // 👇 Add your addons here
-  addons: [addonA11y()],
-  parameters: {
-    // type-safe!
-    a11y: {
-      options: { xpath: true },
-    },
-  },
-});
+npm create storybook@latest --package-manager=npm
 ```
 
 ----------------------------------------
 
-TITLE: Configuring TypeScript Storybook ArgTypes with Conditional Logic for Common Frameworks
-DESCRIPTION: This TypeScript CSF example demonstrates how to define 'argTypes' for a component in Storybook, using the standard 'Meta' type for common frameworks. It showcases various conditional display rules for controls based on argument existence, truthiness, and specific values, including conditions tied to global types.
-SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/arg-types-if.md#_snippet_6
+TITLE: Defining Basic Story with CSF
+DESCRIPTION: This JavaScript snippet defines a basic story using Component Story Format (CSF) for a Button component. It imports React and the Button component, then exports a named story called 'basic' that renders the Button.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/code/addons/docs/docs/recipes.md#_snippet_0
 
-LANGUAGE: TypeScript
+LANGUAGE: javascript
 CODE:
 ```
-// Replace your-framework with the framework you are using, e.g. react-vite, nextjs, vue3-vite, etc.
-import type { Meta } from '@storybook/your-framework';
+import React from 'react';
+import { Button } from './Button';
 
-import { Example } from './Example';
+// NOTE: no default export since `Button.stories.mdx` is the story file for `Button` now
+//
+// export default {
+//   title: 'Demo/Button',
+//   component: Button,
+// };
 
-const meta = {
-  component: Example,
-  argTypes: {
-    parent: { control: 'select', options: ['one', 'two', 'three'] },
-
-    // 👇 Only shown when `parent` arg exists
-    parentExists: { if: { arg: 'parent', exists: true } },
-
-    // 👇 Only shown when `parent` arg does not exist
-    parentDoesNotExist: { if: { arg: 'parent', exists: false } },
-
-    // 👇 Only shown when `parent` arg value is truthy
-    parentIsTruthy: { if: { arg: 'parent' } },
-    parentIsTruthyVerbose: { if: { arg: 'parent', truthy: true } },
-
-    // 👇 Only shown when `parent` arg value is not truthy
-    parentIsNotTruthy: { if: { arg: 'parent', truthy: false } },
-
-    // 👇 Only shown when `parent` arg value is 'three'
-    parentIsEqToValue: { if: { arg: 'parent', eq: 'three' } },
-
-    // 👇 Only shown when `parent` arg value is not 'three'
-    parentIsNotEqToValue: { if: { arg: 'parent', neq: 'three' } },
-
-    // Each of the above can also be conditional on the value of a globalType, e.g.:
-
-    // 👇 Only shown when `theme` global exists
-    parentExists: { if: { global: 'theme', exists: true } },
-  },
-} satisfies Meta<typeof Example>;
-
-export default meta;
+export const basic = () => <Button>Basic</Button>;
+basic.parameters = {
+  foo: 'bar',
+};
 ```
 
 ----------------------------------------
 
-TITLE: Configuring Storybook Main File (TS)
-DESCRIPTION: This TypeScript snippet configures the main Storybook file, leveraging `StorybookConfig` type for better type safety. It defines the framework, story paths, and addons, similar to the JavaScript version. It's crucial to replace `your-framework` with the specific framework being used for proper integration.
-SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/storybook-auto-docs-main-mdx-config.md#_snippet_1
+TITLE: Configuring Storybook Composition in TypeScript
+DESCRIPTION: This TypeScript snippet configures the `.storybook/main.ts` file to enable Storybook composition. It leverages the `StorybookConfig` type for better type safety and uses the `refs` property to define external Storybooks, dynamically setting their URLs based on whether Storybook is running in 'DEVELOPMENT' or production mode. This ensures proper integration of multiple Storybooks with type checking.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/main-config-refs-with-function.md#_snippet_1
 
 LANGUAGE: ts
 CODE:
@@ -312,226 +163,44 @@ CODE:
 import type { StorybookConfig } from '@storybook/your-framework';
 
 const config: StorybookConfig = {
-  // Replace your-framework with the framework you are using, e.g. react-vite, nextjs, vue3-vite, etc.
-  framework: '@storybook/your-framework',
-  stories: [
-    //👇 Your documentation written in MDX along with your stories goes here
-    '../src/**/*.mdx',
-    '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
-  ],
-  addons: ['@storybook/addon-docs'],
-};
-
-export default config;
-```
-
-----------------------------------------
-
-TITLE: Defining ArgTypes with Conditional Controls in Svelte (TS)
-DESCRIPTION: This snippet demonstrates defining `argTypes` for a Storybook component in a Svelte project using standard TypeScript CSF. It imports `Meta` from a framework-specific Storybook package and uses `satisfies Meta<typeof Button>` for type safety, configuring conditional control visibility for `margin`, `padding`, and `cornerRadius` based on the `advanced` argument.
-SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/component-story-conditional-controls-toggle.md#_snippet_6
-
-LANGUAGE: ts
-CODE:
-```
-// Replace your-framework with svelte-vite or sveltekit
-import type { Meta } from '@storybook/your-framework';
-
-import Button from './Button.svelte';
-
-const meta = {
-  component: Button,
-  argTypes: {
-    label: { control: 'text' }, // Always shows the control
-    advanced: { control: 'boolean' },
-    // Only enabled if advanced is true
-    margin: { control: 'number', if: { arg: 'advanced' } },
-    padding: { control: 'number', if: { arg: 'advanced' } },
-    cornerRadius: { control: 'number', if: { arg: 'advanced' } },
-  },
-} satisfies Meta<typeof Button>;
-
-export default meta;
-```
-
-----------------------------------------
-
-TITLE: Configuring Storybook Main Settings with Vite (JavaScript)
-DESCRIPTION: This configuration object defines the core settings for a Storybook project. It specifies the UI framework, the glob patterns for locating story files (MDX and various JavaScript/TypeScript formats), and integrates with the Vite builder. The `viteFinal` function allows for custom Vite configuration merging based on the `configType` (DEVELOPMENT or PRODUCTION), enabling environment-specific build adjustments.
-SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/main-config-vite-final-env.md#_snippet_0
-
-LANGUAGE: JavaScript
-CODE:
-```
-export default {
-  // Replace your-framework with the framework you are using, e.g. react-vite, nextjs-vite, vue3-vite, etc.
-  framework: '@storybook/your-framework',
-  stories: ['../src/**/*.mdx', '../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
-  core: {
-    builder: '@storybook/builder-vite',
-  },
-  async viteFinal(config, { configType }) {
-    const { mergeConfig } = await import('vite');
-
-    if (configType === 'DEVELOPMENT') {
-      // Your development configuration goes here
-    }
-    if (configType === 'PRODUCTION') {
-      // Your production configuration goes here.
-    }
-    return mergeConfig(config, {
-      // Your environment configuration here
-    });
-  },
-};
-```
-
-----------------------------------------
-
-TITLE: Configuring Storybook Test Runner with Jest Image Snapshots (TypeScript)
-DESCRIPTION: This TypeScript configuration, similar to its JavaScript counterpart, sets up the Storybook test runner for visual regression testing. It leverages `jest-image-snapshot` by extending Jest's `expect` and implements a `postVisit` hook to take screenshots of stories, ensuring the page is fully loaded before capturing, and then compares them to existing snapshots.
-SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/test-runner-waitpageready.md#_snippet_1
-
-LANGUAGE: ts
-CODE:
-```
-import type { TestRunnerConfig } from '@storybook/test-runner';
-
-import { waitForPageReady } from '@storybook/test-runner';
-
-import { toMatchImageSnapshot } from 'jest-image-snapshot';
-
-const customSnapshotsDir = `${process.cwd()}/__snapshots__`;
-
-const config: TestRunnerConfig = {
-  setup() {
-    expect.extend({ toMatchImageSnapshot });
-  },
-  async postVisit(page, context) {
-    // Awaits for the page to be loaded and available including assets (e.g., fonts)
-    await waitForPageReady(page);
-
-    // Generates a snapshot file based on the story identifier
-    const image = await page.screenshot();
-    expect(image).toMatchImageSnapshot({
-      customSnapshotsDir,
-      customSnapshotIdentifier: context.id,
-    });
-  },
-};
-
-export default config;
-```
-
-----------------------------------------
-
-TITLE: Running create-storybook
-DESCRIPTION: Executes the create-storybook command with an optional version specifier.  Package managers like npm, pnpm, and Yarn will execute this command when running `create storybook`. You can specify a version (e.g., `@latest`, `@8`, `@next`) or it will default to the latest version.
-SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/api/cli-options.mdx#_snippet_117
-
-LANGUAGE: Shell
-CODE:
-```
-create storybook[@version] [options]
-```
-
-----------------------------------------
-
-TITLE: Testing Event Form Submission in Storybook (Svelte Component Story)
-DESCRIPTION: This Svelte component story defines a Storybook test case for the `EventForm` using Svelte's Component Story Format. It uses `defineMeta` for component metadata and sets up `args` to mock `getUsers` and `onSubmit`. The `beforeEach` hook resolves `getUsers` with mock data, and the `play` function simulates user input and form submission, asserting that the `onSubmit` callback receives the correct data.
-SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/interaction-test-complex.md#_snippet_5
-
-LANGUAGE: JavaScript
-CODE:
-```
-<script module>
-  import { defineMeta } from '@storybook/addon-svelte-csf';
-  import { fn, expect } from 'storybook/test';
-
-  import { users } from '#mocks';
-  import { EventForm } from './EventForm.svelte';
-
-  const { Story } = defineMeta({
-    component: EventForm,
-  });
-</script>
-
-<Story
-  name="Submits"
-  args={{
-    // Mock functions so we can manipulate and spy on them
-    getUsers: fn(),
-    onSubmit: fn(),
-  }}
-  beforeEach={async ({ args }) => {
-    // Manipulate `getUsers` mock to return mocked value
-    args.getUsers.mockResolvedValue(users);
-  }}
-  play={async ({ args, canvas, userEvent }) => {
-    const usersList = canvas.getAllByRole('listitem');
-    await expect(usersList).toHaveLength(4);
-    await expect(canvas.getAllByText('VIP')).toHaveLength(2);
-
-    const titleInput = await canvas.findByLabelText('Enter a title for your event');
-    await userEvent.type(titleInput, 'Holiday party');
-
-    const submitButton = canvas.getByRole('button', { text: 'Plan event' });
-    await userEvent.click(submitButton);
-
-    // Spy on `onSubmit` to verify that it is called correctly
-    await expect(args.onSubmit).toHaveBeenCalledWith({
-      name: 'Holiday party',
-      userCount: 4,
-      data: expect.anything(),
-    });
-  }}
-/>
-```
-
-----------------------------------------
-
-TITLE: Configuring Storybook Main File with JavaScript
-DESCRIPTION: This JavaScript snippet configures the `.storybook/main.js` file for Storybook. It sets the UI framework, defines the glob patterns for story files (MDX and various JS/TS formats), and includes essential addons like `@storybook/addon-docs` and `@storybook/addon-styling-webpack`. The styling addon is configured to process CSS files using `style-loader`, `css-loader`, and `postcss-loader`.
-SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/main-config-addons.md#_snippet_0
-
-LANGUAGE: js
-CODE:
-```
-export default {
-  // Replace your-framework with the framework you are using, e.g. react-vite, nextjs, vue3-vite, etc.
   framework: '@storybook/your-framework',
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
-  addons: [
-    '@storybook/addon-docs',
-    {
-      name: '@storybook/addon-styling-webpack',
-      options: {
-        rules: [
-          {
-            test: /\.css$/,
-            use: [
-              'style-loader',
-              'css-loader',
-              {
-                loader: 'postcss-loader',
-                options: {
-                  implementation: require.resolve('postcss')
-                }
-              }
-            ]
-          }
-        ]
-      }
+
+  // 👇 Retrieve the current environment from the configType argument
+  refs: (config, { configType }) => {
+    if (configType === 'DEVELOPMENT') {
+      return {
+        react: {
+          title: 'Composed React Storybook running in development mode',
+          url: 'http://localhost:7007'
+        },
+        angular: {
+          title: 'Composed Angular Storybook running in development mode',
+          url: 'http://localhost:7008'
+        }
+      };
     }
-  ]
+    return {
+      react: {
+        title: 'Composed React Storybook running in production',
+        url: 'https://your-production-react-storybook-url'
+      },
+      angular: {
+        title: 'Composed Angular Storybook running in production',
+        url: 'https://your-production-angular-storybook-url'
+      }
+    };
+  }
 };
+
+export default config;
 ```
 
 ----------------------------------------
 
 TITLE: Configuring Storybook Main File in TypeScript
-DESCRIPTION: This snippet illustrates configuring the Storybook `main.ts` file using TypeScript, leveraging the `StorybookConfig` type for strong typing. It specifies the framework, story file locations, includes the `addon-docs` for documentation generation, and points to a static assets directory. The `autodocs` option is set to 'tag' for automatic documentation generation.
-SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/main-config-typical.md#_snippet_1
+DESCRIPTION: This TypeScript snippet configures the `.storybook/main.ts` file for Storybook, leveraging type safety with `StorybookConfig`. It specifies the `framework` for the UI library, defines the `stories` array to include MDX and various JavaScript/TypeScript story files, and configures `autodocs` generation by tag. This setup ensures Storybook correctly integrates with the project's components and documentation.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/main-config-docs-autodocs.md#_snippet_1
 
 LANGUAGE: ts
 CODE:
@@ -540,18 +209,273 @@ CODE:
 import type { StorybookConfig } from '@storybook/your-framework';
 
 const config: StorybookConfig = {
-  // Required
   framework: '@storybook/your-framework',
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
-  // Optional
-  addons: ['@storybook/addon-docs'],
   docs: {
-    autodocs: 'tag',
-  },
-  staticDirs: ['../public'],
+    autodocs: 'tag'
+  }
 };
 
 export default config;
+```
+
+----------------------------------------
+
+TITLE: Testing Button onClick Handler in Vue with Storybook
+DESCRIPTION: This snippet demonstrates how to test the `onClick` handler of a Storybook component (Button) in a Vue environment. It uses `composeStory` to create a testable story, spies on the `onClick` function using `jest.fn()`, simulates a click event, and asserts that the handler was called. This requires `@testing-library/vue` and `@storybook/vue3-vite`.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/portable-stories-jest-compose-story.md#_snippet_1
+
+LANGUAGE: TypeScript
+CODE:
+```
+import { jest, test, expect } from '@jest/globals';
+import { render, screen } from '@testing-library/vue';
+import { composeStory } from '@storybook/vue3-vite';
+
+import meta, { Primary as PrimaryStory } from './Button.stories';
+
+test('onclick handler is called', () => {
+  // Returns a story which already contains all annotations from story, meta and global levels
+  const Primary = composeStory(PrimaryStory, meta);
+
+  const onClickSpy = jest.fn();
+  await Primary.run({ args: { ...Primary.args, onClick: onClickSpy } });
+
+  const buttonElement = screen.getByRole('button');
+  buttonElement.click();
+  expect(onClickSpy).toHaveBeenCalled();
+});
+```
+
+----------------------------------------
+
+TITLE: Configuring Storybook Main in TypeScript
+DESCRIPTION: This snippet provides the TypeScript equivalent for Storybook's `main.ts` configuration. It imports the `StorybookConfig` type for type safety, then defines the framework, story paths, and Webpack 5 builder options, similar to the JavaScript version. This setup ensures proper Storybook functionality with TypeScript.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/storybook-main-webpack-options.md#_snippet_1
+
+LANGUAGE: ts
+CODE:
+```
+// Replace your-framework with the framework you are using, e.g. react-webpack5, nextjs, angular, etc.
+import type { StorybookConfig } from '@storybook/your-framework';
+
+const config: StorybookConfig = {
+  framework: '@storybook/your-framework',
+  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  core: {
+    builder: {
+      name: '@storybook/builder-webpack5',
+      options: {
+        fsCache: true,
+        lazyCompilation: true,
+      }
+    }
+  }
+};
+
+export default config;
+```
+
+----------------------------------------
+
+TITLE: Testing Vue Storybook Components with Jest
+DESCRIPTION: This snippet illustrates how to test a Vue 3 component defined in Storybook using Jest and `@testing-library/vue`. It utilizes `composeStories` from `@storybook/vue3-vite` to make Storybook stories testable, showing how to render them with default arguments and prop overrides.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/portable-stories-jest-compose-stories.md#_snippet_1
+
+LANGUAGE: typescript
+CODE:
+```
+import { test, expect } from '@jest/globals';
+import { render, screen } from '@testing-library/vue';
+import { composeStories } from '@storybook/vue3-vite';
+
+// Import all stories and the component annotations from the stories file
+import * as stories from './Button.stories';
+
+// Every component that is returned maps 1:1 with the stories,
+// but they already contain all annotations from story, meta, and project levels
+const { Primary, Secondary } = composeStories(stories);
+
+test('renders primary button with default args', () => {
+  render(Primary);
+  const buttonElement = screen.getByText('Text coming from args in stories file!');
+  expect(buttonElement).not.toBeNull();
+});
+
+test('renders primary button with overridden props', () => {
+  // You can override props and they will get merged with values from the story's args
+  render(Primary, { props: { label: 'Hello world' } });
+  const buttonElement = screen.getByText(/Hello world/i);
+  expect(buttonElement).not.toBeNull();
+});
+```
+
+----------------------------------------
+
+TITLE: Configuring Storybook Main Settings with TypeScript
+DESCRIPTION: This snippet defines the `StorybookConfig` object in TypeScript, setting up the framework, specifying the paths for story files (`.mdx` and `.stories.*`), and configuring TypeScript options. It uses `react-docgen-typescript` for documentation generation, with specific compiler options and a `propFilter` to exclude props from `node_modules` except for `@mui` packages.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/storybook-main-prop-filter.md#_snippet_0
+
+LANGUAGE: TypeScript
+CODE:
+```
+// Replace your-framework with the framework you are using, e.g. react-vite, nextjs, vue3-vite, etc.
+import type { StorybookConfig } from '@storybook/your-framework';
+
+const config: StorybookConfig = {
+  framework: '@storybook/your-framework',
+  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  typescript: {
+    reactDocgen: 'react-docgen-typescript',
+    reactDocgenTypescriptOptions: {
+      compilerOptions: {
+        allowSyntheticDefaultImports: false,
+        esModuleInterop: false,
+      },
+      // Filter out third-party props from node_modules except @mui packages.
+      propFilter: (prop) =>
+        prop.parent ? !/node_modules\/(?!@mui)/.test(prop.parent.fileName) : true,
+    },
+  },
+};
+
+export default config;
+```
+
+----------------------------------------
+
+TITLE: Testing LoginForm Submission in Storybook (Angular)
+DESCRIPTION: This Storybook story demonstrates how to test a `LoginForm` component in an Angular environment. It uses `storybook/test` utilities like `fn` to spy on the `onSubmit` argument and `userEvent` within the `play` function to simulate user input and form submission, followed by an assertion using `expect` to verify that `onSubmit` was called.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/interaction-test-fn-mock-spy.md#_snippet_0
+
+LANGUAGE: typescript
+CODE:
+```
+import type { Meta, StoryObj } from '@storybook/angular';
+import { fn, expect } from 'storybook/test';
+
+import { LoginForm } from './LoginForm.component';
+
+const meta: Meta<LoginForm> = {
+  component: LoginForm,
+  args: {
+    // 👇 Use `fn` to spy on the onSubmit arg
+    onSubmit: fn(),
+  },
+};
+export default meta;
+
+type Story = StoryObj<LoginForm>;
+
+export const FilledForm: Story = {
+  play: async ({ args, canvas, userEvent }) => {
+    await userEvent.type(canvas.getByLabelText('Email'), 'email@provider.com');
+    await userEvent.type(canvas.getByLabelText('Password'), 'a-random-password');
+    await userEvent.click(canvas.getByRole('button', { name: 'Log in' }));
+
+    // 👇 Now we can assert that the onSubmit arg was called
+    await expect(args.onSubmit).toHaveBeenCalled();
+  },
+};
+```
+
+----------------------------------------
+
+TITLE: Testing Primary Button with Overridden Storybook Props (TypeScript)
+DESCRIPTION: This test demonstrates how to override story arguments when running a Storybook story for testing. It uses the `run` function's `context.args` to modify the `children` prop, then asserts that the button renders with the new text. This allows for testing specific prop combinations without altering the original story definition.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/portable-stories-csf-factory-run.md#_snippet_1
+
+LANGUAGE: TypeScript
+CODE:
+```
+import { test, expect } from 'vitest';
+import { screen } from '@testing-library/react';
+
+// Import all stories from the stories file
+import * as stories from './Button.stories';
+
+const { Primary } = stories;
+
+test('renders primary button with overridden props', async () => {
+  // You can override props by passing them in the context argument of the run function
+  await Primary.run({ args: { ...Primary.composed.args, children: 'Hello world' } });
+  const buttonElement = screen.getByText(/Hello world/i);
+  expect(buttonElement).not.toBeNull();
+});
+```
+
+----------------------------------------
+
+TITLE: Defining Storybook Meta for Common Frameworks (TypeScript)
+DESCRIPTION: This TypeScript snippet provides a common `Meta` object configuration for Storybook stories across various frameworks. It imports `Meta` from a specified Storybook framework package and the component. The `meta` object defines the story's title, component, decorators, and parameters, leveraging TypeScript for type checking with `satisfies Meta<typeof MyComponent>`.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/my-component-story-mandatory-export.md#_snippet_6
+
+LANGUAGE: ts
+CODE:
+```
+// Replace your-framework with the framework you are using, e.g. react-vite, nextjs, vue3-vite, etc.
+import type { Meta } from '@storybook/your-framework';
+
+import { MyComponent } from './MyComponent';
+
+const meta = {
+  /* 👇 The title prop is optional.
+   * See https://storybook.js.org/docs/configure/#configure-story-loading
+   * to learn how to generate automatic titles
+   */
+  title: 'Path/To/MyComponent',
+  component: MyComponent,
+  decorators: [
+    /* ... */
+  ],
+  parameters: {
+    /* ... */
+  },
+} satisfies Meta<typeof MyComponent>;
+
+export default meta;
+```
+
+----------------------------------------
+
+TITLE: Storybook Stories for Web Components LoginForm (TypeScript)
+DESCRIPTION: This TypeScript file defines Storybook stories for a `demo-login-form` Web Component. It utilizes `Meta` and `StoryObj` types, includes an `EmptyForm` story, and a `FilledForm` story with a `play` function. The `play` function simulates user interactions (typing into fields, clicking a button) and asserts a success message, showcasing type-safe interaction testing for Web Components.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/login-form-with-play-function.md#_snippet_12
+
+LANGUAGE: TypeScript
+CODE:
+```
+import type { Meta, StoryObj } from '@storybook/web-components-vite';
+
+import { expect } from 'storybook/test';
+
+const meta: Meta = {
+  component: 'demo-login-form',
+};
+export default meta;
+
+type Story = StoryObj;
+
+export const EmptyForm: Story = {};
+
+export const FilledForm: Story = {
+  play: async ({ canvas, userEvent }) => {
+    // 👇 Simulate interactions with the component
+    await userEvent.type(canvas.getByTestId('email'), 'email@provider.com');
+
+    await userEvent.type(canvas.getByTestId('password'), 'a-random-password');
+
+    // See https://storybook.js.org/docs/essentials/actions#automatically-matching-args to learn how to setup logging in the Actions panel
+    await userEvent.click(canvas.getByRole('button'));
+
+    // 👇 Assert DOM structure
+    await expect(
+      canvas.getByText(
+        'Everything is perfect. Your account is ready and we should probably get you started!'
+      )
+    ).toBeInTheDocument();
+  },
+};
 ```
 
 ----------------------------------------
@@ -577,219 +501,26 @@ export const Primary: Story = { args: { primary: true } };
 
 ----------------------------------------
 
-TITLE: Testing NoteUI Save Flow with Storybook (Common Framework, TypeScript)
-DESCRIPTION: This Storybook story defines a 'Save Flow' for the NoteUI component, demonstrating how to simulate user interaction and assert the behavior of a mocked function. It uses storybook/test utilities to click a save button and verify that the saveNote mock function is called, ensuring the component's interaction with external actions is correctly tested. It's configured for a generic framework.
-SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/storybook-test-fn-mock-spy.md#_snippet_6
-
-LANGUAGE: TypeScript
-CODE:
-```
-// Replace your-framework with the framework you are using, e.g. react-vite, nextjs, vue3-vite, etc.
-import type { Meta, StoryObj } from '@storybook/your-framework';
-
-import { expect } from 'storybook/test';
-
-// 👇 Must include the `.mock` portion of filename to have mocks typed correctly
-import { saveNote } from '#app/actions.mock';
-import { createNotes } from '#mocks/notes';
-
-import NoteUI from './note-ui';
-
-const meta = { component: NoteUI } satisfies Meta<typeof NoteUI>;
-export default meta;
-
-type Story = StoryObj<typeof meta>;
-
-const notes = createNotes();
-
-export const SaveFlow: Story = {
-  name: 'Save Flow ▶',
-  args: {
-    isEditing: true,
-    note: notes[0],
-  },
-  play: async ({ canvas, userEvent }) => {
-    const saveButton = canvas.getByRole('menuitem', { name: /done/i });
-    await userEvent.click(saveButton);
-    // 👇 This is the mock function, so you can assert its behavior
-    await expect(saveNote).toHaveBeenCalled();
-  },
-};
-```
-
-----------------------------------------
-
 TITLE: Configuring Storybook Main File in TypeScript
-DESCRIPTION: This snippet illustrates how to configure the Storybook `main.ts` file using TypeScript. It imports `StorybookConfig` for type safety, sets the framework, specifies story file locations (MDX and various JS/TS formats), and disables the `project.json` feature in the core settings. This configuration is essential for Storybook's setup.
-SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/main-config-core-disable-project-json.md#_snippet_1
+DESCRIPTION: This TypeScript snippet illustrates the configuration for Storybook's `main.ts` file, leveraging the `StorybookConfig` type for improved type safety. It specifies the UI framework, story file locations, and provides an asynchronous hook for modifying the webpack configuration.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/storybook-main-simplified-config.md#_snippet_1
 
-LANGUAGE: typescript
+LANGUAGE: ts
 CODE:
 ```
-// Replace your-framework with the framework you are using, e.g. react-vite, nextjs, vue3-vite, etc.
+// Replace your-framework with the framework you are using, e.g. react-webpack5, nextjs, angular, etc.
 import type { StorybookConfig } from '@storybook/your-framework';
 
 const config: StorybookConfig = {
   framework: '@storybook/your-framework',
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
-  core: {
-    disableProjectJson: true,
-  },
-};
-
-export default config;
-```
-
-----------------------------------------
-
-TITLE: Defining Storybook ArgTypes with Diverse Controls - JavaScript
-DESCRIPTION: This snippet illustrates how to define `argTypes` within a Storybook `meta` object, mapping component properties to various UI controls. It includes examples for object, file upload, radio buttons, checkboxes, select dropdowns, text input, color pickers, and date pickers, enabling interactive property manipulation in Storybook's Args table.
-SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/gizmo-story-controls-customization.md#_snippet_4
-
-LANGUAGE: JavaScript
-CODE:
-```
-      control: 'object',
-    },
-    texture: {
-      control: {
-        type: 'file',
-        accept: '.png',
-      },
-    },
-    position: {
-      control: 'radio',
-      options: ['left', 'right', 'center'],
-    },
-    rotationAxis: {
-      control: 'check',
-      options: ['x', 'y', 'z'],
-    },
-    scaling: {
-      control: 'select',
-      options: [10, 50, 75, 100, 200],
-    },
-    label: {
-      control: 'text',
-    },
-    meshColors: {
-      control: {
-        type: 'color',
-        presetColors: ['#ff0000', '#00ff00', '#0000ff'],
-      },
-    },
-    revisionDate: {
-      control: 'date',
-    },
-  },
-};
-
-export default meta;
-```
-
-----------------------------------------
-
-TITLE: Automating Storybook Component Snapshot Tests with Vitest
-DESCRIPTION: This TypeScript code provides a complete setup for running automated snapshot tests on Storybook components using Vitest. It dynamically discovers all story files, composes individual stories, and then iterates through each to render it in a JSDOM environment. A snapshot of the rendered component's DOM (`document.body.firstChild`) is then taken, ensuring visual consistency. It includes error handling for story composition and a small delay to ensure full rendering before snapshot capture.
-SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/snapshot-tests-portable-stories.md#_snippet_3
-
-LANGUAGE: TypeScript
-CODE:
-```
-// @vitest-environment jsdom
-
-// Replace your-framework with one of the supported Storybook frameworks (react, vue3)
-import type { Meta, StoryFn } from '@storybook/your-framework';
-
-import path from 'path';
-import { describe, expect, test } from 'vitest';
-
-// Replace your-framework with the framework you are using, e.g. react-vite, nextjs, vue3-vite, etc.
-import { composeStories } from '@storybook/your-framework';
-
-type StoryFile = {
-  default: Meta;
-  [name: string]: StoryFn | Meta;
-};
-
-const compose = (entry: StoryFile): ReturnType<typeof composeStories<StoryFile>> => {
-  try {
-    return composeStories(entry);
-  } catch (e) {
-    throw new Error(
-      `There was an issue composing stories for the module: ${JSON.stringify(entry)}, ${e}`
-    );
+  webpackFinal: async (config) => {
+    config.plugins.push(/* ... */);
+    return config;
   }
 };
 
-function getAllStoryFiles() {
-  // Place the glob you want to match your story files
-  const storyFiles = Object.entries(
-    import.meta.glob<StoryFile>('./stories/**/*.(stories|story).@(js|jsx|mjs|ts|tsx)', {
-      eager: true,
-    })
-  );
-
-  return storyFiles.map(([filePath, storyFile]) => {
-    const storyDir = path.dirname(filePath);
-    const componentName = path.basename(filePath).replace(/\.(stories|story)\.[^/.]+$/, '');
-    return { filePath, storyFile, componentName, storyDir };
-  });
-}
-
-describe('Stories Snapshots', () => {
-  getAllStoryFiles().forEach(({ storyFile, componentName }) => {
-    const meta = storyFile.default;
-    const title = meta.title || componentName;
-
-    describe(title, () => {
-      const stories = Object.entries(compose(storyFile)).map(([name, story]) => ({ name, story }));
-
-      if (stories.length <= 0) {
-        throw new Error(
-          `No stories found for this module: ${title}. Make sure there is at least one valid story for this module.`
-        );
-      }
-
-      stories.forEach(({ name, story }) => {
-        test(name, async () => {
-          await story.run();
-          // Ensures a consistent snapshot by waiting for the component to render by adding a delay of 1 ms before taking the snapshot.
-          await new Promise((resolve) => setTimeout(resolve, 1));
-          expect(document.body.firstChild).toMatchSnapshot();
-        });
-      });
-    });
-  });
-});
-```
-
-----------------------------------------
-
-TITLE: Defining Svelte Storybook Story (JS CSF) with Play Function
-DESCRIPTION: This Svelte snippet defines a Storybook story using JavaScript Component Story Format (CSF) within a `<script module>` block. It imports `defineMeta` from `@storybook/addon-svelte-csf` to set up the component. The `Story` component is used to define `ExampleStory`, which includes a `play` function to simulate user interactions like typing and clicking on elements.
-SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/play-function-with-canvas.md#_snippet_1
-
-LANGUAGE: javascript
-CODE:
-```
-<script module>
-  import { defineMeta } from '@storybook/addon-svelte-csf';
-
-  import MyComponent from './MyComponent.svelte';
-
-  const { Story } = defineMeta({
-    component: MyComponent,
-  });
-</script>
-
-<Story
-  name="ExampleStory"
-  play={async ({ canvas, userEvent }) => {
-    // Starts querying from the component's root element
-    await userEvent.type(canvas.getByTestId('example-element'), 'something');
-    await userEvent.click(canvas.getByRole('button'));
-  }} />
+export default config;
 ```
 
 ----------------------------------------
@@ -843,119 +574,20 @@ export const FilledForm: Story = {
 
 ----------------------------------------
 
-TITLE: Defining Storybook Meta for Button (Common TypeScript)
-DESCRIPTION: This TypeScript snippet defines Storybook metadata for a generic `Button` component, suitable for common TypeScript-based frameworks like React or Vue. It uses the `satisfies Meta<typeof Button>` assertion for type safety and imports `Meta` from a framework-specific Storybook package, setting `title` and `component`.
-SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/button-story-default-export.md#_snippet_5
+TITLE: Configuring Storybook with TypeScript
+DESCRIPTION: This snippet provides the TypeScript equivalent of the main Storybook configuration, leveraging `StorybookConfig` type for enhanced type safety. It sets the UI framework, defines the paths for story files (MDX and various JS/TS formats), and specifies the logging level, ensuring Storybook correctly loads and displays your stories.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/main-config-log-level.md#_snippet_1
 
 LANGUAGE: ts
 CODE:
 ```
 // Replace your-framework with the framework you are using, e.g. react-vite, nextjs, vue3-vite, etc.
-import type { Meta } from '@storybook/your-framework';
+import type { StorybookConfig } from '@storybook/your-framework';
 
-import { Button } from './Button';
-
-const meta = {
-  /* 👇 The title prop is optional.
-   * See https://storybook.js.org/docs/configure/#configure-story-loading
-   * to learn how to generate automatic titles
-   */
-  title: 'Button',
-  component: Button,
-} satisfies Meta<typeof Button>;
-
-export default meta;
-```
-
-----------------------------------------
-
-TITLE: Defining Primary Button Story in Solid (TypeScript)
-DESCRIPTION: This snippet defines a basic Storybook story for a Button component in a SolidJS project using TypeScript. It imports `Meta` and `StoryObj` types from `storybook-solidjs`, sets the component for the story, and exports a `Primary` story with `primary: true` argument.
-SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/csf-3-example-starter.md#_snippet_3
-
-LANGUAGE: TypeScript
-CODE:
-```
-import type { Meta, StoryObj } from 'storybook-solidjs';
-
-import { Button } from './Button';
-
-const meta = {
-  component: Button,
-} satisfies Meta<typeof Button>;
-
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-export const Primary: Story = { args: { primary: true } };
-```
-
-----------------------------------------
-
-TITLE: Defining Basic Button Story in Solid (TypeScript)
-DESCRIPTION: This snippet defines a basic Storybook story for a SolidJS Button component using TypeScript. It sets the component, defines a 'Basic' story, and renders the Button with a label and an onClick action, using satisfies Meta for type safety.
-SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/button-story-click-handler.md#_snippet_4
-
-LANGUAGE: tsx
-CODE:
-```
-import type { Meta, StoryObj } from 'storybook-solidjs';
-
-import { action } from 'storybook/actions';
-
-import { Button } from './Button';
-
-const meta = {
-  component: Button,
-} satisfies Meta<typeof Button>;
-
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-export const Basic: Story = {
-  render: () => <Button label="Hello" onClick={action('clicked')} />,
-};
-```
-
-----------------------------------------
-
-TITLE: Configuring Storybook Test Runner for Accessibility (TypeScript)
-DESCRIPTION: This TypeScript snippet provides the configuration for the Storybook test runner to integrate accessibility checks. It uses the `preVisit` hook to inject `axe-playwright` and the `postVisit` hook to fetch story context, apply custom Axe rules defined in story parameters, and execute `checkA11y` to produce a detailed HTML accessibility report. This setup leverages `@storybook/test-runner` and `axe-playwright`.
-SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/test-runner-a11y-configure.md#_snippet_1
-
-LANGUAGE: ts
-CODE:
-```
-import type { TestRunnerConfig } from '@storybook/test-runner';
-import { getStoryContext } from '@storybook/test-runner';
-
-import { injectAxe, checkA11y, configureAxe } from 'axe-playwright';
-
-/*
- * See https://storybook.js.org/docs/writing-tests/integrations/test-runner#test-hook-api
- * to learn more about the test-runner hooks API.
- */
-const config: TestRunnerConfig = {
-  async preVisit(page) {
-    await injectAxe(page);
-  },
-  async postVisit(page, context) {
-    // Get the entire context of a story, including parameters, args, argTypes, etc.
-    const storyContext = await getStoryContext(page, context);
-
-    // Apply story-level a11y rules
-    await configureAxe(page, {
-      rules: storyContext.parameters?.a11y?.config?.rules,
-    });
-
-    const element = storyContext.parameters?.a11y?.element ?? 'body';
-    await checkA11y(page, element, {
-      detailedReport: true,
-      detailedReportOptions: {
-        html: true,
-      },
-    });
-  },
+const config: StorybookConfig = {
+  framework: '@storybook/your-framework',
+  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  logLevel: 'debug'
 };
 
 export default config;
@@ -963,88 +595,72 @@ export default config;
 
 ----------------------------------------
 
-TITLE: Configuring Storybook with JavaScript
-DESCRIPTION: This snippet defines the main Storybook configuration in JavaScript, specifying the UI framework, the location of story files (MDX and various JS/TS formats), and the logging level. It's essential for Storybook to find and render your components.
-SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/main-config-log-level.md#_snippet_0
+TITLE: ArgTypes Configuration Object
+DESCRIPTION: Defines the structure for configuring argTypes, allowing specification of control type, description, conditional display, mapping, name, options, table configuration, and data type for each argument.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/api/arg-types.mdx#_snippet_0
 
-LANGUAGE: js
+LANGUAGE: typescript
 CODE:
 ```
-export default {
-  // Replace your-framework with the framework you are using, e.g. react-vite, nextjs, vue3-vite, etc.
-  framework: '@storybook/your-framework',
-  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
-  logLevel: 'debug'
-};
-```
-
-----------------------------------------
-
-TITLE: Configuring Default Export for Storybook Component Stories (JavaScript)
-DESCRIPTION: This snippet demonstrates the standard default export configuration for a Storybook component story file. It imports `MyComponent` and then exports an object defining the story's `title` (how it appears in the Storybook UI) and the `component` itself, which Storybook uses to render the stories.
-SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/my-component-story.md#_snippet_0
-
-LANGUAGE: JavaScript
-CODE:
-```
-import { MyComponent } from './MyComponent';
-
-export default {
-  /* 👇 The title prop is optional.
-   * See https://storybook.js.org/docs/configure/#configure-story-loading
-   * to learn how to generate automatic titles
-   */
-  title: 'MyComponent',
-  component: MyComponent,
-};
-
-// Your stories
-```
-
-----------------------------------------
-
-TITLE: Using CSF Format with Args (Correct)
-DESCRIPTION: This code demonstrates another correct way to define stories in Storybook using the CSF (Component Story Format) with args. It exports a default object containing the component and then exports individual stories as named exports with args defined. This allows for more control over the component's properties.
-SOURCE: https://github.com/storybookjs/storybook/blob/next/code/lib/eslint-plugin/docs/rules/no-stories-of.md#_snippet_2
-
-LANGUAGE: javascript
-CODE:
-```
-import Button from '../components/Button';
-
-export default = {
-  component: Button
-}
-
-export const Primary = {
-  args: {
-    primary: true
+{
+  [key: string]: {
+    control?: ControlType | { type: ControlType; /* See below for more */ } | false;
+    description?: string;
+    if?: Conditional;
+    mapping?: { [key: string]: { [option: string]: any } };
+    name?: string;
+    options?: string[];
+    table?: {
+      category?: string;
+      defaultValue?: { summary: string; detail?: string };
+      disable?: boolean;
+      subcategory?: string;
+      type?: { summary?: string; detail?: string };
+    },
+    type?: SBType | SBScalarType['name'];
   }
 }
 ```
 
 ----------------------------------------
 
-TITLE: Configuring Storybook Main File in JavaScript
-DESCRIPTION: This snippet demonstrates how to configure the Storybook `main.js` file using JavaScript. It sets the framework, defines paths for story files and MDX documentation, includes optional addons like `addon-docs`, and specifies a directory for static assets. The `autodocs` setting is configured to generate documentation based on tags.
-SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/main-config-typical.md#_snippet_0
+TITLE: Compiling Storybook for Deployment - Shell
+DESCRIPTION: This is the general syntax for the `storybook build` command, used to compile a Storybook instance into static files for deployment. It should be executed from the root directory of your project.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/api/cli-options.mdx#_snippet_15
 
-LANGUAGE: js
+LANGUAGE: shell
 CODE:
 ```
-const config = {
-  // Required
-  // Replace your-framework with the framework you are using, e.g. react-vite, nextjs, vue3-vite, etc.
-  framework: '@storybook/your-framework',
-  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
-  // Optional
-  addons: ['@storybook/addon-docs'],
-  docs: {
-    autodocs: 'tag',
+storybook build [options]
+```
+
+----------------------------------------
+
+TITLE: Defining Button Component Stories in Storybook (TypeScript)
+DESCRIPTION: This TypeScript snippet defines a Storybook 'Meta' object for a 'Button' component, specifying its component type. It then creates an 'Example' story ('StoryObj') for the button, setting its 'primary' state to true and its 'label' to 'Button'. This demonstrates how to set up basic component stories with arguments for rendering in Storybook.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/button-story-baseline-with-satisfies-story-level.md#_snippet_0
+
+LANGUAGE: TypeScript
+CODE:
+```
+// Replace your-framework with the framework you are using, e.g. react-vite, nextjs, vue3-vite, etc.
+import type { Meta, StoryObj } from '@storybook/your-framework';
+
+import { Button } from './Button';
+
+const meta = {
+  component: Button,
+} satisfies Meta<typeof Button>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Example = {
+  args: {
+    primary: true,
+    label: 'Button',
   },
-  staticDirs: ['../public'],
-};
-export default config;
+} satisfies Story;
 ```
 
 ----------------------------------------
@@ -1075,6 +691,449 @@ export const Opens: Story = {
     const button = canvas.getByRole('button', { text: 'Open Modal' });
     await userEvent.click(button);
     await expect(canvas.getByRole('dialog')).toBeInTheDocument();
+  },
+};
+```
+
+----------------------------------------
+
+TITLE: Importing `expect` for Assertions - JavaScript
+DESCRIPTION: This snippet demonstrates how to import the `expect` utility from `storybook/test`. The `expect` utility is crucial for making assertions in Storybook interaction tests, combining capabilities from Vitest's `expect` and `@testing-library/jest-dom`.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/writing-tests/interaction-testing.mdx#_snippet_11
+
+LANGUAGE: JavaScript
+CODE:
+```
+import { expect } from 'storybook/test';
+```
+
+----------------------------------------
+
+TITLE: Using CSF Format (Correct)
+DESCRIPTION: This code demonstrates the correct way to define stories in Storybook using the CSF (Component Story Format). It exports a default object containing the component and then exports individual stories as named exports. This is the recommended approach for Storybook 5.2 and later.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/code/lib/eslint-plugin/docs/rules/no-stories-of.md#_snippet_1
+
+LANGUAGE: javascript
+CODE:
+```
+import Button from '../components/Button';
+
+export default = {
+  component: Button
+}
+
+export const Primary = () => <Button primary />
+```
+
+----------------------------------------
+
+TITLE: Creating Storybook Project with npm (Shell)
+DESCRIPTION: Use this command with npm to initialize a new Storybook project. It fetches the latest version of the create-storybook package and runs it interactively.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/create-command.md#_snippet_0
+
+LANGUAGE: Shell
+CODE:
+```
+npm create storybook@latest
+```
+
+----------------------------------------
+
+TITLE: Mocking API Responses with MSW in Angular Storybook
+DESCRIPTION: This snippet demonstrates how to configure Storybook stories for an Angular component using TypeScript, integrating Mock Service Worker (MSW) to mock both successful and error API responses. It defines a TestData object and uses http.get handlers to return JSON data or a 403 status for testing different API scenarios.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/msw-addon-configure-handlers-http.md#_snippet_0
+
+LANGUAGE: TypeScript
+CODE:
+```
+import type { Meta, StoryObj } from '@storybook/angular';
+
+import { http, HttpResponse, delay } from 'msw';
+
+import { DocumentScreen } from './YourPage.component';
+
+const meta: Meta<DocumentScreen> = {
+  component: DocumentScreen,
+};
+
+export default meta;
+type Story = StoryObj<DocumentScreen>;
+
+// 👇 The mocked data that will be used in the story
+const TestData = {
+  user: {
+    userID: 1,
+    name: 'Someone',
+  },
+  document: {
+    id: 1,
+    userID: 1,
+    title: 'Something',
+    brief: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    status: 'approved',
+  },
+  subdocuments: [
+    {
+      id: 1,
+      userID: 1,
+      title: 'Something',
+      content:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      status: 'approved',
+    },
+  ],
+};
+
+export const MockedSuccess: Story = {
+  parameters: {
+    msw: {
+      handlers: [
+        http.get('https://your-restful-endpoint/', () => {
+          return HttpResponse.json(TestData);
+        }),
+      ],
+    },
+  },
+};
+
+export const MockedError: Story = {
+  parameters: {
+    msw: {
+      handlers: [
+        http.get('https://your-restful-endpoint', async () => {
+          await delay(800);
+          return new HttpResponse(null, {
+            status: 403,
+          });
+        }),
+      ],
+    },
+  },
+};
+
+```
+
+----------------------------------------
+
+TITLE: Configuring Storybook Main File (TypeScript)
+DESCRIPTION: This TypeScript snippet illustrates the configuration of the `.storybook/main.ts` file for a Storybook project. It imports `StorybookConfig` for type safety, sets the framework, defines story paths, and integrates the `@storybook/addon-a11y` for accessibility features.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/addon-a11y-register.md#_snippet_1
+
+LANGUAGE: ts
+CODE:
+```
+// Replace your-framework with the framework you are using (e.g., react-vite, vue3-vite, angular, etc.)
+import type { StorybookConfig } from '@storybook/your-framework';
+
+const config: StorybookConfig = {
+  framework: '@storybook/your-framework',
+  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  addons: [
+    // Other Storybook addons
+    '@storybook/addon-a11y' //👈 The a11y addon goes here
+  ]
+};
+
+export default config;
+```
+
+----------------------------------------
+
+TITLE: Testing LoginForm Submission in Storybook (Svelte, TypeScript CSF)
+DESCRIPTION: This Storybook story demonstrates testing a `LoginForm` component in a Svelte environment using TypeScript Component Story Format (CSF). It sets up the story with `fn` to spy on `onSubmit` and uses the `play` function to simulate user input and form submission via `userEvent`, asserting that the `onSubmit` callback was successfully invoked.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/interaction-test-fn-mock-spy.md#_snippet_4
+
+LANGUAGE: typescript
+CODE:
+```
+// Replace your-framework with the framework you are using, e.g. sveltekit or svelte-vite
+import type { Meta, StoryObj } from '@storybook/your-framework';
+import { fn, expect } from 'storybook/test';
+
+import { LoginForm } from './LoginForm.svelte';
+
+const meta = {
+  component: LoginForm,
+  args: {
+    // 👇 Use `fn` to spy on the onSubmit arg
+    onSubmit: fn(),
+  },
+} satisfies Meta<typeof LoginForm>;
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+export const FilledForm: Story = {
+  play: async ({ args, canvas, userEvent }) => {
+    await userEvent.type(canvas.getByLabelText('Email'), 'email@provider.com');
+    await userEvent.type(canvas.getByLabelText('Password'), 'a-random-password');
+    await userEvent.click(canvas.getByRole('button', { name: 'Log in' }));
+
+    // 👇 Now we can assert that the onSubmit arg was called
+    await expect(args.onSubmit).toHaveBeenCalled();
+  },
+};
+```
+
+----------------------------------------
+
+TITLE: Configuring MSW Handlers for GraphQL
+DESCRIPTION: This code configures MSW handlers to mock GraphQL requests for the document screen component. It defines two stories: one that fetches data successfully and another that simulates a failure.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/writing-stories/mocking-data-and-modules/mocking-network-requests.mdx#_snippet_7
+
+LANGUAGE: javascript
+CODE:
+```
+import React from 'react';
+import { graphql } from 'msw';
+
+import { DocumentScreen } from './DocumentScreen';
+
+export default {
+  title: 'DocumentScreen',
+  component: DocumentScreen,
+};
+
+const Template = () => <DocumentScreen />;
+
+export const Success = Template.bind({});
+Success.parameters = {
+  msw: {
+    handlers: [
+      graphql.query('GetDocument', (req, res, ctx) => {
+        return res(
+          ctx.data({
+            document: {
+              title: 'My Document',
+              content: 'This is the content of my document.',
+            },
+          })
+        );
+      }),
+    ],
+  },
+};
+
+export const Failure = Template.bind({});
+Failure.parameters = {
+  msw: {
+    handlers: [
+      graphql.query('GetDocument', (req, res, ctx) => {
+        return res(ctx.status(500));
+      }),
+    ],
+  },
+};
+
+```
+
+----------------------------------------
+
+TITLE: Initializing Storybook with yarn
+DESCRIPTION: This command initializes Storybook version 7 or higher in a project using `yarn dlx`, which is yarn's equivalent to `npx`. It automates the setup of Storybook's configuration and dependencies.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/storybook-init-v7.md#_snippet_2
+
+LANGUAGE: Shell
+CODE:
+```
+yarn dlx storybook@^7 init
+```
+
+----------------------------------------
+
+TITLE: Initializing Storybook with npm
+DESCRIPTION: This command initializes Storybook version 7 or higher in a project using `npx`, the Node Package Execute utility bundled with npm. It sets up the necessary configuration and files for Storybook.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/storybook-init-v7.md#_snippet_0
+
+LANGUAGE: Shell
+CODE:
+```
+npx storybook@^7 init
+```
+
+----------------------------------------
+
+TITLE: Initializing Apollo Client Wrapper Component (Vue/TypeScript)
+DESCRIPTION: This Vue component, `WrapperComponent`, initializes and provides an Apollo Client instance for use throughout an application or within Storybook. It configures an `httpLink` to a GraphQL endpoint and sets up an `InMemoryCache`. The client is configured with `no-cache` fetch policies for queries and watch queries, making it suitable for mocking or testing environments.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/msw-addon-configure-handlers-graphql.md#_snippet_14
+
+LANGUAGE: vue
+CODE:
+```
+<template>
+  <div><slot /></div>
+</template>
+
+<script>
+  import { defineComponent, provide } from 'vue';
+  import { DefaultApolloClient } from '@vue/apollo-composable';
+  import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core';
+
+  // Apollo client wrapper component that can be used within your app and Storybook
+  export default defineComponent({
+    name: 'WrapperComponent',
+    setup() {
+      const httpLink = createHttpLink({
+        // You should use an absolute URL here
+        uri: 'https://your-graphql-endpoint',
+      });
+      const cache = new InMemoryCache();
+
+      const mockedClient = new ApolloClient({
+        link: httpLink,
+        cache,
+        defaultOptions: {
+          watchQuery: {
+            fetchPolicy: 'no-cache',
+            errorPolicy: 'all',
+          },
+          query: {
+            fetchPolicy: 'no-cache',
+            errorPolicy: 'all',
+          },
+        },
+      });
+      provide(DefaultApolloClient, mockedClient);
+    },
+  });
+</script>
+```
+
+----------------------------------------
+
+TITLE: Defining Default Storybook Story for Generic TS/TSX
+DESCRIPTION: This snippet presents a common TypeScript CSF definition for a 'MyComponent', applicable to various frameworks like React, Next.js, or Vue. It defines the 'meta' object with 'component' and 'title', and exports a 'Default' story with 'args', ensuring type safety with 'satisfies Meta<typeof MyComponent>'.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/storybook-csf-3-auto-title-redundant.md#_snippet_6
+
+LANGUAGE: ts
+CODE:
+```
+// Replace your-framework with the framework you are using, e.g. react-vite, nextjs, vue3-vite, etc.
+import type { Meta, StoryObj } from '@storybook/your-framework';
+
+import { MyComponent } from './MyComponent';
+
+const meta = {
+  /* 👇 The title prop is optional.
+   * See https://storybook.js.org/docs/configure/#configure-story-loading
+   * to learn how to generate automatic titles
+   */
+  component: MyComponent,
+  title: 'components/MyComponent/MyComponent',
+} satisfies Meta<typeof MyComponent>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+  args: {
+    something: 'Something else',
+  },
+};
+
+```
+
+----------------------------------------
+
+TITLE: Initializing Storybook Project with CLI (sh)
+DESCRIPTION: This snippet demonstrates the process of initializing Storybook within an existing project using the `npx storybook@latest init` command. It first navigates into the target project directory (`my-app`) and then executes the Storybook CLI command to set up the necessary configuration and files, making the project ready for Storybook development.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/code/lib/cli-storybook/README.md#_snippet_0
+
+LANGUAGE: sh
+CODE:
+```
+cd my-app
+npx storybook@latest init
+```
+
+----------------------------------------
+
+TITLE: Configuring Default Export for Storybook Component Stories (JavaScript)
+DESCRIPTION: This snippet demonstrates the standard default export configuration for a Storybook component story file. It imports `MyComponent` and then exports an object defining the story's `title` (how it appears in the Storybook UI) and the `component` itself, which Storybook uses to render the stories.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/my-component-story.md#_snippet_0
+
+LANGUAGE: JavaScript
+CODE:
+```
+import { MyComponent } from './MyComponent';
+
+export default {
+  /* 👇 The title prop is optional.
+   * See https://storybook.js.org/docs/configure/#configure-story-loading
+   * to learn how to generate automatic titles
+   */
+  title: 'MyComponent',
+  component: MyComponent,
+};
+
+// Your stories
+```
+
+----------------------------------------
+
+TITLE: Configuring Storybook Main in JavaScript
+DESCRIPTION: This JavaScript snippet demonstrates the basic configuration for Storybook's `main.js` file. It exports an object defining the Storybook framework to be used (e.g., React, Vue) and the array of paths where Storybook should find your stories. This file is crucial for initializing Storybook within a project.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/storybook-main-configuration-src-dir.md#_snippet_0
+
+LANGUAGE: js
+CODE:
+```
+export default {
+  // Replace your-framework with the framework you are using, e.g. react-vite, nextjs, vue3-vite, etc.
+  framework: '@storybook/your-framework',
+  stories: ['../src'],
+};
+```
+
+----------------------------------------
+
+TITLE: Mocking Successful API Response in Storybook (JS)
+DESCRIPTION: This Storybook story demonstrates how to mock a successful API response using Mock Service Worker (MSW) for a JavaScript component. It defines `TestData` to simulate a typical data structure and configures an `http.get` handler to return this data as a JSON response, allowing UI components to be tested with predictable successful data.
+SOURCE: https://github.com/storybookjs/storybook/blob/next/docs/_snippets/msw-addon-configure-handlers-http.md#_snippet_6
+
+LANGUAGE: js
+CODE:
+```
+import { http, HttpResponse, delay } from 'msw';
+
+export default {
+  component: 'demo-document-screen',
+};
+
+// 👇 The mocked data that will be used in the story
+const TestData = {
+  user: {
+    userID: 1,
+    name: 'Someone',
+  },
+  document: {
+    id: 1,
+    userID: 1,
+    title: 'Something',
+    brief: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    status: 'approved',
+  },
+  subdocuments: [
+    {
+      id: 1,
+      userID: 1,
+      title: 'Something',
+      content:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      status: 'approved',
+    },
+  ],
+};
+
+export const MockedSuccess = {
+  parameters: {
+    msw: {
+      handlers: [
+        http.get('https://your-restful-endpoint/', () => {
+          return HttpResponse.json(TestData);
+        }),
+      ],
+    },
   },
 };
 ```

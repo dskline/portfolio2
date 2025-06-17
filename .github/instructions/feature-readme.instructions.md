@@ -53,7 +53,11 @@ If the feature has specific package dependencies beyond the standard Next.js sta
 | `package-name` | Brief description of why this package is needed | [Link](url) |
 ```
 
-Only include dependencies that are specific to this feature, not general project dependencies like React, Next.js, etc.
+Only include dependencies that are needed by this feature and are listed as a dependency in package.json.
+
+Do not include any of the following packages:
+- Packages that are part of or included in the standard Next.js stack (e.g., `next`, `react`, `react-dom`)
+- Utilities that are commonly used for design purposes (e.g., `clsx`)
 
 ## Guidelines
 - Keep the README focused on helping developers understand and contribute to the feature
