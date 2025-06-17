@@ -1,10 +1,13 @@
 import GitHubIcon from "@/features/projects/assets/github.svg";
-import { getProjects } from "@/features/projects/getProjects";
+import type { Project } from "@/features/projects/getProjects";
 import clsx from "clsx";
 import Image from "next/image";
 
-export async function Projects() {
-  const projects = await getProjects();
+interface ProjectsProps {
+  projects: Project[];
+}
+
+export function Projects({ projects }: ProjectsProps) {
   let projectImageCounter = 0;
 
   const sortedProjects = projects.sort((a, b) => {
@@ -14,9 +17,12 @@ export async function Projects() {
   });
 
   return (
-    <div className="@container/Projects flex flex-col gap-24">
+    <div
+      className="@container/Projects flex flex-col gap-24"
+      data-testid="projects-container"
+    >
       {sortedProjects.map((project) => (
-        <section
+        <article
           key={project.title}
           className="mx-auto grid @xl/Projects:w-3/4 w-full @5xl/Projects:grid-cols-[2fr_1fr] grid-cols-1 @5xl/Projects:gap-12 gap-y-8"
         >
@@ -61,7 +67,7 @@ export async function Projects() {
                 return (
                   <Image
                     key={`${project.title}-image-${index}`}
-                    data-project-image
+                    data-testid="project-image"
                     className={clsx(
                       "absolute inset-0 overflow-hidden",
                       "rounded-lg border-2 border-dark shadow-lg",
@@ -82,7 +88,7 @@ export async function Projects() {
               })}
             </div>
           )}
-        </section>
+        </article>
       ))}
     </div>
   );
