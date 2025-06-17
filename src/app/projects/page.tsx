@@ -1,7 +1,5 @@
-import { getFiles } from "@/features/cms/getFiles";
+import ProjectsPage from "@/features/projects";
 
 export default async function Page() {
-  const projects = await getFiles("Portfolio/CMS/Projects");
-  // TODO: Render the projects
-  return <>{JSON.stringify(projects)}</>;
+  return <ProjectsPage />;
 }
