@@ -1,23 +1,23 @@
 {
-    "javascript.preferences.importModuleSpecifier": "non-relative",
-    "javascript.preferences.importModuleSpecifierEnding": "minimal",
-    "typescript.preferences.importModuleSpecifier": "non-relative",
-    "typescript.preferences.importModuleSpecifierEnding": "minimal",
-    "typescript.preferences.preferTypeOnlyAutoImports": true,
-    "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
-        "source.addMissingImports.ts": "explicit",
-    },
-    "biome.enabled": true,
-    "biome.suggestInstallingGlobally": true,
-    "editor.defaultFormatter": "biomejs.biome",
-    "notebook.defaultFormatter": "biomejs.biome",
-    "coverage-gutters.showLineCoverage": true,
-    "coverage-gutters.showGutterCoverage": true,
-    "coverage-gutters.showRulerCoverage": true,
-    "markdown-preview-enhanced.automaticallyShowPreviewOfMarkdownBeingEdited": false,
-    "npm-outdated.level": "minor",
-    "files.associations": {
-        "*.css": "tailwindcss"
-    },
+  "javascript.preferences.importModuleSpecifier": "non-relative",
+  "javascript.preferences.importModuleSpecifierEnding": "minimal",
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.preferences.importModuleSpecifierEnding": "minimal",
+  "typescript.preferences.preferTypeOnlyAutoImports": true,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.addMissingImports.ts": "explicit"
+  },
+  "biome.enabled": true,
+  "biome.suggestInstallingGlobally": true,
+  "editor.defaultFormatter": "biomejs.biome",
+  "notebook.defaultFormatter": "biomejs.biome",
+  "coverage-gutters.showLineCoverage": true,
+  "coverage-gutters.showGutterCoverage": true,
+  "coverage-gutters.showRulerCoverage": true,
+  "markdown-preview-enhanced.automaticallyShowPreviewOfMarkdownBeingEdited": false,
+  "npm-outdated.level": "minor",
+  "files.associations": {
+    "*.css": "tailwindcss"
+  }
 }

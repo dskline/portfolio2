@@ -50,7 +50,7 @@ If the feature has specific package dependencies beyond the standard Next.js sta
 
 | Package | Purpose | Documentation |
 |---------|---------|---------------|
-| `package-name` | Brief description of why this package is needed | [Link](url) |
+| `package-name` | Brief description of why this package is needed | [Link](https://example.com) |
 ```
 
 Only include dependencies that are needed by this feature and are listed as a dependency in package.json.
