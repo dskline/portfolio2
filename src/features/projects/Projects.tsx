@@ -10,7 +10,7 @@ interface ProjectsProps {
 export function Projects({ projects }: ProjectsProps) {
   let projectImageCounter = 0;
 
-  const sortedProjects = projects.sort((a, b) => {
+  const sortedProjects = [...projects].sort((a, b) => {
     const dateA = new Date(a.date);
     const dateB = new Date(b.date);
     return dateB.getTime() - dateA.getTime();
@@ -23,7 +23,7 @@ export function Projects({ projects }: ProjectsProps) {
     >
       {sortedProjects.map((project) => (
         <article
-          key={project.title}
+          key={`${project.title} ${project.date.toISOString()}`}
           className="mx-auto grid @xl/Projects:w-3/4 w-full @5xl/Projects:grid-cols-[2fr_1fr] grid-cols-1 @5xl/Projects:gap-12 gap-y-8"
         >
           <div className="@container/ProjectInfo flex flex-col gap-4">
