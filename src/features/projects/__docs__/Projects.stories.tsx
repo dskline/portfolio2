@@ -1,6 +1,6 @@
-import { Projects } from "@/features/projects/Projects";
-import type { Project } from "@/features/projects/getProjects";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import type { Project } from "@/features/projects/getProjects";
+import { Projects } from "@/features/projects/Projects";
 
 // Mock data for projects
 const mockProjects: Project[] = [

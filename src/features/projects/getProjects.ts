@@ -1,5 +1,5 @@
-import { getFiles } from "@/features/cms/getFiles";
 import { z } from "zod";
+import { getFiles } from "@/features/cms/getFiles";
 
 const projectSchema = z.object({
   title: z.string(),

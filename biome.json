@@ -1,11 +1,18 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
-  "organizeImports": {
-    "enabled": true
-  },
+  "$schema": "https://biomejs.dev/schemas/2.0.0/schema.json",
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "files": {
-    "include": ["./*", "/*"],
-    "ignore": [".husky", ".next", ".vscode", "node_modules", "coverage"],
+    "includes": [
+      "**/*",
+      "**//**/*",
+      "!**/.husky/**",
+      "!**/.next/**",
+      "!**/.vscode/**",
+      "!**/node_modules/**",
+      "!**/coverage/**",
+      "!**/storybook-static/**",
+      "!**/test-results/**"
+    ],
     "ignoreUnknown": true
   },
   "linter": {

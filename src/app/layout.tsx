@@ -2,9 +2,9 @@ import { NextDevtoolsProvider } from "@next-devtools/core";
 import type { Metadata } from "next";
 import { Anton, Geist } from "next/font/google";
 import "@/features/theme/globals.css";
-import { Navbar } from "@/features/layout/Navbar";
 import clsx from "clsx";
 import { ThemeProvider } from "next-themes";
+import { Navbar } from "@/features/layout/Navbar";
 
 const fontHeading = Anton({
   variable: "--font-mono",

@@ -17,4 +17,7 @@
     "coverage-gutters.showRulerCoverage": true,
     "markdown-preview-enhanced.automaticallyShowPreviewOfMarkdownBeingEdited": false,
     "npm-outdated.level": "minor",
+    "files.associations": {
+        "*.css": "tailwindcss"
+    },
 }
