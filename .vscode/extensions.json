@@ -1,11 +1,11 @@
 {
-    "recommendations": [
-        "biomejs.biome",
-        "ryanluker.vscode-coverage-gutters",
-        "bradlc.vscode-tailwindcss",
-        "GitHub.copilot",
-        "GitHub.copilot-chat",
-        "mehyaa.branch-cleanup",
-        "mskelton.npm-outdated",
-    ]
+  "recommendations": [
+    "biomejs.biome",
+    "ryanluker.vscode-coverage-gutters",
+    "bradlc.vscode-tailwindcss",
+    "GitHub.copilot",
+    "GitHub.copilot-chat",
+    "mehyaa.branch-cleanup",
+    "mskelton.npm-outdated"
+  ]
 }

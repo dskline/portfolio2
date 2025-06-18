@@ -3,7 +3,7 @@ name: Update PR Title
 
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [opened]
 
 jobs:
   update-title:

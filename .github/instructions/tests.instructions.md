@@ -139,6 +139,69 @@ While both `@smoke` and `@regression` tags aim to ensure the application is work
     - Auto-generated IDs or classes
     - Visual styling attributes that might change
 
+## Test Scope Restrictions
+
+### Visual Testing Guidelines
+
+-   **No Visual Tests in Regular Spec Files**: Regular `.spec.ts` files should NOT include visual testing such as:
+    - Checking for specific Tailwind CSS classes (e.g., `toHaveClass(/bg-blue-500/)`)
+    - Testing hover effects or CSS transitions
+    - Responsive design breakpoint testing
+    - Layout or styling verification
+
+-   **Visual Testing Files**: Create separate `feature.visual.spec.ts` files tagged with `@visual` for visual regression testing:
+    ```typescript
+    // projects.visual.spec.ts
+    test('Projects feature displays correctly across viewports', { tag: '@visual' }, async ({ page }) => {
+      // Test mobile, tablet, and desktop layouts
+      // Generate screenshots and videos for visual comparison
+    });
+    ```
+
+-   **Exception for Dynamic CSS Classes**: The ONLY time CSS class testing is allowed in regular spec files is when testing dynamically added classes that indicate application-wide state changes:
+    ```typescript
+    // Good: Testing application state changes via CSS classes
+    await expect(page.locator('body')).toHaveClass(/dark/); // Dark mode activated
+    await expect(page.locator('container')).toHaveClass(/loading/); // Container in loading state
+    
+    // Prefer: Test actual HTML attributes when available
+    await expect(submitButton).toBeDisabled(); // Button is disabled
+    await expect(modal).toHaveAttribute('open'); // Modal is open
+    await expect(checkbox).toBeChecked(); // Checkbox is checked
+    await expect(input).toHaveAttribute('aria-expanded', 'true'); // Dropdown expanded
+    
+    // Bad: Testing static styling classes
+    await expect(button).toHaveClass(/bg-blue-500/); // Static styling
+    await expect(container).toHaveClass(/flex/); // Layout styling
+    await expect(item).toHaveClass(/selected/); // Use aria-selected instead
+    ```
+
+### Accessibility Testing Restrictions
+
+-   **No Accessibility Tests in Playwright**: Do NOT write accessibility tests in Playwright spec files. This includes:
+    - Testing semantic HTML structure
+    - Checking ARIA attributes
+    - Keyboard navigation testing
+    - Screen reader compatibility
+    - Alt text verification
+    - Focus management
+
+-   **Accessibility Testing Handled Elsewhere**: Accessibility is covered by:
+    - Storybook accessibility addon
+    - ESLint accessibility rules
+    - Code review processes
+    - Dedicated accessibility testing tools
+
+### Focus on Functional Testing
+
+Regular spec files should focus on:
+- **User interactions and workflows**
+- **Data flow and API responses**
+- **Navigation and routing**
+- **Form submission and validation**
+- **Error handling and edge cases**
+- **Business logic verification**
+
 ## Readability and Debugging
 
 -   **Meaningful Titles**: Test and step titles should be concise yet descriptive enough to understand their purpose without reading the code.
