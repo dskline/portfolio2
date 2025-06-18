@@ -12,7 +12,7 @@ const mockProjects: Project[] = [
     date: new Date("2024-01-15"),
     githubUrl: "https://github.com/example/uservoice-feedback",
     images: [
-      "v1734498915/Portfolio/Projects/UserVoice%20Feedback%20Capture/feedback-capture-preview_o4jkm6.png",
+      "https://res.cloudinary.com/frontendlive/ar_5:3,c_fill,g_auto/portfolio2/unnamed.jpg",
     ],
   },
   {
@@ -23,8 +23,8 @@ const mockProjects: Project[] = [
     date: new Date("2023-11-20"),
     githubUrl: "https://github.com/example/uservoice-validation",
     images: [
-      "v1734498915/Portfolio/Projects/UserVoice%20Validation/validation-preview_a8hkn2.png",
-      "v1734498915/Portfolio/Projects/UserVoice%20Validation/validation-dashboard_m9plo4.png",
+      "https://res.cloudinary.com/frontendlive/ar_5:3,c_fill,g_west/portfolio2/uv_validation_2.png",
+      "https://res.cloudinary.com/frontendlive/ar_16:9,c_fill,g_north/portfolio2/uv_validation_1.png",
     ],
   },
   {
@@ -50,7 +50,6 @@ const meta = {
       },
     },
   },
-  tags: ["autodocs"],
 } satisfies Meta<typeof Projects>;
 
 export default meta;

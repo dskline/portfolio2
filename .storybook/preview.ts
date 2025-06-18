@@ -1,4 +1,6 @@
-import type { Preview } from "@storybook/nextjs-vite";
+import { withThemeByClassName } from "@storybook/addon-themes";
+import type { Preview, ReactRenderer } from "@storybook/nextjs-vite";
+import "@/features/theme/globals.css";
 
 const preview: Preview = {
   parameters: {
@@ -8,9 +10,6 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
-    darkMode: {
-      stylePreview: true,
-    },
 
     a11y: {
       // 'todo' - show a11y violations in the test UI only
@@ -19,6 +18,15 @@ const preview: Preview = {
       test: "todo",
     },
   },
+  decorators: [
+    withThemeByClassName<ReactRenderer>({
+      themes: {
+        light: "",
+        dark: "dark",
+      },
+      defaultTheme: "light",
+    }),
+  ],
 };
 
 export default preview;
