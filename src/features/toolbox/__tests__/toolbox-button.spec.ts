@@ -1,5 +1,5 @@
-import { expect, test } from "@playwright/test";
 import type { Locator } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 test("Toolbox Button", { tag: "@smoke" }, async ({ page }) => {
   let toolButtons: Locator;
