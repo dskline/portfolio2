@@ -19,6 +19,8 @@
   - **Depends on**: #SCOPE_2_b
 - [ ] Build `HeroSection` component with title, subtitle, portraitSrc props (#SCOPE_3_b)
   - **Depends on**: #SCOPE_3_a
+- [ ] Storybook integration and tests for `HeroSection` component (#SCOPE_3_c)
+  - **Depends on**: #SCOPE_3_b
 - [ ] Implement component ordering based on lexorank values (#SCOPE_3_d)
   - **Depends on**: #SCOPE_2_b, #SCOPE_3_a
 - [ ] Add prop-types or TypeScript types for all components (#SCOPE_3_e)
@@ -35,4 +37,3 @@
   - **Depends on**: #SCOPE_4_a
 - [ ] Review accessibility and performance for HomePage (#SCOPE_4_e)
   - **Depends on**: #SCOPE_4_a
-
