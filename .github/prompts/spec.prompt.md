@@ -21,4 +21,4 @@ Step 3:
 
 Create a new file `src/features/<tag_name>/__docs__/SCOPE.md` for the feature based on the `src/features/<tag_name>/__docs__/SPEC.md` document. This file should outline the specific implementation tasks required to complete an MVP of the feature.
 
-Use `.github/instructions/scope.instructions.md` as the template and guide for creating the scope document.
+Use `.github/instructions/feature-scope.instructions.md` as the template and guide for creating the scope document.
