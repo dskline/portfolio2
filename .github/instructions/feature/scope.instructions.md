@@ -20,77 +20,77 @@ Begin with a clear title that matches the feature name from the specification:
 # Scope for Feature: [Feature Name]
 ```
 
-### 2. Epics and Tasks Section
+### 2. Scopes and Tasks Section
 
-Organize implementation work into logical epics (high-level goals) and break each epic down into specific tasks.
+Organize implementation work into logical scopes (high-level goals) and break each scope down into specific tasks.
 
 ```markdown
-## Epics and Tasks
+## Scopes and Tasks
 
-### EPIC_1: [Epic Name]
-- [x] Task description (#EPIC_1_a)
-- [ ] Task description (#EPIC_1_b)
-- [ ] Task description (#EPIC_1_c)
+### SCOPE_1: [Scope Name]
+- [x] Task description (#SCOPE_1_a)
+- [ ] Task description (#SCOPE_1_b)
+- [ ] Task description (#SCOPE_1_c)
 
-### EPIC_2: [Epic Name]
-- [ ] Task description (#EPIC_2_a)
-  - **Depends on**: #EPIC_1_a, #EPIC_1_b
-- [ ] Task description (#EPIC_2_b)
-  - **Depends on**: #EPIC_2_a
+### SCOPE_2: [Scope Name]
+- [ ] Task description (#SCOPE_2_a)
+  - **Depends on**: #SCOPE_1_a, #SCOPE_1_b
+- [ ] Task description (#SCOPE_2_b)
+  - **Depends on**: #SCOPE_2_a
 ```
 
 ## Task Numbering Pattern
 
-Tasks are numbered using a combination of the Epic ID and a letter suffix:
+Tasks are numbered using a combination of the Scope ID and a letter suffix:
 
-- **Epic Format**: `EPIC_<number>` (e.g., EPIC_1, EPIC_2, EPIC_3)
-- **Task Format**: `#EPIC_<number>_<letter>` (e.g., #EPIC_1_a, #EPIC_1_b, #EPIC_2_a)
+- **Scope Format**: `SCOPE_<number>` (e.g., SCOPE_1, SCOPE_2, SCOPE_3)
+- **Task Format**: `#SCOPE_<number>_<letter>` (e.g., #SCOPE_1_a, #SCOPE_1_b, #SCOPE_2_a)
 
 This pattern provides:
-- Clear epic grouping
+- Clear scope grouping
 - Unique task identification
-- Alphabetical ordering within epics
+- Alphabetical ordering within scopes
 - Easy cross-referencing in code comments and documentation
 
-### Epic Numbering Guidelines
+### Scope Numbering Guidelines
 
-- **Always start with EPIC_1** for initialization and documentation
-- **Use sequential numbering** (EPIC_2, EPIC_3, etc.) for implementation phases
-- **Use `{FINAL_EPIC_NUMBER}` placeholder** in templates to indicate the final epic should be numbered based on the total number of epics for the specific feature
+- **Always start with SCOPE_1** for initialization and documentation
+- **Use sequential numbering** (SCOPE_2, SCOPE_3, etc.) for implementation phases
+- **Use `{FINAL_SCOPE_NUMBER}` placeholder** in templates to indicate the final scope should be numbered based on the total number of scopes for the specific feature
 - **Replace placeholders with actual numbers** when creating specific feature scope documents
 
-## Epic Guidelines
-### Epic 1: Always Documentation and Testing
+## Scope Guidelines
+### Scope 1: Always Documentation and Testing
 
-The first epic should always focus on documentation and testing setup:
+The first scope should always focus on documentation and testing setup:
 
 ```markdown
-### EPIC_1: Initialization
-- [x] Set up initial project docs (#EPIC_1_a)
-- [ ] Create feature flag and scaffold feature structure with // TODO comments (#EPIC_1_b)
-- [ ] Write integration tests for feature (#EPIC_1_c)
+### SCOPE_1: Initialization
+- [x] Set up initial project docs (#SCOPE_1_a)
+- [ ] Create feature flag and scaffold feature structure with // TODO comments (#SCOPE_1_b)
+- [ ] Write integration tests for feature (#SCOPE_1_c)
 ```
 
-### Subsequent Epics: Feature Implementation
+### Subsequent Scopes: Feature Implementation
 
-Organize remaining epics by logical implementation phases:
+Organize remaining scopes by logical implementation phases:
 - Data layer / API integration
 - Core business logic
 - UI components
 
-### Epic {FINAL_EPIC_NUMBER}: Finalization and Cleanup
+### Scope {FINAL_SCOPE_NUMBER}: Finalization and Cleanup
 
-The final epic should focus on wrapping up the feature and ensuring quality and maintainability:
+The final scope should focus on wrapping up the feature and ensuring quality and maintainability:
 - Integration and deployment. If applicable, write visual tests that generate screenshots and video, and add these assets to the README or documentation.
 - Remove or clean up feature flags if they were used during development. Update test scope tags from `@feature-<tag-name>` to `@regression` to reflect the feature's integration into the main test suite.
 - Add synthetic monitoring to ensure the feature works as expected in production.
 
 ```markdown
-### EPIC_{FINAL_EPIC_NUMBER}: Finalization
-- [ ] Write visual tests for feature and add screenshots/video to docs (#EPIC_{FINAL_EPIC_NUMBER}_a)
-- [ ] Remove feature flags and clean up code (#EPIC_{FINAL_EPIC_NUMBER}_b)
-- [ ] Update test scope tags from `@feature-<tag-name>` to `@regression` (#EPIC_{FINAL_EPIC_NUMBER}_c)
-- [ ] Add synthetic monitoring for feature (#EPIC_{FINAL_EPIC_NUMBER}_d)
+### SCOPE_{FINAL_SCOPE_NUMBER}: Finalization
+- [ ] Write visual tests for feature and add screenshots/video to docs (#SCOPE_{FINAL_SCOPE_NUMBER}_a)
+- [ ] Remove feature flags and clean up code (#SCOPE_{FINAL_SCOPE_NUMBER}_b)
+- [ ] Update test scope tags from `@feature-<tag-name>` to `@regression` (#SCOPE_{FINAL_SCOPE_NUMBER}_c)
+- [ ] Add synthetic monitoring for feature (#SCOPE_{FINAL_SCOPE_NUMBER}_d)
 ```
 
 ## Task Requirements
@@ -105,7 +105,7 @@ The final epic should focus on wrapping up the feature and ensuring quality and 
 ### Task Dependencies
 
 - Use the `**Depends on**:` format to indicate dependencies
-- Reference specific task IDs or entire epics
+- Reference specific task IDs or entire scopes
 - List multiple dependencies with commas
 - Dependencies should be logical and help sequence work
 
@@ -120,41 +120,41 @@ The final epic should focus on wrapping up the feature and ensuring quality and 
 ```markdown
 # Roadmap for Feature: Home Page
 
-## Epics and Tasks
+## Scopes and Tasks
 
-### EPIC_1: Initialization
-- [x] Set up initial project docs (#EPIC_1_a)
-- [ ] Create feature flag and scaffold feature structure with // TODO comments (#EPIC_1_b)
-- [ ] Write integration tests for feature (#EPIC_1_c)
+### SCOPE_1: Initialization
+- [x] Set up initial project docs (#SCOPE_1_a)
+- [ ] Create feature flag and scaffold feature structure with // TODO comments (#SCOPE_1_b)
+- [ ] Write integration tests for feature (#SCOPE_1_c)
 
-### EPIC_2: Implement data fetching and validation
-- [ ] Implement `getHomeContent` function to fetch markdown files (#EPIC_2_a)
-- [ ] Implement zod schema validation for frontmatter fields (#EPIC_2_b)
-- [ ] Add error handling for empty or malformed content (#EPIC_2_c)
+### SCOPE_2: Implement data fetching and validation
+- [ ] Implement `getHomeContent` function to fetch markdown files (#SCOPE_2_a)
+- [ ] Implement zod schema validation for frontmatter fields (#SCOPE_2_b)
+- [ ] Add error handling for empty or malformed content (#SCOPE_2_c)
 
-### EPIC_3: Build UI components for content rendering
-- [ ] Create `ContentRenderer` component to map tags to components (#EPIC_3_a)
-  - **Depends on**: #EPIC_2_b
-- [ ] Build `HeroComponent` for hero sections (#EPIC_3_b)
-  - **Depends on**: #EPIC_3_a
-- [ ] Build `CustomComponent` for generic content (#EPIC_3_c)
-  - **Depends on**: #EPIC_3_a
+### SCOPE_3: Build UI components for content rendering
+- [ ] Create `ContentRenderer` component to map tags to components (#SCOPE_3_a)
+  - **Depends on**: #SCOPE_2_b
+- [ ] Build `HeroComponent` for hero sections (#SCOPE_3_b)
+  - **Depends on**: #SCOPE_3_a
+- [ ] Build `CustomComponent` for generic content (#SCOPE_3_c)
+  - **Depends on**: #SCOPE_3_a
 
-### EPIC_4: Integrate the feature into the main application
-- [ ] Create `HomePage` component to orchestrate content rendering (#EPIC_4_a)
-  - **Depends on**: EPIC_2, EPIC_3
-- [ ] Write visual tests for `HomePage` and add screenshots/video to the docs (#EPIC_4_b)
-  - **Depends on**: #EPIC_4_a
+### SCOPE_4: Integrate the feature into the main application
+- [ ] Create `HomePage` component to orchestrate content rendering (#SCOPE_4_a)
+  - **Depends on**: SCOPE_2, SCOPE_3
+- [ ] Write visual tests for `HomePage` and add screenshots/video to the docs (#SCOPE_4_b)
+  - **Depends on**: #SCOPE_4_a
 ```
 
 ## Best Practices
 
-### Epic Organization
+### Scope Organization
 
-- Keep epics focused on a single major goal
-- Aim for 3-6 tasks per epic
-- Order epics by logical implementation sequence
-- Use descriptive epic names that clearly indicate the goal
+- Keep scopes focused on a single major goal
+- There should be no more than 6 tasks per scope
+- Order scopes by logical implementation sequence
+- Use descriptive scope names that clearly indicate the goal
 
 ### Task Granularity
 

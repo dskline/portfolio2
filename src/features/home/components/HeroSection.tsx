@@ -1,4 +1,4 @@
-// TODO: Implement HeroSection component (#EPIC_3_b)
+// TODO: Implement HeroSection component (#SCOPE_3_b)
 // This component should render hero banners with configurable styling and content
 // Props: title, subtitle, portraitSrc, children (HTML content)
 

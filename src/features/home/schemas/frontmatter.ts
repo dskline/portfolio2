@@ -1,4 +1,4 @@
-// TODO: Create zod schema validation for frontmatter fields (#EPIC_2_b)
+// TODO: Create zod schema validation for frontmatter fields (#SCOPE_2_b)
 // Should validate: component, portraitSrc, lexorank, and other component-specific props
 
 import { z } from "zod";

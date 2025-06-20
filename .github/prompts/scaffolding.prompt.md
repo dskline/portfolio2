@@ -32,7 +32,7 @@ Create the complete folder structure with placeholder files:
 
 Follow the testing guidelines from `tdd.instructions.md`:
 
-- Create integration tests based on SCOPE.md epics
+- Create integration tests based on SCOPE.md scopes
 - Use proper test file naming conventions
 - Implement TDD approach (tests should initially fail)
 - Add appropriate scope tags: `@feature-<tag_name>`
@@ -42,5 +42,5 @@ Follow the testing guidelines from `tdd.instructions.md`:
 
 - All files should include // TODO comments indicating implementation areas
 - Follow existing project conventions and TypeScript standards
-- Tests should reflect the epic breakdown from SCOPE.md
+- Tests should reflect the scope breakdown from SCOPE.md
 - Maintain consistency with existing feature structure patterns
