@@ -3,7 +3,7 @@
 ## Epics and Tasks
 
 ### EPIC_1: Initialization
-- [x] Set up initial project docs (#1)
+- [x] Set up initial feature docs (#1)
 - [ ] Create feature flag and scaffold feature structure with // TODO comments (#2)
 - [ ] Write integration tests for feature (#3)
 
