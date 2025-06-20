@@ -7,7 +7,6 @@ As a website visitor, I want to view dynamically rendered home page content so t
 - Fetch markdown files from the CMS system to populate home page content
 - Parse frontmatter metadata to determine component type and configuration
 - Support HeroSection component rendering with configurable props
-- Support Custom component rendering with configurable props
 - Transform markdown content to HTML and pass as children to components
 - Handle errors gracefully when content is malformed or missing
 - Validate frontmatter schema to ensure required fields are present
@@ -32,7 +31,6 @@ Markdown files follow this structure:
 
 The system maps frontmatter component types to React components:
 - `HeroSection`: Renders hero banners with configurable styling and content
-- `Custom`: Generic component for flexible content rendering
 
 ### Data Flow
 

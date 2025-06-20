@@ -4,7 +4,7 @@
 
 ### EPIC_1: Initialization
 - [x] Set up initial feature docs (#EPIC_1_a)
-- [ ] Scaffold feature structure with placeholder components and // TODO comments (#EPIC_1_b)
+- [x] Scaffold feature structure with placeholder components and // TODO comments (#EPIC_1_b)
 - [ ] Write integration tests for feature (#EPIC_1_c)
 
 ### EPIC_2: Data fetching and content processing
@@ -18,8 +18,6 @@
 - [ ] Create `ContentRenderer` component to map frontmatter to React components (#EPIC_3_a)
   - **Depends on**: #EPIC_2_b
 - [ ] Build `HeroSection` component with title, subtitle, portraitSrc props (#EPIC_3_b)
-  - **Depends on**: #EPIC_3_a
-- [ ] Build `Custom` component for generic content rendering (#EPIC_3_c)
   - **Depends on**: #EPIC_3_a
 - [ ] Implement component ordering based on lexorank values (#EPIC_3_d)
   - **Depends on**: #EPIC_2_b, #EPIC_3_a
