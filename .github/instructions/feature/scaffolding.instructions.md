@@ -68,7 +68,7 @@ Before proceeding with scaffolding, validate the feature tag name:
 
 ### Test Files
 - Create integration tests following TDD principles
-- Use Epic titles from SCOPE.md in describe blocks
+- Use Scope titles from SCOPE.md in describe blocks
 - Add `@feature-<tag_name>` scope tags
 - Tests should initially fail (TDD approach)
 

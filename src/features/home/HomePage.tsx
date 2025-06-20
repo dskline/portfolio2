@@ -1,4 +1,4 @@
-// TODO: Create HomePage component to orchestrate content fetching and rendering (#EPIC_4_a)
+// TODO: Create HomePage component to orchestrate content fetching and rendering (#SCOPE_4_a)
 // This component should integrate all the pieces: data fetching, validation, and rendering
 
 import type React from "react";
@@ -11,9 +11,9 @@ type HomePageProps = Record<string, never>;
 
 export const HomePage: React.FC<HomePageProps> = () => {
   // TODO: Implement content fetching logic
-  // TODO: Add error boundaries for graceful failure handling (#EPIC_4_c)
+  // TODO: Add error boundaries for graceful failure handling (#SCOPE_4_c)
   // TODO: Handle loading states
-  // TODO: Integrate with Next.js app router at root path (#EPIC_4_b)
+  // TODO: Integrate with Next.js app router at root path (#SCOPE_4_b)
 
   // Placeholder data structure
   const mockContent = [

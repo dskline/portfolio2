@@ -1,4 +1,4 @@
-// TODO: Implement ContentRenderer component (#EPIC_3_a)
+// TODO: Implement ContentRenderer component (#SCOPE_3_a)
 // This component maps frontmatter fields to React components
 // Should handle component selection and prop passing dynamically
 
@@ -15,7 +15,7 @@ interface ContentRendererProps {
   content: ContentItem[];
 }
 
-// Component mapping - TODO: Make this more flexible (#EPIC_3_d)
+// Component mapping - TODO: Make this more flexible (#SCOPE_3_d)
 const componentMap = {
   HeroSection,
 } as const;
@@ -23,8 +23,8 @@ const componentMap = {
 export const ContentRenderer: React.FC<ContentRendererProps> = ({
   content,
 }) => {
-  // TODO: Implement component ordering based on lexorank values (#EPIC_3_d)
-  // TODO: Validate component types and props (#EPIC_3_e)
+  // TODO: Implement component ordering based on lexorank values (#SCOPE_3_d)
+  // TODO: Validate component types and props (#SCOPE_3_e)
   // TODO: Handle error cases when component type is not found
 
   return (
@@ -40,11 +40,11 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({
         }
 
         // TODO: Pass HTML content as children properly
-        // TODO: Fix type safety for component props (#EPIC_3_e)
+        // TODO: Fix type safety for component props (#SCOPE_3_e)
         const { component: _component, ...componentProps } = item;
 
         return (
-          // @ts-expect-error - TODO: Fix type safety for dynamic component props (#EPIC_3_e)
+          // @ts-expect-error - TODO: Fix type safety for dynamic component props (#SCOPE_3_e)
           <ComponentToRender key={itemKey} {...componentProps} />
         );
       })}
