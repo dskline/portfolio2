@@ -57,7 +57,7 @@ test.describe('@feature-<feature_tag>: Core functionality', () => {
 
     test('links should navigate correctly', async ({ page }) => {
         await page.goto('/');
-        await page.click('');
+        await page.click('a[href="/about"]');
         await expect(page.locator('[data-testid="about-page"]')).toBeVisible();
     });
 });
