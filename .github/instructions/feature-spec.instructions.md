@@ -58,32 +58,9 @@ Provide a high-level overview of how the feature works or will be implemented. I
 
 Additional details on specific implementation aspects can be organized in sub-sections.
 ```
+### 4. UI/Visual Design
 
-### 4. UI/Visual Components
-
-For features with visual elements, include a section that describes the user interface and visual design:
-
-```markdown
-## UI/Visual Design
-
-Describe the visual components of the feature. Include:
-
-- Key UI elements and their purpose
-- Layout considerations
-- Responsive behavior
-- Accessibility requirements
-- User interaction patterns
-
-Consider including mockups, wireframes, or screenshots when available. Reference any design system components that will be used.
-
-### Visual Assets
-
-List any required visual assets (images, icons, etc.) and their specifications:
-
-- Asset name: Description and purpose
-- Format requirements (SVG, PNG, etc.)
-- Size/resolution requirements
-```
+If the feature includes a user interface, give a short description of the user experience, where the interface can be found in the application, and design mockups in Figma if available.
 
 ## Example
 
@@ -99,11 +76,11 @@ As a website visitor, I want to log in with my existing social media accounts so
 - Create a secure session with appropriate timeout
 - Handle login errors gracefully with user-friendly messages
 
-## Enhancements
+## Future Enhancements
 
-- Support login via GitHub OAuth
-- "Remember me" functionality
-- Auto-reconnect if session expires
+- [x] Support login via GitHub OAuth
+- [ ] "Remember me" functionality
+- [ ] Auto-reconnect if session expires
 
 ## Implementation Details
 
@@ -119,40 +96,3 @@ Authentication is implemented using NextAuth.js to manage OAuth providers, sessi
 - CSRF tokens are implemented for all authentication requests
 - Failed login attempts are rate-limited
 - OAuth state parameters validated to prevent CSRF attacks
-
-## UI/Visual Design
-
-The authentication UI follows a minimal, user-friendly design that integrates seamlessly with the site's overall aesthetic.
-
-### Key UI Elements
-
-- **Provider Selection Panel**: Displays available login options (Google, GitHub) with recognizable logos
-- **Login Form**: Appears when email/password authentication is selected
-- **Status Messages**: Toast notifications for successful login, errors, or session expiration
-- **Loading States**: Subtle loading indicators during authentication processes
-
-### Responsive Behavior
-
-- On mobile devices (<768px), provider buttons stack vertically
-- On tablet and desktop, buttons display in a horizontal row
-- Modal dialogs adjust width based on viewport size while maintaining readability
-
-### Accessibility
-
-- All interactive elements are keyboard navigable
-- Color contrast meets WCAG AA standards
-- Screen reader announcements for state changes
-- Focus management returns to logical location after authentication
-
-### Visual Assets
-
-- Social provider logos (SVG format)
-- Loading animation for authentication states
-- Success/error icons for status messages
-
-## Best Practices
-
-- **Keep Requirements Atomic**: Each requirement should represent a single capability or constraint
-- **Use Descriptive Language**: Avoid ambiguous terms like "fast", "intuitive", or "user-friendly" without defining what they mean
-- **Include Acceptance Criteria**: When appropriate, include measurable acceptance criteria for requirements
-- **Update as Development Progresses**: Revise the specification as requirements or implementation details change
