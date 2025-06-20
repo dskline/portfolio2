@@ -6,7 +6,7 @@ Guidelines for creating integration tests following Test-Driven Development (TDD
 
 - Tests go in the `__tests__` folder with a `.spec.ts` suffix
 - Separate test files by Epic (refer to SCOPE.md for epic breakdown)
-- Use Epic titles in describe function names
+- Use Epic titles to help describe test function names
 - Add `@feature-<tag_name>` scope tags for feature identification
 
 ## Test File Naming Convention
@@ -20,7 +20,7 @@ Guidelines for creating integration tests following Test-Driven Development (TDD
 ```typescript
 import { test, expect } from '@playwright/test';
 
-test.describe('Epic Title from SCOPE.md', { tag: "@feature-<tag_name>" }, () => {
+test.describe('<tag_name>: description based on Epic Title from SCOPE.md', { tag: "@feature-<tag_name>" }, () => {
     test('descriptive test name', async ({ page }) => {
         // Test implementation
         // Should initially fail (TDD approach)
