@@ -53,7 +53,6 @@ This pattern provides:
 - Easy cross-referencing in code comments and documentation
 
 ## Epic Guidelines
-
 ### Epic 1: Always Documentation and Testing
 
 The first epic should always focus on documentation and testing setup:
@@ -71,7 +70,21 @@ Organize remaining epics by logical implementation phases:
 - Data layer / API integration
 - Core business logic
 - UI components
-- Integration and deployment
+
+### Epic N: Finalization and Cleanup
+
+The final epic should focus on wrapping up the feature and ensuring quality and maintainability:
+- Integration and deployment. If applicable, write visual tests that generate screenshots and video, and add these assets to the README or documentation.
+- Remove or clean up feature flags if they were used during development. Update test scope tags from `@feature-<tag-name>` to `@regression` to reflect the feature's integration into the main test suite.
+- Add synthetic monitoring to ensure the feature works as expected in production.
+
+```markdown
+### EPIC_N: Finalization
+- [ ] Write visual tests for feature and add screenshots/video to docs (#EPIC_N_a)
+- [ ] Remove feature flags and clean up code (#EPIC_N_b)
+- [ ] Update test scope tags from `@feature-<tag-name>` to `@regression` (#EPIC_N_c)
+- [ ] Add synthetic monitoring for feature (#EPIC_N_d)
+```
 
 ## Task Requirements
 
