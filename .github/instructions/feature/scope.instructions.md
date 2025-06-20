@@ -52,6 +52,13 @@ This pattern provides:
 - Alphabetical ordering within epics
 - Easy cross-referencing in code comments and documentation
 
+### Epic Numbering Guidelines
+
+- **Always start with EPIC_1** for initialization and documentation
+- **Use sequential numbering** (EPIC_2, EPIC_3, etc.) for implementation phases
+- **Use `{FINAL_EPIC_NUMBER}` placeholder** in templates to indicate the final epic should be numbered based on the total number of epics for the specific feature
+- **Replace placeholders with actual numbers** when creating specific feature scope documents
+
 ## Epic Guidelines
 ### Epic 1: Always Documentation and Testing
 
@@ -71,7 +78,7 @@ Organize remaining epics by logical implementation phases:
 - Core business logic
 - UI components
 
-### Epic N: Finalization and Cleanup
+### Epic {FINAL_EPIC_NUMBER}: Finalization and Cleanup
 
 The final epic should focus on wrapping up the feature and ensuring quality and maintainability:
 - Integration and deployment. If applicable, write visual tests that generate screenshots and video, and add these assets to the README or documentation.
@@ -79,11 +86,11 @@ The final epic should focus on wrapping up the feature and ensuring quality and 
 - Add synthetic monitoring to ensure the feature works as expected in production.
 
 ```markdown
-### EPIC_N: Finalization
-- [ ] Write visual tests for feature and add screenshots/video to docs (#EPIC_N_a)
-- [ ] Remove feature flags and clean up code (#EPIC_N_b)
-- [ ] Update test scope tags from `@feature-<tag-name>` to `@regression` (#EPIC_N_c)
-- [ ] Add synthetic monitoring for feature (#EPIC_N_d)
+### EPIC_{FINAL_EPIC_NUMBER}: Finalization
+- [ ] Write visual tests for feature and add screenshots/video to docs (#EPIC_{FINAL_EPIC_NUMBER}_a)
+- [ ] Remove feature flags and clean up code (#EPIC_{FINAL_EPIC_NUMBER}_b)
+- [ ] Update test scope tags from `@feature-<tag-name>` to `@regression` (#EPIC_{FINAL_EPIC_NUMBER}_c)
+- [ ] Add synthetic monitoring for feature (#EPIC_{FINAL_EPIC_NUMBER}_d)
 ```
 
 ## Task Requirements
