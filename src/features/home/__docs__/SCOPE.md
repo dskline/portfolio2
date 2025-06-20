@@ -19,8 +19,6 @@
   - **Depends on**: #EPIC_2_b
 - [ ] Build `HeroSection` component with title, subtitle, portraitSrc props (#EPIC_3_b)
   - **Depends on**: #EPIC_3_a
-- [ ] Build `Custom` component for generic content rendering (#EPIC_3_c)
-  - **Depends on**: #EPIC_3_a
 - [ ] Implement component ordering based on lexorank values (#EPIC_3_d)
   - **Depends on**: #EPIC_2_b, #EPIC_3_a
 - [ ] Add prop-types or TypeScript types for all components (#EPIC_3_e)

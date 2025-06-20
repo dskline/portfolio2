@@ -1,6 +1,6 @@
 # Feature: Home Page Content Management
 
-A dynamic home page that renders content blocks from markdown files using the CMS system. The feature supports HeroSection and Custom components with configurable props and HTML content.
+A dynamic home page that renders content blocks from markdown files using the CMS system. The feature only supports HeroSection at this time, with plans to expand to other components in the future.
 
 📖 **[View Detailed Specification](./__docs__/SPEC.md)**
 
@@ -31,14 +31,6 @@ component: "HeroSection"
 title: "Hero Title"
 subtitle: "Hero Subtitle"
 portraitSrc: "path/to/portrait.jpg"
-lexorank: "orderbytext"
----
-```
-
-#### Custom
-```yaml
----
-component: "Custom"
 lexorank: "orderbytext"
 ---
 ```

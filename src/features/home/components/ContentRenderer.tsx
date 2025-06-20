@@ -3,7 +3,6 @@
 // Should handle component selection and prop passing dynamically
 
 import type React from "react";
-import { CustomComponent } from "./CustomComponent";
 import { HeroSection } from "./HeroSection";
 
 interface ContentItem {
@@ -19,7 +18,6 @@ interface ContentRendererProps {
 // Component mapping - TODO: Make this more flexible (#EPIC_3_d)
 const componentMap = {
   HeroSection,
-  Custom: CustomComponent,
 } as const;
 
 export const ContentRenderer: React.FC<ContentRendererProps> = ({

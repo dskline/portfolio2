@@ -17,15 +17,9 @@ export const heroSectionSchema = baseFrontmatterSchema.extend({
   portraitSrc: z.string().optional(),
 });
 
-// TODO: Define Custom component schema
-export const customComponentSchema = baseFrontmatterSchema.extend({
-  component: z.literal("Custom"),
-});
-
 // TODO: Create union schema for all component types
 export const frontmatterSchema = z.discriminatedUnion("component", [
   heroSectionSchema,
-  customComponentSchema,
 ]);
 
 export type FrontmatterData = z.infer<typeof frontmatterSchema>;

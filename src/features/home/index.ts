@@ -1,7 +1,6 @@
 // TODO: Export all components for easy importing
 
 export { ContentRenderer } from "./components/ContentRenderer";
-export { CustomComponent } from "./components/CustomComponent";
 export { HeroSection } from "./components/HeroSection";
 export { HomePage } from "./HomePage";
 // TODO: Export schemas when implemented
