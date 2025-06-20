@@ -52,7 +52,7 @@ Example:
 
 ### EPIC_4: Integrate the feature into the main application
 - [ ] Create `HomePage` component to orchestrate content rendering (#10)
-  - **Depends on**: EPIC2, EPIC_3
+  - **Depends on**: EPIC_2, EPIC_3
 - [ ] Write visual tests for `HomePage` and add screenshots/video to the docs (#11)
   - **Depends on**: #10
 ```
