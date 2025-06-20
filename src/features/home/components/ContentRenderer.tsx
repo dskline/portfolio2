@@ -31,11 +31,10 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({
 
   return (
     <div>
-      {content.map((item) => {
+      {content.map((item, i) => {
         const ComponentToRender =
           componentMap[item.component as keyof typeof componentMap];
-        const itemKey =
-          item.lexorank || `${item.component}-${JSON.stringify(item)}`;
+        const itemKey = `${item.component}-${i}`;
 
         if (!ComponentToRender) {
           // TODO: Implement proper error handling

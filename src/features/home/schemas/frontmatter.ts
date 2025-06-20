@@ -23,7 +23,7 @@ export const customComponentSchema = baseFrontmatterSchema.extend({
 });
 
 // TODO: Create union schema for all component types
-export const frontmatterSchema = z.union([
+export const frontmatterSchema = z.discriminatedUnion("component", [
   heroSectionSchema,
   customComponentSchema,
 ]);

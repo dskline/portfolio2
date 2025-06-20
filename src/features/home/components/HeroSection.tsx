@@ -24,7 +24,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       <h1>{title}</h1>
       {subtitle && <h2>{subtitle}</h2>}
       {portraitSrc && (
-        <Image src={portraitSrc} alt="Portrait" width={200} height={200} />
+        <Image
+          src={portraitSrc}
+          alt="Author Portrait"
+          width={200}
+          height={200}
+        />
       )}
       {children && <div>{children}</div>}
     </div>
