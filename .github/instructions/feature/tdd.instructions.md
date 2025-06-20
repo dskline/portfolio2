@@ -7,19 +7,19 @@ Guidelines for creating integration tests following Test-Driven Development (TDD
 - Tests go in the `__tests__` folder with a `.spec.ts` suffix
 - Separate test files by Scope (refer to SCOPE.md for scope breakdown)
 - Use Scope titles to help describe test function names
-- Add `@feature-<tag_name>` scope tags for feature identification
+- Add `@feature-<feature_tag>` scope tags for feature identification
 
 ## Test File Naming Convention
 
-- Scope-based tests: `<tag_name>_scope<number>.spec.ts` (e.g., `home_scope2.spec.ts`)
-- Service tests: `<tag_name>_services.spec.ts`
-- Component-specific tests: `<tag_name>_<component_name>.spec.ts`
+- Main feature test file: `<feature_tag>.spec.ts` (e.g., `about.spec.ts`)
+- Scope-based tests: `<feature_tag>_<scope_name>.spec.ts` (e.g., `about_cms_integration.spec.ts`, `about_components.spec.ts`)
+- Visual tests: `<feature_tag>.visual.spec.ts` (e.g., `about.visual.spec.ts`)
 
 ## Scope Separation Requirements
 
 - Each Scope from SCOPE.md must have its own dedicated test file
-- Test files should be named using the pattern: `<feature_name>_scope<number>.spec.ts`
-- This ensures better organization and allows parallel test execution
+- Scope test files should be named using the pattern: `<feature_name>_<scope_name>.spec.ts`
+- <scope_name> should be derived from the Scope title in SCOPE.md and prefer only one word if possible (two words max)
 - Each Scope file should focus only on testing functionality described in that specific Scope
 
 ## Test Structure Template
@@ -28,7 +28,7 @@ For Scope-specific tests:
 ```typescript
 import { test, expect } from '@playwright/test';
 
-test.describe('@feature-<tag_name>: Scope description from SCOPE.md', () => {
+test.describe('@feature-<feature_tag>: Scope description from SCOPE.md', () => {
     test('descriptive test name based on Scope tasks', async ({ page }) => {
         await test.step('Step description', async () => {
             // Test implementation
@@ -43,7 +43,7 @@ For overview tests (main feature file):
 ```typescript
 import { test, expect } from '@playwright/test';
 
-test.describe('@feature-<tag_name>: Core functionality', () => {
+test.describe('@feature-<feature_tag>: Core functionality', () => {
     test('page should load successfully', async ({ page }) => {
         await page.goto('/about');
         await expect(page.locator('[data-testid="about-page"]')).toBeVisible();
