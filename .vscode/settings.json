@@ -19,5 +19,11 @@
   "npm-outdated.level": "minor",
   "files.associations": {
     "*.css": "tailwindcss"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "chat.promptFilesLocations": {
+    "contributing/prompts": true
   }
 }

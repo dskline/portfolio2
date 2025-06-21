@@ -1,14 +1,9 @@
-````instructions
----
-applyTo: '**/__docs__/SCOPE.md'
----
-
 # Scope Documentation Guide
 This guide outlines the standard format and content requirements for feature scope documentation. Following this structure ensures comprehensive, consistent, and maintainable task tracking across all features in the project.
 
 ## Introduction
 
-Scope documents serve as the primary implementation roadmap for features, breaking down complex specifications into manageable, actionable tasks. Each feature should have a dedicated SCOPE.md file that follows this standardized format.
+Scope documents serve as the primary implementation roadmap for features, breaking down complex specifications into manageable, actionable tasks. Each feature should have a dedicated SCOPES.md file that follows this standardized format.
 
 ## Document Structure
 
@@ -82,15 +77,14 @@ Organize remaining scopes by logical implementation phases:
 
 The final scope should focus on wrapping up the feature and ensuring quality and maintainability:
 - Integration and deployment. If applicable, write visual tests that generate screenshots and video, and add these assets to the README or documentation.
-- Remove or clean up feature flags if they were used during development. Update test scope tags from `@feature-<tag-name>` to `@regression` to reflect the feature's integration into the main test suite.
+- Remove or clean up feature flags if they were used during development. Ensure feature tests are no longer expected to fail.
 - Add synthetic monitoring to ensure the feature works as expected in production.
 
 ```markdown
 ### SCOPE_{FINAL_SCOPE_NUMBER}: Finalization
-- [ ] Write visual tests for feature and add screenshots/video to docs (#SCOPE_{FINAL_SCOPE_NUMBER}_a)
-- [ ] Remove feature flags and clean up code (#SCOPE_{FINAL_SCOPE_NUMBER}_b)
-- [ ] Update test scope tags from `@feature-<tag-name>` to `@regression` (#SCOPE_{FINAL_SCOPE_NUMBER}_c)
-- [ ] Add synthetic monitoring for feature (#SCOPE_{FINAL_SCOPE_NUMBER}_d)
+- [ ] Create visual tests for feature and add screenshots/video to docs (#SCOPE_{FINAL_SCOPE_NUMBER}_a)
+- [ ] Remove feature flags (#SCOPE_{FINAL_SCOPE_NUMBER}_b)
+- [ ] Add synthetic monitoring and regression tags to tests (#SCOPE_{FINAL_SCOPE_NUMBER}_c)
 ```
 
 ## Task Requirements
@@ -176,4 +170,3 @@ The final scope should focus on wrapping up the feature and ensuring quality and
 - Add new tasks as they're discovered during implementation
 - Remove or modify tasks that become obsolete
 - Keep descriptions current with the actual implementation
-````

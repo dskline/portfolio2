@@ -7,10 +7,10 @@ Create the necessary folder structure and files for the feature.
 ```
 src/features/<tag_name>/
 ├── __docs__/
-│   └── SCOPE.md (already exists)
+│   └── SCOPES.md (already exists)
 ├── __tests__/
 │   ├── <tag_name>.spec.ts
-│   └── <tag_name>_services.spec.ts (if services exist)
+│   └── <tag_name>_services.spec.ts
 ├── components/
 │   └── index.ts
 ├── services/
@@ -30,14 +30,14 @@ Before proceeding with scaffolding, validate the feature tag name:
 - Tag name should be lowercase, alphabetic with hyphens allowed
 - Tag name must not be empty or contain only whitespace
 - Feature directory `src/features/<tag_name>/` should not already exist
-- SCOPE.md file should exist at `src/features/<tag_name>/__docs__/SCOPE.md`
+- SCOPES.md file should exist at `src/features/<tag_name>/__docs__/SCOPES.md`
 
 ### Validation Steps
 
 1. **Prompt for feature tag name**: Ask the user to provide the feature tag name
 2. **Format validation**: Check that the tag name matches the pattern `^[a-z-]+$`
 3. **Existence check**: Verify that `src/features/<tag_name>/` does not already exist
-4. **Scope file check**: Confirm that `src/features/<tag_name>/__docs__/SCOPE.md` exists
+4. **Scope file check**: Confirm that `src/features/<tag_name>/__docs__/SCOPES.md` exists
 5. **Error handling**: If any validation fails, provide clear error message and re-prompt
 
 ### Error Messages
@@ -45,8 +45,7 @@ Before proceeding with scaffolding, validate the feature tag name:
 - **Empty input**: "Feature tag name cannot be empty. Please provide a valid tag name."
 - **Invalid format**: "Feature tag name must contain only lowercase letters, numbers, and hyphens. Example: 'user-profile' or 'data-export'"
 - **Directory exists**: "Feature directory already exists at 'src/features/<tag_name>/'. Please choose a different tag name or remove the existing directory."
-- **Missing scope**: "SCOPE.md file not found at 'src/features/<tag_name>/__docs__/SCOPE.md'. Please ensure the feature planning is complete before scaffolding."
-
+- **Missing scope**: "SCOPES.md file not found at 'src/features/<tag_name>/__docs__/SCOPES.md'. Please ensure the feature planning is complete before scaffolding."
 
 
 ## File Creation Guidelines
@@ -68,9 +67,7 @@ Before proceeding with scaffolding, validate the feature tag name:
 
 ### Test Files
 - Create integration tests following TDD principles
-- Use Scope titles from SCOPE.md in describe blocks
-- Add `@feature-<tag_name>` scope tags
-- Tests should initially fail (TDD approach)
+- Refer to [testing guidelines](./testing.md)
 
 ## File Templates
 
