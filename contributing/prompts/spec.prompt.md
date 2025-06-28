@@ -11,7 +11,7 @@ After I've responded, you will create a new folder in `src/features/` using that
 
 Use the [feature spec instructions](../instructions/feature-spec.instructions.md) as the template for the specification document.
 
-Create a README.md file in `src/features/<tag_name>/` that links to the specification document and provides a brief overview of the feature. Use the [feature README instructions](../instructions/feature-readme.instructions.md) as the template for the README.
+Create a README.md file in `src/features/<tag_name>/` that links to the specification document and provides a brief overview of the feature. Use the [feature README instructions](../feature-readme.md) as the template for the README.
 
 Once you've created the specification and README, you will ask me to review them and make any necessary adjustments, and wait for my confirmation before continuing with step 3.
 
@@ -21,4 +21,4 @@ Step 3:
 
 Create a new file `src/features/<tag_name>/__docs__/SCOPES.md` for the feature based on the `src/features/<tag_name>/__docs__/SPEC.md` document. This file should outline the specific implementation tasks required to complete an MVP of the feature.
 
-Use `.github/instructions/feature-scope.instructions.md` as the template and guide for creating the scope document.
+Use `contributing/feature-scope.md` as the template and guide for creating the scope document.

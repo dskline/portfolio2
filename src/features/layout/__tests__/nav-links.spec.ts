@@ -1,11 +1,9 @@
 import { expect, test } from "@playwright/test";
 
-test(
-  "all homepage links work",
-  { tag: "@synthetic-monitoring" },
-  async ({ page, request }) => {
+test.describe("Navigation Regression Tests", { tag: ["@regression"] }, () => {
+  test("all navigation links work", async ({ page, request }) => {
     await page.goto("/");
-    const links = await page.$$eval("a[href]", (els) =>
+    const links = await page.$$eval("nav a[href]", (els) =>
       els.map((e) => (e as HTMLAnchorElement).href),
     );
 
@@ -19,9 +17,9 @@ test(
         ? href
         : new URL(href, page.url()).toString();
       const response = await request.get(url);
-      console.debug(`Homepage Link: ${url} - Status: ${response.status()}`);
+      console.debug(`Navigation Link: ${url} - Status: ${response.status()}`);
 
       expect(response.status(), `Link failed: ${url}`).toBeLessThan(400);
     }
-  },
-);
+  });
+});

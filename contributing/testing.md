@@ -78,4 +78,5 @@ await expect(response.status(), `API call to ${url} failed`).toBe(200);
 - Focus on critical user paths, maintaining tests that are stable, maintainable, and reflect real user behavior.
 - Cover user interactions, workflows, navigation, input validation, and business logic verification.
 - Avoid testing implementation details or internal states that are not visible to the user.
-- Avoid testing accessibility (this should be done in Storybook).
+- Avoid testing accessibility (Storybook will do this for us).
+- Avoid mocking API calls or external services. Instead, use integration tests that interact with real endpoints or services.
