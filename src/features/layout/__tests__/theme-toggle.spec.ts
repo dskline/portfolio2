@@ -13,7 +13,6 @@ test.describe("Theme Toggle Functionality", { tag: ["@regression"] }, () => {
       initialHtmlClass = await htmlElement.getAttribute("class");
       // next-themes might add 'light' or 'dark' or nothing if system is preferred and no explicit toggle yet
       // We are primarily interested in the presence/absence of 'dark'
-      console.debug(`Initial html class: ${initialHtmlClass}`);
     });
 
     const toggleButton = page.locator('[aria-label="Toggle theme"]');
@@ -43,18 +42,15 @@ test.describe("Theme Toggle Functionality", { tag: ["@regression"] }, () => {
         ).toHaveClass(/dark/);
       }
       themeAfterFirstToggle = await htmlElement.getAttribute("class");
-      console.debug(`HTML class after first toggle: ${themeAfterFirstToggle}`);
     });
 
     await test.step("Click toggle button again", async () => {
       await toggleButton.click();
-      console.debug("Toggle button clicked second time");
     });
 
     let finalHtmlClass: string | null;
     await test.step("Get final theme state", async () => {
       finalHtmlClass = await htmlElement.getAttribute("class");
-      console.debug(`HTML class after second toggle: ${finalHtmlClass}`);
     });
 
     await test.step("Verify theme class changes after second toggle", async () => {

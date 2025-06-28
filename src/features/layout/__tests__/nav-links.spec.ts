@@ -17,7 +17,6 @@ test.describe("Navigation Regression Tests", { tag: ["@regression"] }, () => {
         ? href
         : new URL(href, page.url()).toString();
       const response = await request.get(url);
-      console.debug(`Navigation Link: ${url} - Status: ${response.status()}`);
 
       expect(response.status(), `Link failed: ${url}`).toBeLessThan(400);
     }

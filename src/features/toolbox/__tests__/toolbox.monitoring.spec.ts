@@ -19,7 +19,6 @@ test(
         ? href
         : new URL(href, page.url()).toString();
       const response = await request.get(url);
-      console.debug(`Toolbox Link: ${url} - Status: ${response.status()}`);
 
       expect(response.status(), `Toolbox link failed: ${url}`).toBeLessThan(
         400,
