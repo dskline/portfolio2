@@ -1,42 +1,53 @@
-import { defineConfig } from "@playwright/test";
+import {
+  defineConfig,
+  devices,
+  type PlaywrightTestProject,
+} from "@playwright/test";
 
 const baseURL = process.env.PLAYWRIGHT_BASE_URL || "http://localhost:3000"; // default for local dev
 
-export default defineConfig({
-  use: {
-    baseURL,
-    headless: true,
+const projects: PlaywrightTestProject[] = [
+  {
+    name: "smoke",
+    grep: /@smoke/,
   },
-  testMatch: "src/features/**/*.spec.{js,ts,jsx,tsx}",
-  projects: [
-    {
-      name: "smoke",
-      grep: /@smoke/,
-    },
-    {
-      name: "regression",
-      grep: /@regression/,
-    },
-    {
-      name: "synthetic-monitoring",
-      grep: /@synthetic-monitoring/,
-    },
+  {
+    name: "regression",
+    grep: /@regression/,
+  },
+  {
+    name: "synthetic-monitoring",
+    grep: /@synthetic-monitoring/,
+  },
+];
+if (process.env.VISUAL) {
+  projects.push(
     {
       name: "visual-desktop",
       grep: /@visual/,
       use: {
+        ...devices["Desktop Firefox"],
         video: "on",
-        viewport: { width: 800, height: 600 },
       },
     },
     {
       name: "visual-mobile",
       grep: /@visual/,
       use: {
-        isMobile: true,
+        ...devices["iPhone SE"],
         video: "on",
-        viewport: { width: 400, height: 600 },
       },
     },
-  ],
+  );
+}
+
+export default defineConfig({
+  retries: 1,
+  use: {
+    baseURL,
+    headless: true,
+    trace: "on-first-retry",
+  },
+  testMatch: "src/features/**/*.spec.{js,ts,jsx,tsx}",
+  projects,
 });

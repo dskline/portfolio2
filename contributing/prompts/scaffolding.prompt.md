@@ -22,7 +22,7 @@ Create the complete folder structure with placeholder files:
 - Service files with proper typing and placeholder functions
 - Schema files with Zod validation setup
 - Index files with proper exports
-- Test files following TDD principles
+- All files should include // TODO comments indicating implementation areas
 
 ## Step 3: Test Implementation
 
@@ -33,7 +33,6 @@ Create the complete folder structure with placeholder files:
 
 ## Implementation Notes
 
-- All files should include // TODO comments indicating implementation areas
 - Follow existing project conventions and TypeScript standards
 - Tests should reflect the scope breakdown from SCOPES.md
 - Maintain consistency with existing feature structure patterns

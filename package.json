@@ -15,7 +15,7 @@
     "lint:fix": "biome check --write",
     "test": "playwright test",
     "test:smoke": "npm test -- --project=smoke",
-    "test:visual": "npm test -- --project=visual*",
+    "test:visual": "VISUAL=1 npm test -- --project=visual*",
     "test:nightly": "npm test -- --project=synthetic-monitoring",
     "test:ci": "npm test -- --project=regression",
     "test:snapshot": "npx chromatic",

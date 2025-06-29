@@ -1,33 +1,14 @@
 import { expect, test } from "@playwright/test";
 
-test.describe("Projects Feature", () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto("/projects");
-  });
+test.describe(
+  "Projects Page Regression Tests",
+  { tag: ["@regression"] },
+  () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto("/projects");
+    });
 
-  test(
-    "should display projects page with correct title and layout",
-    {
-      tag: "@smoke",
-    },
-    async ({ page }) => {
-      await test.step("Check page loads with projects container", async () => {
-        await expect(page.getByTestId("projects-container")).toBeVisible();
-      });
-
-      await test.step("Verify basic functionality", async () => {
-        // Check that projects are loading and displayed
-        await expect(page.locator("article").first()).toBeVisible();
-      });
-    },
-  );
-
-  test(
-    "should display project information correctly",
-    {
-      tag: "@regression",
-    },
-    async ({ page }) => {
+    test("should display project information correctly", async ({ page }) => {
       await test.step("Check projects are visible", async () => {
         // Wait for at least one project to be visible
         await expect(page.locator("article").first()).toBeVisible();
@@ -48,15 +29,9 @@ test.describe("Projects Feature", () => {
         const content = firstProject.locator("p").nth(1);
         await expect(content).toBeVisible();
       });
-    },
-  );
+    });
 
-  test(
-    "should display GitHub links when available",
-    {
-      tag: "@regression",
-    },
-    async ({ page }) => {
+    test("should display GitHub links when available", async ({ page }) => {
       await test.step("Check for GitHub source code links", async () => {
         const githubLinks = page.getByRole("link", { name: /source code/i });
 
@@ -80,15 +55,9 @@ test.describe("Projects Feature", () => {
         const githubIcon = firstGithubLink.locator('img[alt="GitHub"]');
         await expect(githubIcon).toBeVisible();
       });
-    },
-  );
+    });
 
-  test(
-    "should display project images when available",
-    {
-      tag: "@regression",
-    },
-    async ({ page }) => {
+    test("should display project images when available", async ({ page }) => {
       await test.step("Check for project images", async () => {
         const projectImages = page.getByTestId("project-image");
 
@@ -102,15 +71,9 @@ test.describe("Projects Feature", () => {
         // Check image has proper alt text
         await expect(firstImage).toHaveAttribute("alt", /image \d+/);
       });
-    },
-  );
+    });
 
-  test(
-    "should display projects in proper order",
-    {
-      tag: "@regression",
-    },
-    async ({ page }) => {
+    test("should display projects in proper order", async ({ page }) => {
       await test.step("Verify projects are displayed and accessible", async () => {
         const articles = page.locator("article");
         const articleCount = await articles.count();
@@ -121,15 +84,11 @@ test.describe("Projects Feature", () => {
           await expect(articles.nth(1)).toBeVisible();
         }
       });
-    },
-  );
+    });
 
-  test(
-    "should handle projects without images gracefully",
-    {
-      tag: "@regression",
-    },
-    async ({ page }) => {
+    test("should handle projects without images gracefully", async ({
+      page,
+    }) => {
       await test.step("Check layout for projects without images", async () => {
         const articles = page.locator("article");
         const firstArticle = articles.first();
@@ -149,15 +108,11 @@ test.describe("Projects Feature", () => {
           await expect(projectInfo).toBeVisible();
         }
       });
-    },
-  );
+    });
 
-  test(
-    "should handle projects without GitHub links gracefully",
-    {
-      tag: "@regression",
-    },
-    async ({ page }) => {
+    test("should handle projects without GitHub links gracefully", async ({
+      page,
+    }) => {
       await test.step("Check layout for projects without GitHub links", async () => {
         const articles = page.locator("article");
 
@@ -173,45 +128,15 @@ test.describe("Projects Feature", () => {
           await expect(article.locator("p").first()).toBeVisible();
         }
       });
-    },
-  );
+    });
 
-  test(
-    "should handle empty state gracefully",
-    {
-      tag: "@regression",
-    },
-    async ({ page }) => {
+    test("should handle empty state gracefully", async ({ page }) => {
       // This test would need a way to mock empty data
       // For now, we just ensure the container exists
       await test.step("Check container exists even with no projects", async () => {
         const container = page.getByTestId("projects-container");
         await expect(container).toBeVisible();
       });
-    },
-  );
-
-  test(
-    "should load and display correctly on slow connections",
-    {
-      tag: "@synthetic-monitoring",
-    },
-    async ({ page }) => {
-      await test.step("Simulate slow network and verify content loads", async () => {
-        // Simulate slow 3G connection
-        await page.route("**/*", async (route) => {
-          await new Promise((resolve) => setTimeout(resolve, 100));
-          await route.continue();
-        });
-
-        await page.reload();
-
-        // Content should still load and be visible
-        await expect(page.getByTestId("projects-container")).toBeVisible();
-        await expect(page.locator("article").first()).toBeVisible({
-          timeout: 10000,
-        });
-      });
-    },
-  );
-});
+    });
+  },
+);
