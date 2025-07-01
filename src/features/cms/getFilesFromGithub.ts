@@ -1,5 +1,4 @@
 import matter from "gray-matter";
-import { sanitizeContent } from "@/features/cms/utils/sanitizeContent";
 
 const headers = {
   Accept: "application/vnd.github+json",
@@ -59,8 +58,7 @@ async function toJSON(files: File[]) {
       const response = await fetch(file.url, { headers });
       const data = await response.json();
       const content = Buffer.from(data.content, "base64").toString("utf-8");
-      const sanitizedContent = sanitizeContent(content);
-      return matter(sanitizedContent);
+      return matter(content);
     }),
   );
 }
