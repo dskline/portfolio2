@@ -7,6 +7,7 @@ import { z } from "zod";
 export const baseFrontmatterSchema = z.object({
   component: z.string(),
   lexorank: z.string().optional(),
+  content: z.string(), // Raw markdown content (for components that need it)
 });
 
 // TODO: Define HeroSection-specific schema
@@ -18,8 +19,8 @@ export const heroSectionSchema = baseFrontmatterSchema.extend({
 });
 
 // TODO: Create union schema for all component types
-export const frontmatterSchema = z.discriminatedUnion("component", [
+export const homeFrontmatterSchema = z.discriminatedUnion("component", [
   heroSectionSchema,
 ]);
 
-export type FrontmatterData = z.infer<typeof frontmatterSchema>;
+export type HomeFrontmatterData = z.infer<typeof homeFrontmatterSchema>;
