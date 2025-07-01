@@ -1,31 +1,30 @@
 import { expect, test } from "@playwright/test";
 
 test.describe("Home Page Smoke Tests", { tag: ["@smoke"] }, () => {
-  test.fail(
-    "should load home page with hero content successfully",
-    async ({ page }) => {
-      await test.step("should navigate to home page", async () => {
-        const startTime = Date.now();
-        await page.goto("/");
-        const loadTime = Date.now() - startTime;
+  test("should load home page with hero content successfully", async ({
+    page,
+  }) => {
+    await test.step("should navigate to home page", async () => {
+      const startTime = Date.now();
+      await page.goto("/");
+      const loadTime = Date.now() - startTime;
 
-        // Critical path should load within 3 seconds
-        expect(loadTime, `Home page took ${loadTime}ms to load`).toBeLessThan(
-          3000,
-        );
-      });
+      // Critical path should load within 3 seconds
+      expect(loadTime, `Home page took ${loadTime}ms to load`).toBeLessThan(
+        3000,
+      );
+    });
 
-      await test.step("should display main content area", async () => {
-        await expect(page.getByRole("main")).toBeVisible();
-      });
+    await test.step("should display main content area", async () => {
+      await expect(page.getByRole("main")).toBeVisible();
+    });
 
-      await test.step("should render hero section content", async () => {
-        await expect(page.getByRole("heading").first()).toBeVisible();
-      });
-    },
-  );
+    await test.step("should render hero section content", async () => {
+      await expect(page.getByRole("heading").first()).toBeVisible();
+    });
+  });
 
-  test.fail("should maintain performance under load", async ({ page }) => {
+  test("should maintain performance under load", async ({ page }) => {
     await test.step("should load page within performance budget", async () => {
       const startTime = Date.now();
       await page.goto("/");

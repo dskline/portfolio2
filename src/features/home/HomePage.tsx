@@ -2,34 +2,26 @@
 // This component should integrate all the pieces: data fetching, validation, and rendering
 
 import type React from "react";
-import { ContentRenderer } from "./components/ContentRenderer";
+import { ContentRenderer } from "@/features/home/components/ContentRenderer";
+import type { HomeFrontmatterData } from "@/features/home/schemas/frontmatter";
 
-// import { getHomeContent } from './services/getHomeContent';
-
-// TODO: Define props if needed for server-side rendering
-type HomePageProps = Record<string, never>;
-
-export const HomePage: React.FC<HomePageProps> = () => {
-  // TODO: Implement content fetching logic
+export const HomePage: React.FC<{ content: HomeFrontmatterData[] }> = ({
+  content,
+}) => {
   // TODO: Add error boundaries for graceful failure handling (#SCOPE_4_c)
   // TODO: Handle loading states
-  // TODO: Integrate with Next.js app router at root path (#SCOPE_4_b)
-
-  // Placeholder data structure
-  const mockContent = [
-    {
-      component: "HeroSection",
-      title: "Welcome to My Portfolio",
-      subtitle: "Building amazing web experiences",
-      lexorank: "a",
-    },
-  ];
 
   return (
     <main>
       {/* TODO: Add proper error boundaries */}
-      {/* TODO: Add loading states */}
-      <ContentRenderer content={mockContent} />
+      {/* Display content as JSON for debugging (SCOPE_2_c implementation) */}
+      <div className="p-8">
+        <h1 className="mb-4 font-bold text-2xl">Home Content (Debug View)</h1>
+        <pre className="overflow-auto rounded-lg bg-gray-100 p-4 text-sm dark:bg-gray-800">
+          {JSON.stringify(content, null, 2)}
+        </pre>
+      </div>
+      <ContentRenderer content={content} />
     </main>
   );
 };

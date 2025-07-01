@@ -1,22 +1,64 @@
-// TODO: Implement getHomeContent function (#SCOPE_2_a)
-// This function should fetch markdown files from the CMS system
-// Should integrate with existing CMS utilities
+import { getFiles } from "@/features/cms/getFiles";
+import {
+  type HomeFrontmatterData,
+  homeFrontmatterSchema,
+} from "@/features/home/schemas/frontmatter";
 
-// TODO: Add proper return type (#SCOPE_2_e)
-export async function getHomeContent() {
-  // TODO: Implement CMS integration to fetch markdown files
-  // TODO: Parse frontmatter metadata
-  // TODO: Transform markdown content to HTML (#SCOPE_2_c)
-  // TODO: Add error handling for malformed content and network failures (#SCOPE_2_d)
+/**
+ * Fetches and validates home page content from the CMS.
+ *
+ * This function integrates with the existing CMS system to retrieve markdown files
+ * that define the home page structure and content. Each file represents a content
+ * block with frontmatter defining component type and configuration.
+ *
+ * @returns Promise<HomeContentItem[]> Array of validated content items sorted by lexorank
+ *
+ * @throws No exceptions are thrown - errors are logged and empty array is returned
+ *
+ * @example
+ * ```typescript
+ * const content = await getHomeContent();
+ * // Returns array of content items like:
+ * // [
+ * //   {
+ * //     component: "HeroSection",
+ * //     title: "Welcome",
+ * //     subtitle: "Portfolio subtitle",
+ * //     lexorank: "a",
+ * //     content: "Raw markdown content..."
+ * //   }
+ * // ]
+ * ```
+ */
+export async function getHomeContent(): Promise<HomeFrontmatterData[]> {
+  try {
+    // Fetch markdown files from CMS
+    const files = await getFiles("Portfolio/CMS/Home");
 
-  throw new Error("getHomeContent not implemented");
-}
+    // Parse and validate each file
+    const contentItems = files
+      .map((file) => {
+        const fileData = {
+          ...file.data,
+          content: file.content, // Raw markdown content
+        };
+        // Validate frontmatter against schema
+        const validation = homeFrontmatterSchema.safeParse(fileData);
+        return validation.success
+          ? { ...validation.data, content: file.content }
+          : null;
+      })
+      .filter((item): item is HomeFrontmatterData => item !== null);
 
-// TODO: Document data contract and expected content structure (#SCOPE_2_e)
-export interface HomeContentItem {
-  component: string;
-  lexorank?: string;
-  title?: string;
-  subtitle?: string;
-  portraitSrc?: string;
+    // Sort by lexorank if available, otherwise maintain file order
+    return contentItems.sort((a, b) => {
+      if (!a.lexorank && !b.lexorank) return 0;
+      if (!a.lexorank) return 1;
+      if (!b.lexorank) return -1;
+      return a.lexorank.localeCompare(b.lexorank);
+    });
+  } catch (error) {
+    console.error("Failed to fetch home content:", error);
+    return [];
+  }
 }
