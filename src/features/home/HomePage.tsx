@@ -15,12 +15,14 @@ export const HomePage: React.FC<{ content: HomeFrontmatterData[] }> = ({
     <main>
       {/* TODO: Add proper error boundaries */}
       {/* Display content as JSON for debugging (SCOPE_2_c implementation) */}
-      <div className="p-8">
-        <h1 className="mb-4 font-bold text-2xl">Home Content (Debug View)</h1>
-        <pre className="overflow-auto rounded-lg bg-gray-100 p-4 text-sm dark:bg-gray-800">
-          {JSON.stringify(content, null, 2)}
-        </pre>
-      </div>
+      {process.env.NODE_ENV === 'development' && (
+        <div className="p-8">
+          <h1 className="mb-4 font-bold text-2xl">Home Content (Debug View)</h1>
+          <pre className="overflow-auto rounded-lg bg-gray-100 p-4 text-sm dark:bg-gray-800">
+            {JSON.stringify(content, null, 2)}
+          </pre>
+        </div>
+      )}
       <ContentRenderer content={content} />
     </main>
   );
