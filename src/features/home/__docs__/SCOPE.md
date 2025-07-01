@@ -10,7 +10,6 @@
 ### SCOPE_2: Data fetching and content processing
 - [x] Implement `getHomeContent` function to fetch markdown files from CMS (#SCOPE_2_a)
 - [x] Create zod schema validation for frontmatter fields (component, portraitSrc, lexorank) (#SCOPE_2_b)
-- [x] Implement markdown-to-HTML transformation with sanitization (#SCOPE_2_c)
 - [x] Add error handling for malformed content and network failures (#SCOPE_2_d)
 - [x] Document data contract and expected content structure (#SCOPE_2_e)
 
