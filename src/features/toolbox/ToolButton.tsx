@@ -1,10 +1,7 @@
 import { clsx } from "clsx";
 import type { Tool } from "@/features/toolbox/getTools";
-import { sanitizeSvg } from "@/features/toolbox/sanitizeSvg";
 
 export function ToolButton(tool: Tool) {
-  const sanitizedLogo = sanitizeSvg(tool.logo);
-
   return (
     <a
       key={tool.title}
@@ -22,7 +19,7 @@ export function ToolButton(tool: Tool) {
       <div
         className="flex items-center [&>svg]:h-6"
         /* biome-ignore lint/security/noDangerouslySetInnerHtml: sanitized SVG */
-        dangerouslySetInnerHTML={{ __html: sanitizedLogo }}
+        dangerouslySetInnerHTML={{ __html: tool.logo }}
       />
     </a>
   );
