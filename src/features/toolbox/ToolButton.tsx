@@ -1,9 +1,16 @@
 import { clsx } from "clsx";
+import createDOMPurify from "dompurify";
+import { JSDOM } from "jsdom";
 import type { Tool } from "@/features/toolbox/getTools";
-import { sanitizeSvg } from "@/features/toolbox/sanitizeSvg";
 
 export function ToolButton(tool: Tool) {
-  const sanitizedLogo = sanitizeSvg(tool.logo);
+  // Sanitize the SVG logo to prevent XSS attacks
+  const window = new JSDOM("").window;
+  const DOMPurify = createDOMPurify(window);
+  // allow all safe SVG elements and SVG Filters, no HTML or MathML
+  const sanitizedLogo = DOMPurify.sanitize(tool.logo, {
+    USE_PROFILES: { svg: true, svgFilters: true },
+  });
 
   return (
     <a

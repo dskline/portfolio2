@@ -55,4 +55,6 @@ export async function getBlogPosts() {
 
 | Package | Purpose | Documentation |
 |---------|---------|---------------|
+| `dompurify` | Sanitizes HTML content to prevent XSS attacks | [Documentation](https://github.com/cure53/DOMPurify) |
 | `gray-matter` | Parses markdown frontmatter and content | [Documentation](https://github.com/jonschlinkert/gray-matter) |
+| `jsdom` | Provides a DOM-like environment for server-side HTML sanitization | [Documentation](https://github.com/jsdom/jsdom) |
