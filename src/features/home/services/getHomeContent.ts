@@ -44,6 +44,12 @@ export async function getHomeContent(): Promise<HomeFrontmatterData[]> {
         };
         // Validate frontmatter against schema
         const validation = homeFrontmatterSchema.safeParse(fileData);
+        if (!validation.success) {
+          console.warn(
+            `Validation failed for file: ${file.name}. Errors:`,
+            validation.error.errors
+          );
+        }
         return validation.success
           ? { ...validation.data, content: file.content }
           : null;
