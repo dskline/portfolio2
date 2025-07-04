@@ -31,8 +31,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <Image
               src={portraitSrc}
               alt="Author Portrait"
-              width={128}
-              height={128}
+              width={256}
+              height={256}
               className="h-full w-full object-cover"
               priority
             />
