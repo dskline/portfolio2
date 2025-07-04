@@ -5,7 +5,7 @@ export const projectSchema = z.object({
   subtitle: z.string(),
   githubUrl: z.string().optional(),
   url: z.string().optional(),
-  date: z.date(),
+  date: z.coerce.date(),
   images: z.array(z.string()).optional(),
   content: z.string(),
 });

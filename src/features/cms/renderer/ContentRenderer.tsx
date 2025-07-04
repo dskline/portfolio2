@@ -15,7 +15,7 @@ interface ContentRendererProps<T extends BaseContentRendererData> {
 }
 
 // DOMPurify setup (server-safe)
-const window = new JSDOM("").window;
+const { window } = new JSDOM("");
 const DOMPurify = createDOMPurify(window);
 
 const defaultComponent = ({

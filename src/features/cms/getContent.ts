@@ -2,7 +2,7 @@ import type matter from "gray-matter";
 import type { ZodType } from "zod";
 import { getFilesFromGithub } from "@/features/cms/getFilesFromGithub";
 
-const CMS_TYPE = process.env.CMS_TYPE;
+const { CMS_TYPE } = process.env;
 
 export async function getContent<T>(
   path: string,

@@ -3,7 +3,7 @@
 
 import type React from "react";
 import { ContentRenderer } from "@/features/cms/renderer/ContentRenderer";
-import HeroSection from "@/features/home/components/HeroSection";
+import { HeroSection } from "@/features/home/components/HeroSection";
 import type { HomePageContent } from "@/features/home/schemas";
 
 const componentsMap = {
