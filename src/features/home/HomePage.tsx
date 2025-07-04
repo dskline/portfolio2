@@ -2,28 +2,32 @@
 // This component should integrate all the pieces: data fetching, validation, and rendering
 
 import type React from "react";
-import { ContentRenderer } from "@/features/home/components/ContentRenderer";
-import type { HomeFrontmatterData } from "@/features/home/schemas/frontmatter";
+import { ContentRenderer } from "@/features/cms/renderer/ContentRenderer";
+import HeroSection from "@/features/home/components/HeroSection";
+import type { HomePageContent } from "@/features/home/schemas";
 
-export const HomePage: React.FC<{ content: HomeFrontmatterData[] }> = ({
+const componentsMap = {
+  HeroSection,
+  // Add other components here as needed
+} as const;
+
+export const HomePage: React.FC<{ content: HomePageContent[] }> = ({
   content,
 }) => {
   // TODO: Add error boundaries for graceful failure handling (#SCOPE_4_c)
   // TODO: Handle loading states
 
   return (
-    <main>
-      {/* TODO: Add proper error boundaries */}
-      {/* Display content as JSON for debugging (SCOPE_2_c implementation) */}
-      {process.env.NODE_ENV === 'development' && (
-        <div className="p-8">
-          <h1 className="mb-4 font-bold text-2xl">Home Content (Debug View)</h1>
-          <pre className="overflow-auto rounded-lg bg-gray-100 p-4 text-sm dark:bg-gray-800">
-            {JSON.stringify(content, null, 2)}
-          </pre>
-        </div>
-      )}
-      <ContentRenderer content={content} />
+    <main className="flex flex-col items-center gap-6 px-10 ">
+      {content.map((item, index) => {
+        return (
+          <ContentRenderer
+            key={`${item.component}-${index}`}
+            content={item}
+            component={componentsMap[item.component]}
+          />
+        );
+      })}
     </main>
   );
 };

@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import Image from "next/image";
 import GitHubIcon from "@/features/projects/assets/github.svg";
-import type { Project } from "@/features/projects/getProjects";
+import type { Project } from "@/features/projects/schema";
 
 interface ProjectsProps {
   projects: Project[];

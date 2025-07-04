@@ -3,10 +3,11 @@ import createDOMPurify from "dompurify";
 import { JSDOM } from "jsdom";
 import type { Tool } from "@/features/toolbox/getTools";
 
+// Sanitize the SVG logo to prevent XSS attacks
+const window = new JSDOM("").window;
+const DOMPurify = createDOMPurify(window);
+
 export function ToolButton(tool: Tool) {
-  // Sanitize the SVG logo to prevent XSS attacks
-  const window = new JSDOM("").window;
-  const DOMPurify = createDOMPurify(window);
   // allow all safe SVG elements and SVG Filters, no HTML or MathML
   const sanitizedLogo = DOMPurify.sanitize(tool.logo, {
     USE_PROFILES: { svg: true, svgFilters: true },
