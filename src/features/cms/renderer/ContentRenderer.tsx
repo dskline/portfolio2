@@ -1,7 +1,3 @@
-// TODO: Implement ContentRenderer component (#SCOPE_3_a)
-// This component maps frontmatter fields to React components
-// Should handle component selection and prop passing dynamically
-
 import createDOMPurify from "dompurify";
 import { JSDOM } from "jsdom";
 import type React from "react";
