@@ -1,18 +1,7 @@
 import { clsx } from "clsx";
-import createDOMPurify from "dompurify";
-import { JSDOM } from "jsdom";
-import type { Tool } from "@/features/toolbox/getTools";
+import type { Tool } from "@/features/toolbox/schema";
 
-const { window } = new JSDOM("");
-const DOMPurify = createDOMPurify(window);
-
-export function ToolButton(tool: Tool) {
-  // Sanitize the SVG logo to prevent XSS attacks
-  const sanitizedLogo = DOMPurify.sanitize(tool.logo, {
-    // allow all safe SVG elements and SVG Filters, no HTML or MathML
-    USE_PROFILES: { svg: true, svgFilters: true },
-  });
-
+export function UnsanitizedToolButton(tool: Tool) {
   return (
     <a
       key={tool.title}
@@ -30,7 +19,7 @@ export function ToolButton(tool: Tool) {
       <div
         className="flex items-center [&>svg]:h-6"
         /* biome-ignore lint/security/noDangerouslySetInnerHtml: sanitized SVG */
-        dangerouslySetInnerHTML={{ __html: sanitizedLogo }}
+        dangerouslySetInnerHTML={{ __html: tool.logo }}
       />
     </a>
   );

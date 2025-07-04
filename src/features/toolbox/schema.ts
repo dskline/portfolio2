@@ -1,5 +1,4 @@
-import { z } from "zod";
-import { getContent } from "@/features/cms/getContent";
+import z from "zod";
 
 export const toolSchema = z.object({
   title: z.string(),
@@ -9,7 +8,3 @@ export const toolSchema = z.object({
   logo: z.string(),
 });
 export type Tool = z.infer<typeof toolSchema>;
-
-export const getTools = async () => {
-  return await getContent("Portfolio/CMS/Tools", toolSchema);
-};

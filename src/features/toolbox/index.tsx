@@ -1,6 +1,6 @@
 import { getContent } from "@/features/cms/getContent";
-import { toolSchema } from "@/features/toolbox/getTools";
-import { Toolbox } from "@/features/toolbox/Toolbox";
+import { Toolbox } from "@/features/toolbox/components/Toolbox";
+import { toolSchema } from "@/features/toolbox/schema";
 
 export default async function ToolboxPage() {
   const tools = await getContent("Portfolio/CMS/Tools", toolSchema);
