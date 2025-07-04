@@ -6,35 +6,31 @@ A headless content management system that enables dynamic content updates withou
 
 ## Usage
 
-The CMS feature provides a simple API for retrieving content from GitHub repositories:
+The CMS feature now provides a unified API for retrieving and validating content from GitHub repositories using Zod schemas:
 
 ```typescript
-import { getFiles } from '@/features/cms';
+import { getContent } from '@/features/cms/getContent';
+import { projectSchema } from '@/features/projects/schema';
 
-// Get all markdown files from a specific path
+// Get all validated project entries from a specific path
 export async function getProjects() {
-  const files = await getFiles('content/projects');
-  return files.map(file => ({
-    slug: file.data.slug,
-    title: file.data.title,
-    content: file.content,
-    ...file.data
-  }));
+  return getContent('content/projects', projectSchema);
 }
 ```
 
-For retrieving specific content collections:
 
-```typescript
-import { getFiles } from '@/features/cms';
+### Rendering Markdown Content
 
-export async function getBlogPosts() {
-  const posts = await getFiles('content/blog');
-  return posts
-    .filter(post => post.data.published)
-    .sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
-}
+To render markdown content as HTML, use the `ContentRenderer` component:
+
+```tsx
+import { ContentRenderer } from '@/features/cms/renderer/ContentRenderer';
+
+<ContentRenderer content={item.content} />
 ```
+
+- `ContentRenderer` uses `remark` and `remark-html` to convert markdown to HTML, and sanitizes the output with DOMPurify to prevent XSS attacks.
+- For custom rendering, pass a component prop to `ContentRenderer`.
 
 ## Environment Variables
 

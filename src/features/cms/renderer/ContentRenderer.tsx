@@ -11,16 +11,23 @@ import type { BaseContentRendererData } from "@/features/cms/renderer/schema";
 
 interface ContentRendererProps<T extends BaseContentRendererData> {
   content: T;
-  component: React.ComponentType<T>;
+  component?: React.ComponentType<T>;
 }
 
 // DOMPurify setup (server-safe)
 const window = new JSDOM("").window;
 const DOMPurify = createDOMPurify(window);
 
+const defaultComponent = ({
+  children,
+  ...componentProps
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div {...componentProps}>{children}</div>
+);
+
 export const ContentRenderer = <T extends BaseContentRendererData>({
   content,
-  component: Component,
+  component: Component = defaultComponent,
 }: ContentRendererProps<T>) => {
   const { children, ...componentProps } = content;
 
