@@ -4,13 +4,7 @@
 
 import Image from "next/image";
 import type React from "react";
-
-interface HeroSectionProps {
-  title: string;
-  subtitle?: string;
-  portraitSrc?: string;
-  children?: React.ReactNode;
-}
+import type { HeroSectionProps } from "@/features/home/schemas";
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
   title,

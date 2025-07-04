@@ -1,5 +1,6 @@
+import { getContent } from "@/features/cms/getContent";
 import { HomePage } from "@/features/home/HomePage";
-import { getHomeContent } from "@/features/home/services/getHomeContent";
+import { homePageContent } from "@/features/home/schemas";
 
 /**
  * Data container component for the HomePage
@@ -13,7 +14,7 @@ import { getHomeContent } from "@/features/home/services/getHomeContent";
  */
 export async function HomePageDataContainer() {
   // Fetch home content from CMS
-  const content = await getHomeContent();
+  const content = await getContent("Portfolio/CMS/Home", homePageContent);
 
   // Pass content as props to the presentation component
   return <HomePage content={content} />;
