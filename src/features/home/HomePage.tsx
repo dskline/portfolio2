@@ -1,6 +1,3 @@
-// TODO: Create HomePage component to orchestrate content fetching and rendering (#SCOPE_4_a)
-// This component should integrate all the pieces: data fetching, validation, and rendering
-
 import type React from "react";
 import { ContentRenderer } from "@/features/cms/renderer/ContentRenderer";
 import { HeroSection } from "@/features/home/components/HeroSection";
@@ -14,9 +11,6 @@ const componentsMap = {
 export const HomePage: React.FC<{ content: HomePageContent[] }> = ({
   content,
 }) => {
-  // TODO: Add error boundaries for graceful failure handling (#SCOPE_4_c)
-  // TODO: Handle loading states
-
   return (
     <main className="flex flex-col items-center gap-6 px-10 ">
       {content.map((item, index) => {

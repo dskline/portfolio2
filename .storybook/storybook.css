@@ -1,0 +1,5 @@
+/* Bad fix for dark mode on autodocs pages */
+.sbdocs,
+.sb-unstyled {
+  background-color: inherit !important;
+}

@@ -20,6 +20,7 @@
     "test:nightly": "npm test -- --project=synthetic-monitoring",
     "test:ci": "npm test -- --project=regression",
     "test:snapshot": "npx chromatic",
+    "test:storybook": "vitest --project=storybook",
     "storybook": "storybook dev -p 6006"
   },
   "dependencies": {

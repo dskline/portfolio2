@@ -1,6 +1,7 @@
 import { withThemeByClassName } from "@storybook/addon-themes";
 import type { Preview, ReactRenderer } from "@storybook/nextjs-vite";
 import "@/features/theme/globals.css";
+import "./storybook.css";
 
 const preview: Preview = {
   parameters: {
