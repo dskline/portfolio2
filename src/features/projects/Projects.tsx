@@ -83,7 +83,7 @@ export function Projects({ projects }: ProjectsProps) {
                     src={image}
                     alt={`${project.title} image ${index + 1}`}
                     fill
-                    sizes="50vw"
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     priority={index === 0} // Prioritize the first image
                   />
                 );
