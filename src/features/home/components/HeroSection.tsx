@@ -8,6 +8,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   subtitle,
   portraitSrc,
   children,
+  isOpenForWork,
 }) => {
   return (
     <div className="@container w-full">
@@ -17,6 +18,25 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             "relative @xl:row-end-1 flex flex-col justify-center gap-2 @xl:text-left text-center",
           )}
         >
+          {isOpenForWork && (
+            <div
+              className={clsx(
+                "absolute top-0 left-0",
+                "inline-flex items-center self-center",
+                "rounded-full bg-cyan-100 px-4 py-1",
+                "font-semibold text-cyan-700 text-xs shadow-sm",
+              )}
+            >
+              <span
+                className={clsx(
+                  "mr-2",
+                  "inline-block h-2 w-2",
+                  "rounded-full bg-cyan-400",
+                )}
+              />
+              AVAILABLE FOR WORK
+            </div>
+          )}
           <h1 className="font-extrabold text-4xl">{title}</h1>
           {subtitle && <span className="text-lg">{subtitle}</span>}
         </div>
