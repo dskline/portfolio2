@@ -1,6 +1,6 @@
 import clsx from "clsx";
-import type { Tool } from "@/features/toolbox/getTools";
-import { ToolButton } from "@/features/toolbox/ToolButton";
+import { ToolButton } from "@/features/toolbox/components/SanitizedToolButton";
+import type { Tool } from "@/features/toolbox/schema";
 
 export async function Toolbox({ tools }: { tools: Tool[] }) {
   // Group tools by category
