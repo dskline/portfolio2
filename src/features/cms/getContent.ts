@@ -30,7 +30,7 @@ export async function getContent<T>(
 function schemaAdapter(file: matter.GrayMatterFile<string>, schema: ZodType) {
   const fileData = {
     ...file.data,
-    content: file.content, // Raw markdown content
+    children: file.content, // Raw markdown content
   };
   // Validate frontmatter against schema
   const validation = schema.safeParse(fileData);
