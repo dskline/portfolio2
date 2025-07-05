@@ -1,5 +1,3 @@
-import createDOMPurify from "dompurify";
-import { JSDOM } from "jsdom";
 import type React from "react";
 import { remark } from "remark";
 import remarkHtml from "remark-html";
@@ -10,10 +8,16 @@ interface ContentRendererProps<T extends BaseContentRendererData> {
   component?: React.ComponentType<T>;
 }
 
-// DOMPurify setup (server-safe)
-const { window } = new JSDOM("");
-const DOMPurify = createDOMPurify(window);
-
+async function getPurify() {
+  if (typeof window === "undefined") {
+    const { default: DOMPurify } = await import("dompurify");
+    const { JSDOM } = await import("jsdom");
+    return DOMPurify(new JSDOM("").window);
+  } else {
+    const { default: DOMPurify } = await import("dompurify");
+    return DOMPurify;
+  }
+}
 const defaultComponent = ({
   children,
   ...componentProps
@@ -21,7 +25,7 @@ const defaultComponent = ({
   <div {...componentProps}>{children}</div>
 );
 
-export const ContentRenderer = <T extends BaseContentRendererData>({
+export const ContentRenderer = async <T extends BaseContentRendererData>({
   content,
   component: Component = defaultComponent,
 }: ContentRendererProps<T>) => {
@@ -32,8 +36,10 @@ export const ContentRenderer = <T extends BaseContentRendererData>({
   if (typeof children === "string") {
     const html = remark().use(remarkHtml).processSync(children).toString();
     sanitizedChildren = (
-      // biome-ignore lint/security/noDangerouslySetInnerHtml: sanitized markdown HTML
-      <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(html) }} />
+      <div
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: sanitized markdown HTML
+        dangerouslySetInnerHTML={{ __html: (await getPurify()).sanitize(html) }}
+      />
     );
   }
 
