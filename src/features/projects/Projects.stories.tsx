@@ -7,7 +7,7 @@ const mockProjects: Project[] = [
   {
     title: "UserVoice Feedback Capture",
     subtitle: "Work Project",
-    content:
+    children:
       "A browser extension for capturing product feedback wherever you are on the web. Requires and integrates into an existing UserVoice instance.",
     date: new Date("2024-01-15"),
     githubUrl: "https://github.com/example/uservoice-feedback",
@@ -18,7 +18,7 @@ const mockProjects: Project[] = [
   {
     title: "UserVoice Validation",
     subtitle: "Work Project",
-    content:
+    children:
       "A product feedback tool that lets companies test and validate product ideas or features with targeted users before development. It gathers user feedback and votes to help teams prioritize what to build based on real demand.",
     date: new Date("2023-11-20"),
     githubUrl: "https://github.com/example/uservoice-validation",
@@ -30,7 +30,7 @@ const mockProjects: Project[] = [
   {
     title: "Portfolio Website",
     subtitle: "Personal Project",
-    content:
+    children:
       "The second version of my portfolio built with Next.js, featuring a modern design and interactive components.",
     date: new Date("2023-08-10"),
     githubUrl: "https://github.com/example/portfolio-v2",
