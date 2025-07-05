@@ -56,7 +56,6 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  name: "Default Projects Display",
   args: {
     projects: mockProjects,
   },
@@ -71,7 +70,6 @@ export const Default: Story = {
 };
 
 export const SingleProject: Story = {
-  name: "Single Project",
   args: {
     projects: [mockProjects[0]],
   },
@@ -86,7 +84,6 @@ export const SingleProject: Story = {
 };
 
 export const ProjectsWithoutImages: Story = {
-  name: "Projects Without Images",
   args: {
     projects: [
       {
@@ -106,7 +103,6 @@ export const ProjectsWithoutImages: Story = {
 };
 
 export const ProjectsWithoutGitHub: Story = {
-  name: "Projects Without GitHub Links",
   args: {
     projects: [
       {
@@ -126,7 +122,6 @@ export const ProjectsWithoutGitHub: Story = {
 };
 
 export const MultipleImages: Story = {
-  name: "Projects With Multiple Images",
   args: {
     projects: [mockProjects[1]], // UserVoice Validation has 2 images
   },
@@ -140,7 +135,6 @@ export const MultipleImages: Story = {
 };
 
 export const EmptyState: Story = {
-  name: "Empty State",
   args: {
     projects: [],
   },
@@ -154,7 +148,6 @@ export const EmptyState: Story = {
 };
 
 export const DateSorting: Story = {
-  name: "Date Sorting (Newest First)",
   args: {
     projects: [
       { ...mockProjects[2], date: new Date("2020-01-01") }, // Oldest

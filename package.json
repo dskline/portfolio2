@@ -13,6 +13,7 @@
     "prepare": "husky",
     "lint": "biome check",
     "lint:fix": "biome check --write",
+    "tsc": "tsc",
     "test": "playwright test",
     "test:smoke": "npm test -- --project=smoke",
     "test:visual": "VISUAL=1 npm test -- --project=visual*",

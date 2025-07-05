@@ -3,13 +3,15 @@
   "tasks": [
     {
       "type": "shell",
-      "command": "pnpm run lint:fix ${file}",
-      "label": "lint:fix single"
+      "command": "pnpm run lint:fix --unsafe ${file}",
+      "label": "lint:fix single",
+      "problemMatcher": []
     },
     {
       "type": "shell",
       "command": "pnpm run lint:fix",
-      "label": "lint:fix all"
+      "label": "lint:fix all",
+      "problemMatcher": []
     }
   ]
 }
