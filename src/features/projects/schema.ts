@@ -7,6 +7,6 @@ export const projectSchema = z.object({
   url: z.string().optional(),
   date: z.coerce.date(),
   images: z.array(z.string()).optional(),
-  content: z.string(),
+  children: z.string(),
 });
 export type Project = z.infer<typeof projectSchema>;

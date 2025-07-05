@@ -33,7 +33,7 @@ export function Projects({ projects }: ProjectsProps) {
                 {project.subtitle}
               </p>
             </header>
-            <p>{project.content}</p>
+            <p>{project.children}</p>
             <div className="flex flex-col gap-2">
               {project.githubUrl && (
                 <div className="flex">
