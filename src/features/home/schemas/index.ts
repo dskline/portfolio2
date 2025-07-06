@@ -6,6 +6,7 @@ export const heroSectionSchema = baseContentRendererSchema.extend({
   title: z.string(),
   subtitle: z.string().optional(),
   portraitSrc: z.string().optional(),
+  isOpenForWork: z.boolean().optional(),
 });
 
 export type HeroSectionProps = z.infer<typeof heroSectionSchema>;
