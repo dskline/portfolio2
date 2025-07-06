@@ -29,6 +29,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               )}
             >
               <span
+                role="presentation"
                 className={clsx(
                   "mr-2",
                   "inline-block h-2 w-2",
