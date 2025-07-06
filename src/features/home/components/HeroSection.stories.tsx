@@ -49,15 +49,3 @@ export const WithChildren: Story = {
     ),
   } satisfies HeroSectionProps,
 };
-
-export const OpenForWork: Story = {
-  args: {
-    component: "HeroSection",
-    title: "Modern Web Developer",
-    subtitle: "Building modern web experiences",
-    portraitSrc: "/globe.svg",
-    isOpenForWork: true,
-    children:
-      "Welcome to my portfolio! Here you'll find my projects, toolbox, and more.",
-  } satisfies HeroSectionProps,
-};
