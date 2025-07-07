@@ -7,6 +7,7 @@ const homePageContent = z.discriminatedUnion("component", [
   heroSectionSchema,
   // Add other components here as needed
 ]);
+export type HomePageContent = z.infer<typeof homePageContent>;
 
 /**
  * Data container component for the HomePage
