@@ -1,6 +1,12 @@
+import z from "zod";
 import { getContent } from "@/features/cms/getContent";
+import { heroSectionSchema } from "@/features/home/components/HeroSection/schema";
 import { HomePage } from "@/features/home/HomePage";
-import { homePageContent } from "@/features/home/schemas";
+
+const homePageContent = z.discriminatedUnion("component", [
+  heroSectionSchema,
+  // Add other components here as needed
+]);
 
 /**
  * Data container component for the HomePage

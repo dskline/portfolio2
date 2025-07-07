@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import type { HeroSectionProps } from "@/features/home/schemas";
-import { HeroSection } from "./HeroSection";
+import { HeroSection } from ".";
 
 const meta = {
   title: "Features/Home/HeroSection",
