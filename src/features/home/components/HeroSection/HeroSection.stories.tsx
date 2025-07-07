@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import type { HeroSectionProps } from "@/features/home/schemas";
-import { HeroSection } from "./HeroSection";
+import HeroSection from "@/features/home/components/HeroSection";
+import type { HeroSectionProps } from "@/features/home/components/HeroSection/schema";
 
 const meta = {
   title: "Features/Home/HeroSection",
@@ -47,5 +47,17 @@ export const WithChildren: Story = {
         as children.
       </span>
     ),
+  } satisfies HeroSectionProps,
+};
+
+export const OpenForWork: Story = {
+  args: {
+    component: "HeroSection",
+    title: "Modern Web Developer",
+    subtitle: "Building modern web experiences",
+    portraitSrc: "/globe.svg",
+    isOpenForWork: true,
+    children:
+      "Welcome to my portfolio! Here you'll find my projects, toolbox, and more.",
   } satisfies HeroSectionProps,
 };

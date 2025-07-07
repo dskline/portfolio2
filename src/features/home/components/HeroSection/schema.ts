@@ -1,4 +1,4 @@
-import { z } from "zod";
+import z from "zod";
 import { baseContentRendererSchema } from "@/features/cms/renderer/schema";
 
 export const heroSectionSchema = baseContentRendererSchema.extend({
@@ -6,13 +6,7 @@ export const heroSectionSchema = baseContentRendererSchema.extend({
   title: z.string(),
   subtitle: z.string().optional(),
   portraitSrc: z.string().optional(),
+  isOpenForWork: z.boolean().optional(),
 });
 
 export type HeroSectionProps = z.infer<typeof heroSectionSchema>;
-
-export const homePageContent = z.discriminatedUnion("component", [
-  heroSectionSchema,
-  // Add other components here as needed
-]);
-
-export type HomePageContent = z.infer<typeof homePageContent>;
